@@ -1,7 +1,9 @@
 % !TeX spellcheck = en_US
 \chapter{Introduction}
+\label{ch:intro}
 
 \section{Terminology}
+\label{sec:terminology}
 
 A \textbf{system} is the portion of the world affected by the decision, it should allow different configurations, it should not be given once and for all, otherwise no decision would be possible. 
 
@@ -37,6 +39,7 @@ The focus is on practical decisions where a large amount of data must be taken i
 We want to discuss \textit{what make a decision complicated}, present the mathematical models to describe complicated situations and present the methods to deal with such situations, while recognizing limits and errors of this approach.
 
 \section{Modeling approach to decision}
+\label{sec:modelingapproach}
 
 The modeling approach to decision requires a series of intermediate passages: 
 \begin{itemize}
@@ -63,10 +66,11 @@ The \textbf{decision process} occurs in an \textbf{iterative correction approach
 \end{enumerate}
 
 \begin{center}
-	\includegraphics[width=0.75\columnwidth]{img/intro/decisionIter}
+	\includegraphics[width=0.75\columnwidth]{img/dp/intro/decisionIter}
 \end{center}
 
 \section{Why a formal approach?}
+\label{sec:whyformal}
 
 A formal approach allows to: 
 \begin{itemize}
@@ -94,8 +98,9 @@ The formal approach is based on
 \end{itemize}
 
 \section{Prescriptive and descriptive models}
+\label{sec:prescriptivedescriptive}
 
-A decision model includes a number of submodels, which can be classified based on the data they require and the result they produce. Decision models usually combine:
+A decision model includes a number of sub-models, which can be classified based on the data they require and the result they produce. Decision models usually combine:
 \begin{enumerate}
 	\item \textbf{Prescriptive models} that
 	\begin{itemize}
@@ -119,6 +124,7 @@ The two families of models can have subtle and complex interactions. For example
 Example: a model prescribes  a decision (\textit{close or open streets}) based on models that describe a system (\textit{amount of traffic}), including decisions prescribed by models (\textit{satellite navigators})
 
 \section{What makes a decision problem complicated?}
+\label{whycomplicated}
 
 A decision problem can be \textit{complicated} due to:
 \begin{itemize}
@@ -159,7 +165,7 @@ We'll consider four basic families of prescriptive models:
 	\begin{itemize}
 		\item paretian preferences
 		
-		\item weak rationality models (AHP and ELECTRE methods)
+		\item weak rationality models (\textit{AHP} and \textit{ELECTRE} methods)
 	\end{itemize}
 	
 	\item Simple preference, multiple scenarios and a single decision-maker:
@@ -176,3 +182,68 @@ We'll consider four basic families of prescriptive models:
 		\item cooperating decision-makers (group decisions)
 	\end{itemize}
 \end{enumerate}
+
+\subsection{Examples of complicated decision problems}
+\label{subsec:examplesofcomplicatedproblems}
+
+Before some large-size examples (Chapter \ref{ch:cases}), we present some realistic situations that might suggest what elements make a decision complicated in practice.
+
+\paragraph{\textit{The search for parking:}} In a rather congested town, we are looking for a parking to leave out car and reach the place of an important meeting; we would prefer to park quickly  and not walk for long to reach the destination.
+\begin{itemize}
+	\item \textit{System} is the local street network, with the set of all potential parking places
+	
+	\item \textit{Alternative} is every possible trajectory of the car (path and time)
+	
+	\item \textit{Scenario} is every possible distribution of the free parking spaces over space and time
+	
+	\item \textit{Impact} are the driving time and walking time after parking
+	
+	\item \textit{Decision-maker} is the driver
+\end{itemize}
+
+The impact reduces to the aspects which actually matter for the decision, but it depends on a complex combination (configuration) of every possible trajectory of the car and distribution of parking spaces (alternative and scenario).
+
+\paragraph{\textit{Thermostat regulation:}} We want to tune the classroom's thermostat so that the temperature is pleasant for the teacher and students.
+\begin{itemize}
+	\item \textit{System} is the classroom
+	
+	\item \textit{Alternative} is the position of the thermostat
+	
+	\item \textit{Scenario} is the external temperature and the exposition of the classroom to the sun 
+	
+	\item \textit{Impact} is the internal temperature of the classroom (but probably, also the humidity)
+	
+	\item \textit{Decision-makers} are all the people in the classroom (or just the teacher?)
+\end{itemize}
+
+This problem is easier than the others, but the definition of impact and decision-makers is not trivial.
+
+\paragraph{\textit{Buying a car:}} We want to buy a car with good performance, comfort, design and low cost throughout its life cycle.
+\begin{itemize}
+	\item \textit{System} is the local market of cars, petrol, repairs, etc.
+	
+	\item \textit{Alternative} is the car bought 
+	
+	\item \textit{Scenario} are the stock and prices of the car dealers, the occurrence of accidents, prices of petrol and repairs, etc. 
+	
+	\item \textit{Impact} are the characteristics of the car throughout its life cycle
+	
+	\item \textit{Decision-maker} is the buyer (possibly some other family members/friends?)
+\end{itemize}
+
+A possible alternative, easy to forget, is to not buy a car, with an impact very bad for some aspects, but very good for others.
+
+\paragraph{\textit{Risiko round:}} We want to play a round of Risiko, considering in turn all of the players.
+\begin{itemize}
+	\item \textit{System} is the map, with the distribution of territories, armies, cards
+	
+	\item \textit{Alternative} are the territories from which and to which each attack is launched and the corresponding number of attacking and defending armies
+	
+	\item \textit{Scenario} is the dices' outcome at each attack
+	
+	\item \textit{Impact} is the number of armies destroyed for each player
+	
+	\item \textit{Decision-makers} are the players
+\end{itemize}
+
+Here the presence of multiple decision-makers is intrinsic and unavoidable, moreover they all make their own choices autonomously.

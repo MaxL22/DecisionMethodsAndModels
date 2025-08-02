@@ -13,14 +13,29 @@
 \usepackage[parfill]{parskip}
 \MakeOuterQuote{"}
 
+\usepackage{amsthm}
+\usepackage{booktabs}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\wpref}[1]{\preceq_{#1}}
+\newcommand{\indiff}[1]{\text{Ind}_{#1}}
+\newcommand{\spref}[1]{\text{Str}_{#1}}
+\newcommand{\inc}[1]{\text{Inc}_{#1}}
+
 \begin{document}
 	\maketitle
 	\tableofcontents
 	\newpage	
 	
-	\include{chapters/intro}
+	\part{Decision Problems}
 	
-	
+	\include{chapters/dp/intro}
+	\include{chapters/dp/cases}
+	\include{chapters/dp/fundamentaldefinitions}
 	
 	
 	
