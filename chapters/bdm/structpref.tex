@@ -1,0 +1,202 @@
+% !TeX spellcheck = en_US
+\chapter{Structured preferences}
+\label{ch:structpref}
+
+How can we use the concept introduced to choose a solution for a decision problem? 
+
+We'll assume: 
+\begin{itemize}
+	\item A simple preference relation $\Pi$
+	
+	\item A certain environment $|\Omega| = 1 \implies f(x, \bar \omega)$ reduces to $f(x)$
+	
+	\item A single decision-maker $|D| = 1 \implies \Pi_d$ reduces to $\Pi$
+\end{itemize}
+
+Single scenario and single decision-maker. Also, the preference relation of the decision-maker will be a weak order (reflexive, transitive and complete).
+
+The first two conditions allow a well-posed definition of solutions that can be justifiably selected and the third allows the choice of a single solution.
+
+\section{Dominance relation}
+\label{sec:dominancerel}
+
+The preference relation between impacts $(\Pi \subseteq F \times F)$ projects onto an \textbf{induced relation between solutions}. A solution \textit{dominates} another when the impact of the former is preferable to the impact of the latter.
+$$ x \wpref{} x' \Leftrightarrow f(x) \wpref{} f(x') \quad \forall x, x' \in X $$
+
+\begin{definition}
+	We denote as \textbf{dominated solution} a solution $x \in X$ such that $\exists x' \in X : f(x') \prec f(x)$, \textbf{nondominated solution}. We denote as $X^\ast \subseteq X$ the set of \textbf{all nondominated solutions}.
+\end{definition}
+
+This implies a partition of the feasible region into
+\begin{itemize}
+	\item dominated solutions: $x \in X$ such that $\exists x' \in X: x' \prec x$
+	
+	\item nondominated solutions: the other ones
+\end{itemize}
+
+\textbf{Reflexivity} looks natural in a preference relation. When solving a decision problem, it is also rather natural to 
+\begin{itemize}
+	\item \textbf{exclude dominated solutions}, that is choose $x^\ast \in X^\ast$
+	
+	\item Choose an \textbf{arbitrary solution from a set of mutually indifferent ones}
+\end{itemize}
+
+But this conflicts with some possible situations: 
+\begin{itemize}
+	\item All solutions in a strict dominance circuit would be removed
+	
+	\item Two solutions might be indifferent with respect to a third one, but incomparable with each other
+\end{itemize}
+
+Transitivity solves both problems. \textbf{Preorders} are strong candidates to \textbf{be preference relations}.
+
+\subsection{Decision-making on preorders}
+
+\begin{theo}
+	If the preference relation $\Pi$ is a preorder, the induced dominance is a preorder. \\
+\end{theo}
+
+\begin{theo}
+	If the preference relation $\Pi$ is a preorder (reflexive and transitive) and the solution set is finite and nonempty ($X \neq \emptyset$), the nondominated solution set $X^\ast$ is nonempty.
+\end{theo}
+
+This guarantees that decision problems admit reasonable solutions. In some cases, $X^\ast$ will contain a single solution, or several mutually indifferent, in other cases it will include incomparable solutions. Therefore, determining $X^\ast$ simplifies the problem, but doesn't solve it completely.
+
+\begin{theo}
+	If preference $\Pi$ is a preorder and $X^\ast$ is nonempty, the nondominated solutions partition into disjoint components
+	\begin{itemize}
+		\item they are mutually indifferent within each component
+		
+		\item they are mutually incomparable between different components
+	\end{itemize}
+	$\implies$ if there is only one component, the problem is solved (requires completeness).
+\end{theo}
+
+\subsubsection{Identification of the nondominated solutions}
+
+If $X$ is a finite set, it's possible to build the \textbf{strict preference graph}, whose nodes correspond to solutions, while the arcs correspond to solution pairs whose impacts are related by a strict preference. In this graph there are no indifferent pairs. 
+
+The nondominated solutions correspond to \textit{nodes with no ingoing arc} (from each node there's an arrow towards dominated solutions), to identify them it's sufficient to scan each node of the graph and search for nodes with zero indegree.
+
+Let $O(\gamma)$ be the complexity of computing the preference between two given impacts (non necessarily constant, they must be computed and compared), then the overall complexity for the search is $O\left(\gamma |X|^2\right)$ (for each node, compare its impact to the one ov every other in time $\gamma$).
+
+This obviously can't be applied to infinite sets and could be impractical even in the case of combinatorial sets.
+
+\subsection{Decision-making on weak orders}
+
+\begin{theo}
+	If preference $\Pi$ is a weak order (reflexive, transitive and complete), the induced dominance is a weak order. \\
+\end{theo}
+
+\begin{theo}
+	If preference $\Pi$ is a weak order (reflexive, transitive and complete) and $X$ is finite and nonempty, nondominated solutions exist and are all mutually indifferent.
+\end{theo}
+
+This allows to choose any of such solutions as the overall solution of the problem. This is good, the aim is to "make the right choice". Weak orders allow to sort impact on a line, with possible ties, as if associating a degree to each impact.
+
+\begin{definition}
+	A \textbf{value function} is a function $v: F \rightarrow \R$ that associates a real value to each impact (also called \textit{utility functions in economics}). Function $v$ is \textbf{consistent} with preference relation $\Pi$ when 
+	$$ f \wpref{} f' \Leftrightarrow v(f) \geq v(f'), \quad \forall f,f' \in F$$
+	or, equivalently
+	$$ \Pi = \left\{(f, f') \in F \times F \mid v(f) \geq v(f') \right\} $$
+\end{definition}
+
+This offers a compact way to represent preference relations, that is also good for computation
+$$ \max_{x \in X} \left\{ v\left(f(x)\right) \right\}$$
+if we have analytic expressions for $X$ and $v\left( f (\cdot)\right)$ and a solving algorithm.
+
+Value functions are \textbf{not univocal} (infinite equivalent ones always exist).
+
+If a preference relation admits a consistent value function, the derived relations of indifference and strict preference correspond to identity and strict inequality between the values of the value function. \\
+
+\begin{theo}
+	If a preference relation $\Pi$ admits a consistent value function $v(f)$, then $\Pi$ is a weak order (reflexive, transitive and complete).
+\end{theo}
+
+The proof is simple, the point is to show that the preference enjoys reflexivity (because $\Pi$ includes pair $(f,f)$ for all $f \in F$), transitivity (because for all triplets $f, f', f'' \in F$ such that relation $\Pi$ includes pairs $(f,f')$ and $(f', f'')$, it also includes pair $(f, f'')$), and completeness (because for each pair $(f, f')$ not included in $\Pi$, pair $(f',f)$ belongs to it).
+%TODO: proof is missing, maybe do it?
+
+In practice, we start from a preference relation, not from a value function, the inverse would be more useful (the decision problem could be reduced to a maximization of the value function), but it's not always true.
+
+\subsubsection{Weak orders not reducible to a consistent value function}
+
+\paragraph{Lexicographic order} The main example of weak order relation (actually, strong order relation), which doesn't admit a consistent value function. 
+
+Considering the simplest two-dimensional case, with real components ($F = \R^2$), the preference relation is defined as
+$$ 
+\left[
+\begin{array}{c}
+	f_1 \\
+	f_2
+\end{array}
+\right] \wpref{}  \left[
+\begin{array}{c}
+	f_1' \\
+	f_2'
+\end{array}
+\right]
+\Leftrightarrow f_1 < f_1' \text{ or } f_1 = f_1' \wedge f_2 \leq f_2'
+$$
+The decision-maker prefers the smaller impact of the first one, for any value of the second, preferring the smaller value of the second only in the case of a tie for the first.
+
+It can be proven that this relation doesn't admit any consistent value function $v(f)$, that is assigning to each impact in $F$ a real value such that the preference between two impacts correspond to an inequality between the function values.
+
+The intuitive reason is that no improvement of the second can compensate for a worsening, even very small, of the first.
+
+%P78 notes, section not part of the syllabus, read it and weep
+
+\subsubsection{Weak order preference models}
+
+\paragraph{Scalar impact} When the impact is one-dimensional, it's often easy (though not always) to turn it into a value function. E.g., if the impact
+\begin{itemize}
+	\item is a benefit, set $v(f) = f$
+	
+	\item is a cost, set $v(f) = -f$
+	
+	\item has a target value $\bar f$, set $v(f) = - \dist(f, \bar f)$
+\end{itemize}
+
+\paragraph{Borda count} In the finite case, every weak order admits a value function (Borda count)
+$$ B(f) = |\left\{f' \in F \mid f \wpref{} f' \right\}|$$
+
+Basically, the Borda count $B(f)$ is the number of solutions dominated by $f$.
+
+\paragraph{Lexicographic order} If the indicators are all costs (or benefits) and are sorted by importance ($P = (\pi_1, \dots, \pi_p)$), the preference relation $\Pi$ is a total order
+$$ f \wpref{} f' \Leftrightarrow f_{\pi_1} < f_{\pi_1}' \text{ or } \left\{
+\begin{array}{c}
+	f_{\pi_1} = f_{\pi_1}' \\
+	f_{\pi_2} < f_{\pi_2}' 
+\end{array}\right\} \text{ or } \dots \text{ or } \left\{\begin{array}{c}
+f_{\pi_1} = f_{\pi_1}' \\
+f_{\pi_2} = f_{\pi_2}'  \\
+\dots  \\
+f_{\pi_p} \leq f_{\pi_p}'
+\end{array}\right\}
+$$
+
+It does not admit value functions, but can be solved as follows
+\begin{itemize}
+	\item find the whole set $X^\ast_{\pi_1}$ of optimal solutions for $\min_{x \in X} f_{\pi_1}(x)$
+	
+	\item find the whole set $X^\ast_{\pi_2}$ of optimal solutions for $\min_{x \in X^\ast_{\pi_1}} f_{\pi_2}(x)$
+	
+	\item \dots
+	
+	\item find a single optimal solution $x^\ast_{\pi_p}$ for $\min_{x \in X^\ast_{\pi_{p-1}}} f_{\pi_p}(x)$
+\end{itemize}
+
+\paragraph{Utopia point} This model of preference:
+\begin{enumerate}
+	\item Identifies an ideal impact $f^\ast$ independently optimizing each indicator
+	$$ f_I^\ast = \min_{x \in X} f_I (x) $$
+	and combining the optimal values in a vector $f^\ast = \left[f_1^\ast \dots f_p^\ast \right]^T$. Determining such value is a classical optimization problem, sometimes hard, but generally possible
+	
+	\item Finds a solution with impact having minimum "distance" from $f^\ast$
+	$$ \min_{x \in X} \dist \left(f(x), f^\ast \right)$$
+\end{enumerate}
+
+Different definitions of distance imply different results (Manhattan distance, Euclidean distance, \dots; infinite different distances can be defined), and the choice is arbitrary. 
+
+If the indicators are heterogeneous, the units of measure have an influence and conversion coefficients are required to standardize them. The choice of coefficient is complex and, at least partly, arbitrary.
+
+%End L4
