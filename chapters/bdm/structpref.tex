@@ -51,6 +51,7 @@ But this conflicts with some possible situations:
 Transitivity solves both problems. \textbf{Preorders} are strong candidates to \textbf{be preference relations}.
 
 \subsection{Decision-making on preorders}
+\label{subsec:decisionmakingpreorders}
 
 \begin{theo}
 	If the preference relation $\Pi$ is a preorder, the induced dominance is a preorder. \\
@@ -83,6 +84,7 @@ Let $O(\gamma)$ be the complexity of computing the preference between two given 
 This obviously can't be applied to infinite sets and could be impractical even in the case of combinatorial sets.
 
 \subsection{Decision-making on weak orders}
+\label{subsec:decisionmakingweakorders}
 
 \begin{theo}
 	If preference $\Pi$ is a weak order (reflexive, transitive and complete), the induced dominance is a weak order. \\
@@ -143,6 +145,17 @@ It can be proven that this relation doesn't admit any consistent value function 
 
 The intuitive reason is that no improvement of the second can compensate for a worsening, even very small, of the first.
 
+\subsubsection{Multiplicity of the consistent value functions}
+\label{subsubsec:multeplicityvalfunc}
+
+The existence of a way to build a consistent value function does not imply its uniqueness. \\
+
+\begin{theo}
+	Given a value function $v: F \rightarrow \R$, consistent with a preference relation $\Pi$ on $F$, for any strictly increasing function $\phi: \R \rightarrow \R$ the composite function $\phi(v(\cdot))$ is also consistent with $\Pi$.
+\end{theo}
+
+If a weak order admits a consistent value function, it admits infinite equivalent ones, that associate to the same impacts different values, but sorted in the same way.
+
 %P78 notes, section not part of the syllabus, read it and weep
 
 \subsubsection{Weak order preference models}
@@ -188,7 +201,7 @@ It does not admit value functions, but can be solved as follows
 \paragraph{Utopia point} This model of preference:
 \begin{enumerate}
 	\item Identifies an ideal impact $f^\ast$ independently optimizing each indicator
-	$$ f_I^\ast = \min_{x \in X} f_I (x) $$
+	$$ f_l^\ast = \min_{x \in X} f_l (x) $$
 	and combining the optimal values in a vector $f^\ast = \left[f_1^\ast \dots f_p^\ast \right]^T$. Determining such value is a classical optimization problem, sometimes hard, but generally possible
 	
 	\item Finds a solution with impact having minimum "distance" from $f^\ast$
@@ -200,3 +213,290 @@ Different definitions of distance imply different results (Manhattan distance, E
 If the indicators are heterogeneous, the units of measure have an influence and conversion coefficients are required to standardize them. The choice of coefficient is complex and, at least partly, arbitrary.
 
 %End L4
+
+\section{Multi Attribute Utility Theory MAUT}
+\label{sec:maut}
+
+The \textbf{Multi Attribute Utility Theory (MAUT)} assumes that the preference relation of the decision-maker is a weak order, admitting a consistent value function, but the decision-maker is unable to make the value function explicit without help.
+
+It poses the problem to derive from the preference relation $\Pi$ the consistent value function $u: F \rightarrow \R$. We'll denote $u(f)$ as \textit{utility function} (economical notation).
+
+We assume: 
+\begin{itemize}
+	\item a preference relation $\Pi$ with a consistent utility function $u(f)$ 
+	
+	\item a certain environment: $|\Omega| = 1 \implies f(x, \bar \omega)$ reduces to $f(x)$
+	
+	\item a single decision maker: $|D| = 1 \implies \Pi_d$ reduces to $\Pi$
+\end{itemize}
+
+And we know the preference $\Pi$, but not the utility function $u(f)$. \textit{How to build it?}
+
+Specific models of preference have specific applications, \textit{case by case, they might work or not}. We want a \textbf{general way to derive $u(f)$ from $\Pi$}
+\begin{enumerate}
+	\item Introduce a graphical tool (indifference map)
+	
+	\item Turn the graph into a function, with a complex error-prone process 
+	
+	\item Define a special case with a simpler process (additive value functions)
+	
+	\item Characterize the preference relations falling within the special case
+\end{enumerate}
+
+
+\subsection{Indifference Curves}
+\label{subsec:indifferencecurves}
+
+\begin{definition}
+	Given an impact set $F$ in the space of the indicators $\R^p$ and a preference relation $\Pi$ which is a weak order, we denote as \textbf{indifference curve} every subset of impacts that are reciprocally different.
+\end{definition}
+
+An indifference curve is a set $I \subseteq F$ of \textbf{reciprocally indifferent impacts}. They always enjoy the following properties: 
+\begin{itemize}
+	\item The \textbf{curves covers} $F$: every impact belongs to a curve, due to the completeness of the relation
+	
+	\item Any two indifference curves $I$ and $I'$ have \textbf{empty intersection} (transitivity would merge them)
+	
+	\item The weak order on impacts maps onto a \textbf{total order on curves (antisymmetry)}; there are no incomparable impacts and all indifferent impacts belong to the same curve, so impacts on different curves are linked by strict preference
+\end{itemize}
+
+Usually, technical assumptions are made:
+\begin{itemize}
+	\item \textbf{Continuity} implies that the curves are \textit{regular mathematical objects} and not completely general set of points
+	
+	\item The utility function $u(f)$ has a \textbf{continuous infinity of values} $c \in \R$ 
+	
+	\item Each indifference curve is expressed in \textbf{implicit form}
+	$$ u(f) = c $$
+	
+	\item When the implicit form $u(f) = c$ can be turned into an \textbf{explicit form}
+	$$ f_l = f_l \left(c, f_1, \dots, f_{l-1}, f_{l+1}, \dots , f_p\right) $$
+	an indifference curve is a \textbf{hypersurface of $p-1$ dimensions in $\R^p$} (when $p = 2$, it's a line in the plane)
+\end{itemize}
+
+If a value function is known, the family of all indifference curves admits an analytic representation in the indicator space $F$ through the equation $u(f) = c$, where $c$ is a constant parameter that identifies each single curve. This corresponds to an analytic representation of the solution space $X$ through the parametric equation $u(f(x)) = c$.
+
+\subsubsection{Indifference curves and utility function (Indifference map)}
+
+If a preference relation admits a consistent value function, it admits infinitely many (as seen in \ref{subsubsec:multeplicityvalfunc}); the indifference curves of such functions, however, are always the same. 
+
+The correspondence between preference relations and indifference curves is one-to-one, the one between preference relations and value functions is one-to-many.
+
+Given a weak order preference relation $\Pi$ on $F$, its \textbf{indifference map} $\I_\Pi$ is the ordered family of indifference curves covering $F$. The correspondence between $\Pi$ and $\I_\Pi$ is one to one
+\begin{itemize}
+	\item $\Pi$ identifies all groups of indifferent impacts (curves) and their order
+	
+	\item $\I_\Pi$ identifies the preference between all pairs of impacts
+\end{itemize}
+
+The indifference map $\I_\Pi$ corresponds to infinite utility functions $u(f)$.
+
+\subsection{Determining the utility function}
+
+Given a preference relation $\Pi$ on $F$: 
+\begin{enumerate}
+	\item Extract a sample $\tilde F$ from $F$
+	
+	\item Ask the decision-maker to 
+	\begin{itemize}
+		\item sort the sampled impacts
+		
+		\item Identify their equivalence classes
+	\end{itemize}
+	
+	\item Draw an interpolating curve for each equivalence class 
+	
+	\item Guess a parametric utility function family from their shape 
+	$$ u = u_\alpha (f) \text{ with } \alpha = \left[\alpha_1 \dots \alpha_p \right]^T $$
+	
+	\item Each pair of indifferent impacts implies an equation on $\alpha$
+	$$ f \sim f' \Leftrightarrow u(f(\alpha)) = u(f'(\alpha)) $$
+	
+	\item Add a normalization condition to select one of the equivalent utilities
+	
+	\item Make consistency checks by comparing other pairs of impacts; if they fail, go back to 4 and change the parametric utility
+\end{enumerate}
+
+The process is, in general, very complex and error prone
+\begin{itemize}
+	\item Large samples are costly
+	
+	\item The sample must include at least $p-1$ pairs of indifferent impacts found by trial and error
+	
+	\item Small samples ($\approx p$) lead to likely incorrect curves; if the samples is too large, the workload for the decision maker becomes huge (if $k$ different values for each indicator leads to $k^p$ different impacts to evaluate)
+	
+	\item Numerical errors over many equations combine in cascade
+	
+	\item Mutually dependent pairs are useless
+	
+	\item High dimensional spaces make it hard to draw curves and guess $u_\alpha$
+\end{itemize}
+
+Some properties (not guaranteed) which allow to make easier estimates, helping to draw curves and guessing $u(f)$:
+\begin{itemize}
+	\item \textbf{Invertibility:} $u(f)= c$ can be solver with respect to each $f_l$
+	\begin{itemize}
+		\item always verified when the indicators are costs or benefits
+		
+		\item basically, when we can get each indicator $f_l$ from the function $u(f)$ (analytically, the function can be inverted)
+	\end{itemize}
+	Under this assumption, an indifference curve $u(f) = c$ can be written in explicit form as $f_l = f_l (c, f_1, \dots, f_p)$
+	
+	\item \textbf{Monotony:} strictly decreasing or increasing difference curves (\textit{an increase in one is balanced by a decrease in another})
+	\begin{itemize}
+		\item always verified when the indicators are all costs or benefits
+	\end{itemize}
+	In order to compensate for the variations of an indicator, the other ones must vary in a well-determined direction
+	
+	\item \textbf{Convexity} or \textbf{concavity} ("law of diminishing marginal utility"): 
+	\begin{itemize}
+		\item costs lead to concave curves, benefits to convex ones
+	\end{itemize}
+	The indifference curves compensate for the increase of an indicator by a certain amount with variations of the other ones that increase (or decrease) with the value of the first indicator; basically, if a resource (indicator) is scarce, increasing it brings a large utility, compensated by a strong decrease of other resources, if a resource is abundant the same increase brings a small utility, compensated bt a weak decrease of other resources (this is the case of convex curves, they would be concave in the case of indicators expressing cost)
+\end{itemize}
+
+\subsection{Additive utility functions (game changer)}
+
+\begin{definition}
+	We denote a utility function as \textbf{additive} when it can be expressed as the sum of functions of the single indicators:
+	$$ u(f_1, \dots, f_p) = \sum_{l = 1}^p u_l (f_l) $$
+\end{definition}
+
+It's a specific case that brings many simplifications:
+\begin{itemize}
+	\item Ask different decision-makers for each indicator $f_l$ (\textit{split the work})
+	
+	\item Ask decision-makers with experience in the sector (\textit{more reliable})
+	
+	\item Compare scalar values $f_l$ instead of vectors $f$ (\textit{easier and better})
+	
+	\item Build functions $u_l (f_l)$ with one argument (\textit{easier and better})
+\end{itemize}
+
+Since a utility function has infinitely many forms, \textbf{a nonadditive function can have an additive equivalent form}, but \textit{that is not guaranteed, how can we know?}
+
+Example (Cobb-Douglas functions):
+$$ u(f) = \prod_{l=1}^{p} f_l^{\alpha_l} \text{ is equivalent to } u'(f) = \log u (f) = \sum_{l = 1}^p \alpha_l f_l $$
+
+If the utility function is additive, the problem of estimating it can be reduced to the estimation of $p$ single-variable functions, making the process easier.
+
+\subsection{Preferential Independence}
+\label{subsec:preferentialindependence}
+
+How to know that $\Pi$ admits an additive consistent utility function? Given the set of attribute indices $P = \left\{1, \dots, p\right\}$, focus on subset $L \subset P$; we can write that
+$$ f = \left[
+\begin{array}{c}
+	f_L \\
+	f_{P\setminus L}
+\end{array}
+\right]$$
+where $f_L$ and $f_{P\setminus L}$ are the subvectors of impact $f$ corresponding, respectively, to the indicators of $L$ and $P \setminus L$.\\
+
+\begin{definition}
+	A proper subset of indicators $L$ is \textbf{preferentially independent} from the complementary subset $P \setminus L$ when, given two impacts with identical values of the indicators in $P \setminus L$, the preference relation between them does not depend on such values:
+	$$ 
+	\left[
+	\begin{array}{c}
+		f_L \\
+		\phi 
+	\end{array}
+	\right]
+	\wpref{}
+	\left[
+	\begin{array}{c}
+		f_L' \\
+		\phi 
+	\end{array}
+	\right]
+	\Leftrightarrow
+	\left[
+	\begin{array}{c}
+		f_L \\
+		\psi
+	\end{array}
+	\right]
+	\wpref{}
+	\left[
+	\begin{array}{c}
+		f_Lì \\
+		\psi
+	\end{array}
+	\right]
+	$$
+	for all subvectors $\phi$, $\psi$, $f_L$, $f_L'$ such that the four impacts are in $F$:
+	$$ 
+	\left[
+	\begin{array}{c}
+		f_L \\ \phi
+	\end{array}
+	\right],
+	\left[
+	\begin{array}{c}
+		f_L' \\ \phi
+	\end{array}
+	\right],
+	\left[
+	\begin{array}{c}
+		f_L \\ \psi
+	\end{array}
+	\right],
+	\left[
+	\begin{array}{c}
+		f_L' \\ \psi
+	\end{array}
+	\right] \in F
+	$$
+\end{definition}
+
+Preferences between values in $L$ do not depend on the values out of $L$. 
+
+For example: a cost is preferentially independent from all other indicators (the lower the better), but this is not true for a thermostat, at a certain humidity a lower temperature is better, at other ones, a higher temperature might be better.
+
+Preferential independence is \textbf{not symmetric}:
+$$L \text{ independent from } P\setminus L \centernot \implies P \setminus L \text{ independent from } L $$
+
+Preferential independence \textbf{on single indicators does not imply independence on larger subsets}: 
+$$ \left\{l\right\} \text{ independent from } P \setminus \{l\}, \ \forall l \in P \centernot \implies L \text{ independent from } P \setminus L, \forall L \subseteq P $$
+
+\subsubsection{Mutual preferential independence}
+
+Preferential independence of relation $\Pi$ and additivity of function $u(f)$ are strictly connected, even if not rigorously equivalent. \\
+
+\begin{definition}
+	We say that a problem enjoys \textbf{mutual preferential independence} when every proper subset of indicators $L \subset P$ is independent from its complement $P \setminus L$.
+\end{definition}
+
+Mutual preferential independence is a necessary condition for additivity. \\
+
+\begin{theo}
+	If a preference relation admits an additive utility function, then it enjoys mutual preferential independence.
+\end{theo}
+To verify this is enough to apply the definition (for a more detailed proof, p.92 of the notes).
+
+This definition requires to check every nonempty proper subset $P \subset L$: 
+\begin{itemize}
+	\item $2^p - 2$ subsets
+	
+	\item infinite 4-tuples of subimpacts (to sample) for each subset \\
+\end{itemize}
+
+\begin{theo}
+	Mutual preferential independence holds if and only if, given $\bar l \in P$, every pair $L = \left\{l, \bar l \right\}$ is preferentially independent from $P \setminus L$ for all $l \in P \setminus \{\bar l\}$
+\end{theo}
+
+We need to check only $p-1$ pairs (\textit{but single indicators are not enough}). \\
+
+\begin{theo}
+	If $\Pi$ admits a consistent additive utility function $u(f)$, then $\Pi$ enjoys mutual preferential independence.
+\end{theo}
+
+The problem is that the opposite is needed (we want to prove additivity). \\
+
+\begin{theo}
+	When $p \geq 3$, $\Pi$ admits a consistent additive utility function $u(f)$ if and only if $\Pi$ enjoys mutual preferential independence.
+\end{theo}
+
+Unfortunately, when $p=2$, mutual preferential independence is necessary but not sufficient for additivity, as it reduces to checking each indicator with respect to the other one.
+
+% Maybe check the last subsubsec, doesn't make a whole lot of sense
+% End L4, p 93/94 of the notes
