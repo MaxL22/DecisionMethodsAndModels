@@ -4,17 +4,17 @@
 
 While analyzing the two case studies, we remarked that
 \begin{itemize}
-	\item The alternatives are generated combining elements of alternative and there is always an alternative zero (leaving the system as is)
+	\item The \textit{alternatives are generated combining elements of alternative} and there is always an alternative zero (leaving the system as is)
 	
-	\item The scenarios are generated combining elements of scenario
+	\item The \textit{scenarios are generated combining elements of scenario}
 	
-	\item The impacts are generated combining indicators and indicators are organized into a hierarchy
+	\item The \textit{impacts are generated combining indicators} and \textit{indicators are organized into a hierarchy}
 	
-	\item Each configuration generates an impact through descriptive models
+	\item \textit{Each configuration generates an impact} through descriptive models
 	
-	\item Decision-makers should never ignore stakeholders (people affected by the decision and can react to it)
+	\item \textit{Decision-makers should never ignore stakeholders} (people affected by the decision and can react to it)
 	
-	\item Preferences are expressed on impacts (not on configurations)
+	\item \textit{Preferences are expressed on impacts} (not on configurations)
 \end{itemize}
 
 \section{Decision problem}
@@ -48,8 +48,10 @@ While analyzing the two case studies, we remarked that
 
 The aim of the problem is to identify a solution $x^\ast \in X$ ir a subset of solutions $X^\ast \subseteq X$ that the decision-makers consider satisfactory based on their preferences between the impacts $f(x^\ast, \omega)$ with $\omega \in \Omega$ and the other impacts $f \in F$
 
-\subsection{Feasible region}
-\label{subsec:feasibleregiondef}
+\subsection{Alternatives}
+\label{subsec:alternativesdef}
+
+The alternatives formally describe the events under the control of the decision-makers. The set $X$ includes al the possible choices.
 
 We'll assume that 
 $$ X \subseteq \R^n \Leftrightarrow x = \left[x_1 \dots x_n \right]^T \text{ with } \ x_i \in \R \quad \forall i \in \{1, \dots, n\} $$
@@ -73,17 +75,23 @@ Several \textbf{kinds of feasible regions} $X$ exist
 \end{itemize}
 Focusing on a specific kind allows algorithms which are more effective and less general.
 
-\subsection{Sample space}
-\label{subsec:samplespacedef}
+The notation is, so far, purely descriptive and not used to make computations.
 
-The sample space is the set of all scenarios or outcomes, they also describe, modeling errors (disturbances). We'll assume 
+\subsection{Scenarios}
+\label{subsec:scenariosdef}
+
+The scenarios formally describe the events out of the control of the decision-makers that have non-indifferent effect on the system. The set $\Omega$ defines all such events during the time horizon relevant to the decision. Scenarios also describe modeling errors (disturbances).
+
+We'll assume 
 $$ \Omega \subseteq \R^r \Leftrightarrow \omega = \left[\omega_1 \dots \omega_r \right]^T \text{ with } w_k \in \R \quad \forall k \in \{1, \dots, r\} $$
 with a finite number $r$ of elements of scenario or exogenous variables.
 
-\subsection{Indicator space}
-\label{subsec:indicatorspacedef}
+\subsection{Impacts}
+\label{subsec:impactsdef}
 
-We'll assume 
+The impacts formally describe all aspects that are relevant for the decision, i.e., decisions are taken based on the impact. 
+
+The impacts are described quantitatively as vectors of real numbers. We'll assume 
 $$ F \subseteq \R^p \Leftrightarrow f = \left[f_1 \dots f_p\right] \text{ with } f_I \in \R $$
 with a finite number $p$ of 
 \begin{itemize}
@@ -99,7 +107,9 @@ with a finite number $p$ of
 \subsection{Impact function}
 \label{subsec:impactfunctiondef}
 
-$f: X \times \Omega \rightarrow F$ is a vectorial function that associates each configuration $(x, \omega)$ to an impact $f(x, \omega)$. Trivial example
+The impact function $f: X \times \Omega \rightarrow F$ is a vectorial function that associates each configuration $(x, \omega)$ to an impact $f(x, \omega)$. 
+
+Trivial example
 \begin{itemize}
 	\item buy quantities $x_i$ of products ($n$ decision variables)
 	
@@ -139,8 +149,10 @@ Two classical representations for finite problems are
 	\end{center}
 \end{enumerate}
 
-\subsection{Set of all decision-makers or stakeholders}
+\subsection{Decision-makers or stakeholders}
 \label{subsec:decisionmakersdef}
+
+A decision-maker is whoever takes part in a decision. The subjects who do not directly contribute to a decision, but play a role in it with their preferences are often denoted as stakeholders.
 
 $D$ is a finite set which includes all stakeholders. They (directly or indirectly) set the value of the decision variables $x$
 \begin{itemize}
@@ -151,8 +163,10 @@ $D$ is a finite set which includes all stakeholders. They (directly or indirectl
 	$$ X = X^{(1)} \cap \dots \cap X^{(d)} $$
 \end{itemize}
 
-\subsection{Preference function}
-\label{subsec:preffunctiondef}
+\subsection{Preference relation}
+\label{subsec:prefreltiondef}
+
+For each decision-maker, there is the need to distinguish \textit{which impact is preferred}, i.e., preferring $f \in F$ to $f' \in F$ means \textit{considering acceptable the replacement of $f'$ with $f$}. This corresponds to establishing a relation between pairs of impacts.
 
 $\Pi: D \rightarrow 2^{F \times F}$ associates each decision-maker $d \in D$ to a subset of impact pairs that represents a binary relation $\Pi (d)$ on $F$.
 
@@ -192,30 +206,40 @@ In the finite case, a preference relation can be represented by
 
 From the weak preference relation, one can derive
 \begin{itemize}
-	\item \textbf{Indifference} ($\indiff{\Pi} = \Pi \cap \Pi^{-1}$), definition:
+	\item \textbf{Indifference} relation ($\indiff{\Pi} = \Pi \cap \Pi^{-1}$), definition:
 	$$ f \sim f' \Leftrightarrow f \wpref{} f' \text{ and } f' \wpref{} f $$
 	\textit{The decision-maker accepts the exchange in both directions}
 	
-	\item \textbf{Strict preference} ($\spref{\Pi} = \Pi \setminus \Pi^{-1}$), definition
+	\item \textbf{Strict preference} relation ($\spref{\Pi} = \Pi \setminus \Pi^{-1}$), definition
 	$$ f \prec f' \Leftrightarrow f \wpref{} f' \text{ and } f' \not \wpref{} f $$
 	\textit{The decision-maker accepts the exchange only in the given direction}
 	
-	\item \textbf{Incomparability} ($\inc{\Pi} = \bar \Pi \cap \bar \Pi^{-1}$), definition
+	\item \textbf{Incomparability} relation ($\inc{\Pi} = \bar \Pi \cap \bar \Pi^{-1}$), definition
 	$$ f \bowtie f' \Leftrightarrow f \not \wpref{} f' \text{ and } f' \not \wpref{} f $$
-	\textit{The decision-maker rejects the exchange in both directions}
+	\textit{The decision-maker rejects the exchange in both directions} (the decision-maker is not indifferent between the impacts, but is unable or unwilling to chose between them, refusing both exchanges)
 \end{itemize}
 
-\subsubsection{Property of binary relations}
+\subsection{Property of binary relations}
+\label{subsec:propertybinrel}
 
-Some preference relations enjoy special properties
+Not all binary relations express reasonable preference relations for a decision-maker. In principle, the preference relation should be 
 \begin{itemize}
-	\item \textbf{Reflexivity}: $f \wpref{} f$, $\forall f \in F$
+	\item \textit{Realistic}, it models correctly the aims of the decision-maker
 	
-	\item \textbf{Antisymmetry:} if $f \wpref{} f'$ and $f' \wpref{} f$, then $f = f'$ for all $f, f' \in F$
+	\item \textit{Effective}, it allows algorithms that yield a satisfactory choice
+\end{itemize}
+
+The two are, surprisingly, often conflicting.
+
+Some preference relations enjoy some other special properties
+\begin{itemize}
+	\item \textbf{Reflexivity}: $f \wpref{} f$, $\forall f \in F$; it would be meaningless to consider a decision-maker unable to compare an impact to itself
 	
-	\item \textbf{Completeness:} if $f \not \wpref{} f'$, then $f' \wpref{} f$ for all $f, f' \in F$
+	\item \textbf{Antisymmetry:} if $f \wpref{} f'$ and $f' \wpref{} f$, then $f = f'$ for all $f, f' \in F$; two impacts are indifferent only if they are identical
 	
-	\item \textbf{Transitivity:} if $f \wpref{} f'$ and $f' \wpref{} f''$, then $f \wpref{} f''$, for all $f, f', f'' \in F$
+	\item \textbf{Completeness:} if $f \not \wpref{} f'$, then $f' \wpref{} f$ for all $f, f' \in F$; it requires the decision-maker to be able to always sort the impacts, though allowing ties; this excludes incomparability
+	
+	\item \textbf{Transitivity:} if $f \wpref{} f'$ and $f' \wpref{} f''$, then $f \wpref{} f''$, for all $f, f', f'' \in F$; discussed later
 \end{itemize}
 
 While building the model, we must investigate whether they hold or not, because they could be
@@ -245,5 +269,4 @@ Rational decision-makers are transitive, humans are not. There are two main appr
 	\item \textit{let humans be non-transitive}, i.e., appeal to practical and thought experiments and adopt weaker models of rationality
 \end{enumerate}
 
-%Maybe read again the notes, from after the case studies, but it should be fine
 %End of L3
