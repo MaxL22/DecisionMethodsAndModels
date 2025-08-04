@@ -390,7 +390,7 @@ $$ f = \left[
 	f_{P\setminus L}
 \end{array}
 \right]$$
-where $f_L$ and $f_{P\setminus L}$ are the subvectors of impact $f$ corresponding, respectively, to the indicators of $L$ and $P \setminus L$.\\
+where $f_L$ and $f_{P\setminus L}$ are the subvectors of impact $f$ corresponding, respectively, to the indicators of $L$ and $P \setminus L$ (we just divided the whole thing in two parts).\\
 
 \begin{definition}
 	A proper subset of indicators $L$ is \textbf{preferentially independent} from the complementary subset $P \setminus L$ when, given two impacts with identical values of the indicators in $P \setminus L$, the preference relation between them does not depend on such values:
@@ -466,14 +466,9 @@ Preferential independence of relation $\Pi$ and additivity of function $u(f)$ ar
 	We say that a problem enjoys \textbf{mutual preferential independence} when every proper subset of indicators $L \subset P$ is independent from its complement $P \setminus L$.
 \end{definition}
 
-Mutual preferential independence is a necessary condition for additivity. \\
+Mutual preferential independence is a necessary condition for additivity.
 
-\begin{theo}
-	If a preference relation admits an additive utility function, then it enjoys mutual preferential independence.
-\end{theo}
-To verify this is enough to apply the definition (for a more detailed proof, p.92 of the notes).
-
-This definition requires to check every nonempty proper subset $P \subset L$: 
+The above definition requires to check every nonempty proper subset $P \subset L$: 
 \begin{itemize}
 	\item $2^p - 2$ subsets
 	
@@ -490,13 +485,14 @@ We need to check only $p-1$ pairs (\textit{but single indicators are not enough}
 	If $\Pi$ admits a consistent additive utility function $u(f)$, then $\Pi$ enjoys mutual preferential independence.
 \end{theo}
 
-The problem is that the opposite is needed (we want to prove additivity). \\
+To verify this is enough to apply the definition (for a more detailed proof, p.92 of the notes).
+
+The problem is that the opposite is needed, we can verify mutual preferential independence and not additivity, as the utility function is always unknown, we need a sufficient condition. \\
 
 \begin{theo}
-	When $p \geq 3$, $\Pi$ admits a consistent additive utility function $u(f)$ if and only if $\Pi$ enjoys mutual preferential independence.
+	A decision problem with $p \geq 3$ indicators enjoying mutual preferential independence admits an additive utility function $u(f)$.
 \end{theo}
 
 Unfortunately, when $p=2$, mutual preferential independence is necessary but not sufficient for additivity, as it reduces to checking each indicator with respect to the other one.
 
-% Maybe check the last subsubsec, doesn't make a whole lot of sense
 % End L4, p 93/94 of the notes
