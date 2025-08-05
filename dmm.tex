@@ -16,8 +16,15 @@
 \usepackage{amsthm}
 \usepackage{booktabs}
 \usepackage{centernot}
+\usepackage{cancel}
+\usepackage[italiano, noline]{algorithm2e}
+\usepackage{tcolorbox}
+\usepackage{setspace}
+\usepackage{xparse}
+\usepackage{xcolor}
 
 \newtheorem{theo}{Theorem}
+\newtheorem{coro}{Corollary}
 %\theoremstyle{definition}
 \newtheorem{definition}{Definition}
 
@@ -25,12 +32,29 @@
 \DeclareMathOperator{\R}{\mathbb{R}}
 \DeclareMathOperator{\N}{\mathbb{N}}
 \DeclareMathOperator{\I}{\mathcal{I}}
+\DeclareMathOperator{\U}{\mathcal{U}}
 
 \newcommand{\wpref}[1]{\preceq_{#1}}
 \newcommand{\indiff}[1]{\text{Ind}_{#1}}
 \newcommand{\spref}[1]{\text{Str}_{#1}}
 \newcommand{\inc}[1]{\text{Inc}_{#1}}
 \renewcommand{\dist}{\text{dist}}
+
+\NewDocumentEnvironment{myalgo}{m +b}{%
+	\begin{center}
+		\begin{minipage}{#1\linewidth}
+			\begin{tcolorbox}[colback=white,sharp corners,boxrule=.3mm]
+				\begin{algorithm}[H]
+					\setstretch{1.3}
+					\SetArgSty{relax}
+					\SetAlgoNoEnd
+					\SetKwSty{texttt}
+					#2
+				\end{algorithm}
+			\end{tcolorbox}
+		\end{minipage}
+	\end{center}
+}{}
 
 \begin{document}
 	\maketitle
@@ -46,7 +70,7 @@
 	\part{Basic Decision Models}
 	
 	\include{chapters/bdm/structpref}
-	
+	\include{chapters/bdm/mathprog}
 	
 	
 	

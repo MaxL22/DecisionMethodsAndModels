@@ -292,6 +292,7 @@ Given a weak order preference relation $\Pi$ on $F$, its \textbf{indifference ma
 The indifference map $\I_\Pi$ corresponds to infinite utility functions $u(f)$.
 
 \subsection{Determining the utility function}
+\label{subsec:detutility}
 
 Given a preference relation $\Pi$ on $F$: 
 \begin{enumerate}
@@ -356,6 +357,7 @@ Some properties (not guaranteed) which allow to make easier estimates, helping t
 \end{itemize}
 
 \subsection{Additive utility functions (game changer)}
+\label{subsec:additiveutil}
 
 \begin{definition}
 	We denote a utility function as \textbf{additive} when it can be expressed as the sum of functions of the single indicators:
@@ -673,6 +675,7 @@ Switch them for costs.
 If $\min_{x \in X} f_l (x)$ or $\max_{x \in X} f_l (x)$ are unknown or hard to compute, an underestimate and overestimate can be used instead, yielding a normalized utility function, different from above mentioned one. This can lead to a "compression" of the value range if the estimates are loose (it's not using the whole interval $[0,1]$).
 
 \subsection{Determining the weights}
+\label{subsec:detweights}
 
 We still need to determine the weights with which to combine the components of the additive utility function. This requires to identify a sufficient number of pairs of indifferent impacts, equaling the utilities of the two impacts imposes a constraint on the weights of $w_l$, allowing us to find a single solution, with enough constraints (linear equation system).
 
@@ -720,6 +723,7 @@ A correct pairwise comparison matrix $\tilde \Lambda$ enjoys the following prope
 We can check these properties on $\tilde \Lambda$ to be sure that $u(f)$ makes sense.
 
 \subsection{The process in summary}
+\label{subsec:detfunctionsummary}
 
 In summary, the process to determine the utility function is composed of the following steps: 
 \begin{enumerate}

@@ -1,0 +1,378 @@
+% !TeX spellcheck = en_US
+\chapter{Mathematical Programing}
+\label{ch:mathprog}
+
+This chapter will deal with the simplest class of decision problems We assume:
+\begin{itemize}
+	\item A preference relation $\Pi$ with a known consistent utility function $u(f)$
+	$$ \exists u: F \rightarrow \R : \Pi = \left\{(f,f') \in F \times F \mid u(f) \geq u(f')\right\} $$
+	
+	\item A certain environment: $|\Omega| = 1 \implies f(x, \bar \omega)$ reduces to $f(x)$; a single scenario, the impact $f$ depends only on the alternative $x$
+	
+	\item A single decision-maker: $|D| = 1 \implies \Pi_d$ reduces to $\Pi$
+\end{itemize}
+
+This class of problems reduces the decision problem to classical optimization: 
+$$ \max_{x \in X} u(f) $$
+We'll discuss a solving technique that is very general but complex and inefficient.
+
+This class of problems is mainly treated in mathematical literature, where preference is expressed as a cost function, so the most common form is
+$$ \min_{x \in X} f(x) $$
+where $f(x)$  replaces $-u(f(x))$ (not the original $f$).
+
+We also assume regularity for the objective and feasible region:
+\begin{itemize}
+	\item $f(x) \in C^1 (X)$; the cost function is continuous with its first derivative
+	
+	\item $X = \left\{x \in \R^n \mid g_j (x) \leq 0, \ j = 1, \dots, m\right\}$ with $g_j (x) \in C^1 (X)$; the solution set $X$ can be described through a finite system of inequalities, where the constraint functions $g_j(x)$ are real-valued continuous functions with a continuous first derivative in the feasible solution set of the problem
+\end{itemize}
+
+These are very general assumptions. This class of problem (with assumptions more or less strict with respect to the continuity of functions) are denoted under the label of \textbf{Mathematical Programming} problems, describing both preference and feasible region through real-valued functions allows to apply mathematical analysis to these decision problems.
+
+\section{Basic concepts}
+\label{sec:mathbasic}
+
+\begin{definition}
+	Given a set $X \subseteq \R^n$ and a function $f: X \rightarrow \R$ we denote as \textbf{global optimum point} a point $x^\circ \in X$ such that
+	$$ f\left(x^\circ \right) \leq f(x) \quad \forall x \in X $$
+\end{definition}
+
+\begin{definition}
+	Given a set $X \subseteq \R^n$ and a function $f: X \rightarrow \R$, we denote as \textbf{local optimum point} a point $x^\ast \in X$ such that 
+	$$ \exists \epsilon > 0 : f\left(x^\ast\right) \leq f(x), \quad \forall x \in X \cap \U_{x^\ast, \epsilon} $$
+	where
+	$$ \U_{x^\ast, \epsilon} = \left\{x \in \R^n \mid \| x - x^\ast \| < \epsilon \right\} $$
+	is a neighborhood of $x^\ast$ of width $\epsilon$ ($\|x - x^\ast \|$ is the norm of vector $x - x^\ast$).
+\end{definition}
+
+It can easily be seen that a global optimum is, by definition, also a local optimum:
+$$ X^\circ \subseteq X^\ast $$
+
+There is no process to find $X^\circ$ or $X^\ast$ directly, so we want to search the conditions necessary for local optimality. These conditions aim to identify points "candidate" to being local optimum, weakening twice our request:
+$$ 
+\begin{array}{c c c c c}
+	\text{Global optimum} & \implies & \text{Local optimum} & \implies & \text{KKT conditions} \\
+	$X^\circ$ & \subseteq & X^\ast & \subseteq & X^{KKT} 
+\end{array}
+$$
+The conditions are known as \textbf{Karush-Kuhn-Tucker conditions}, from the names of their discoverers.
+
+After finding the "weakened" set, we enumerate $X^{KKT}$ exhaustively to find $X^\circ$. 
+
+The KKT conditions identify candidate points as follows: 
+\begin{enumerate}
+	\item Lay out the conditions as a system of equalities and inequalities
+	
+	\item Solve the system, finding $X^{KKT}$
+	
+	\item Evaluate every point in $X^{KKT}$, keeping only the best ones (which will compose $X^\circ$)
+\end{enumerate}
+
+The method requires $X^{KKT}$ to be a finite set, or at least a set which can be analytically describes, in order to determine $X^\circ$.
+
+The basic tool will be linear approximation in small neighborhoods (hence the false positives).
+
+\subsection{Taylor's series expansion}
+\label{subsec:taylor}
+
+Every sufficiently regular function (i.e., continuous function with continuous derivatives up to a suitable order $k$) can be locally approximated with a polynomial of degree $k$. \\
+
+\begin{theo}
+	Let $f \in C^k \left(\U_{\tilde x, \epsilon}\right)$ be a function of a real variable $x \in \R$. For all $x \in \U_{\tilde x, \epsilon}$, Taylor's series expansion holds: 
+	$$ f(x) = \sum_{i = 0}^k \frac{f^{(i)} (\tilde x)}{i!} (x - \tilde x)^i $$ 
+	$$ \text{with } f^{(0)}  = f, \quad f^{(i)} = \frac{d^i f}{dx^i} \quad \forall i \in \N^+, \text{ and } \lim_{x \rightarrow \tilde x} \frac{R_k (x - \tilde x)}{\|x - \tilde x\|} = 0$$
+\end{theo}
+
+Any regular function can be locally approximated in $\tilde x$ by its tangent line, terms with exponents higher than 1 improve the approximation (which we'll not consider). Any function regular up to the first order ($f: \R \rightarrow \R$ and $f \in C^1 (\U_{\tilde x, \epsilon})$) admits a linear approximation
+$$ f(x) = f(\tilde x) +  f'(\tilde x) (x - \tilde x)  + R_1 (|x - \tilde x|)$$
+which can be generalized to multiple-variable functions ($x \in \R^n$) by 
+$$ f(x) = f(\tilde x) + \left(\nabla f(\tilde x)\right)^T (x  - \tilde x) + R_1 (\|x - \tilde x\|) $$
+where 
+$$ \lim_{x \rightarrow \tilde x} \frac{R_1 \left(\|x - \tilde x\|\right)}{\|x - \tilde x\|} = 0$$
+and $\nabla f(x)$ is the gradient vector
+$$ 
+\nabla f(x) = \left[\begin{array}{c}
+	\frac{\partial f}{\partial x_1} \\ \dots \\ \frac{\partial f}{\partial x_n}
+\end{array}\right]
+$$
+It's the direction of quickest increase for $f(\cdot)$.
+
+\subsection{Arcs}
+\label{subsec:arcs}
+
+$\R^n$ offers many ways to move away from $\tilde x$.\\
+
+\begin{definition}
+	Given a point $\tilde x \in \R^n$, an \textbf{arc} in $\tilde x$ is a parametric curve $\xi: \R^+ \rightarrow \R^n$, that is $\xi (\alpha) = \left[\begin{array}{c}
+		\xi_1 (\alpha) \\ \dots \\ \xi_n (\alpha)
+	\end{array}\right]$, such that $\xi (0) = \tilde x$ and $\xi_1 (\alpha) \in C^1 (\R^+)$.
+\end{definition}
+
+Basically, a function that starts at $\tilde x$ (since $\xi (0) = \tilde x$) and then gets further from it, with each component continuously differentiable for $\alpha > 0$. \\
+
+\begin{definition}
+	An arc $\xi (\alpha)$ is \textbf{feasible} for a given region $X \subseteq \R^n$ when the curve remains in $X$ for small $\alpha$
+	$$ \exists \bar \alpha_f > 0 : \xi (\alpha) \in X, \quad \forall \alpha \in [0; \bar \alpha_f) $$
+\end{definition}
+
+Given a region $X$ (our function), we can travel "a little" (a small enough interval, as defined) along the arc without leaving $X$. \\
+
+\begin{definition}
+	An arc $\xi (\alpha)$ is \textbf{improving} for a given function $f:X \rightarrow \R$ when $f$ is strictly better in $\xi (\alpha)$ than in $\tilde x$ for all small positive $\alpha$
+	$$ \exists \bar \alpha_i > 0 : f\left(\xi(\alpha)\right) < f (\tilde x), \quad \forall \alpha \in (0; \bar \alpha_i) $$
+\end{definition}
+
+Along the curve, but close enough to $\tilde x$, the value of the function $f$ is strictly better than in $\tilde x$.
+
+\section{Necessary conditions for local optimality}
+\label{sec:necforlocal}
+
+\begin{theo}
+	If $\tilde x \in X \subseteq \R^n$ (a point in a region), $f(\cdot) \in C^1 (X)$ (continuously differentiable function) and $\xi (\alpha)$ is an arc in $\tilde x$, feasible for $X$ and improving for $f(\cdot)$, then $\tilde x$ is not locally optimal for $f(\cdot)$ in $X$.
+\end{theo}
+
+If a feasible improving arc in $\tilde x$ exists, then $\tilde x$ can't be a local optima; no improving arc can exist ar a local optima.
+
+\begin{proof}
+	By assumption, for suitable values $\bar \alpha_f > 0$ and $\bar \alpha_i > 0$, we have:
+	\begin{itemize}
+		\item $\xi (\alpha)$ feasible: $\xi (\alpha) \in X$ for all $\alpha \in [0, \bar \alpha_f)$
+		
+		\item $\xi (\alpha)$ improving: $f(\xi(\alpha))  < f(\tilde x)$ for all $\alpha \in (0, \bar \alpha_i)$
+	\end{itemize}
+	
+	Since $\xi (\alpha)$ is a continuous arc 
+	$$ \lim_{\alpha \rightarrow 0} \xi(\alpha) = \tilde x \Leftrightarrow \forall \epsilon > 0, \ \exists \bar \alpha_\epsilon  : \| \xi(\alpha)  - \tilde x \| < \epsilon, \ \forall \alpha \in (0, \bar \alpha_\epsilon ) $$
+	that is, $\xi (\alpha) \in \U_{\tilde x, \epsilon}$, $\forall \alpha \in (0, \bar \alpha_\epsilon )$.
+	
+	Now $\alpha = \frac{1}{2} \min (\bar \alpha_f, \bar \alpha_i \bar \alpha_\epsilon )$ satisfies all three conditions: 
+	\begin{itemize}
+		\item $\alpha < \bar \alpha_f \implies \xi(\alpha) \in X$
+		
+		\item $\alpha < \bar \alpha_i \implies f(\xi(\alpha)) < f(\tilde x)$
+		
+		\item $\alpha < \bar \alpha_\epsilon \implies \xi(\alpha) \in \U_{x^\ast, \epsilon}$
+	\end{itemize}
+	But this contradicts local optimality
+	$$ f(x) \geq f(\tilde x), \quad \forall x \in \U_{\tilde x, \epsilon}  \cap X $$
+\end{proof}
+
+\subsection{A filtering approach}
+\label{subsec:filteringapproach}
+
+This suggests an approach to find candidate points: remove from $X$ all the points that are provably nonoptimal:
+\begin{enumerate}
+	\item Consider all feasible points as candidates: $C := X$
+	
+	\item Scan the set of candidate points $C$
+	
+	\item For each candidate point $\tilde x$, scan all feasible arcs
+	
+	\item For each arc $d$ feasible in $\tilde x$, check whether the arc is improving for $f(\cdot)$: if it is, remove $\tilde x$ from the candidate set
+	
+	\item In the end, scan the remaining candidate points, keeping only the best ones
+\end{enumerate}
+
+The pseudo-code of which being:
+\begin{myalgo}{0.85}
+	$X^{KKT} := X$; \\
+	\tcp{(continuous set for $x$)}
+	\For{\texttt{each} $x \in X^{KKT}$}{
+		\tcp{(continuous set for $\xi$, interval for $\alpha$)}
+		\For{\texttt{each} arc $\xi(\alpha)$ in $x$ feasible for $X$}{
+			\tcp{(interval for $\alpha$)}
+			\If{$\xi(\alpha)$ is improving in $x$ for $f(\cdot)$}{
+				$X^{KKT}:=X^{KKT} \setminus \{x\}$; \\
+			}
+		}
+	}
+	\Return{$X^{KKT}$;}
+\end{myalgo}
+
+Problem: the set of feasible points and directions is, generally, infinite. We can replace the infinite loops with more efficient analytic conditions, all based on first-order approximations. \\
+
+\begin{definition}
+	We denote as \textbf{tangent direction} of an arc $\xi (\alpha)$ feasible in $\tilde x$ the vector composed of the first derivatives of the components $\xi_i$ with respect to parameter $\alpha$, evaluated in the starting point of the arc
+	$$ p_\xi = \left[\begin{array}{c}
+		\xi_1'(0) \\ \dots \\ \xi_n'(0) \\
+	\end{array}\right]$$
+\end{definition}
+
+Straight lines $\xi (\alpha) = \tilde x + \alpha d$ have tangent direction $d$ (\textit{arcs generalize directions}).
+
+Example: the arc in $\tilde x = (2,0)$
+$$ \xi (\alpha) = \left[\begin{array}{c}
+	2 \cos \alpha \\ 2 \sin \alpha 
+\end{array}\right] $$
+describes the circumference with center in the origin and radius 2. Its tangent direction is 
+$$ p_\xi = \left[\begin{array}{c}
+	-2 \sin 0 \\ 2 \cos 0
+\end{array} \right] = \left[ \begin{array}{c}
+0 \\ 2
+\end{array}\right] $$
+
+\begin{theo}
+	If $x^\ast$ is locally optimal in $X$ for $f(\cdot)$ and $\xi (\alpha)$ is a feasible arc in $x^\ast$ for $X$, then 
+	$$ \nabla f (\tilde x)^T p_\xi \geq 0 $$
+\end{theo}
+
+\begin{proof}
+	If $\xi (\alpha)$ is a feasible arc, there exists a coefficient $\bar \alpha$ such that $\xi (\alpha) \in X$ for all $\alpha \in [0;\bar \alpha)$ (remains in $X$ for a small $\alpha$) and since $x^\ast$ is a local optima, for small $\alpha$ it holds that $f(\xi (\alpha)) \geq f(x^\ast)$. 
+	
+	Apply Taylor's expansion to $f(\xi (\alpha))$ in $\alpha = 0$
+	\begin{align*}
+		f(\xi (\alpha)) & \geq f(x^\ast) \implies \\
+		\implies \cancel{f(\xi (0))} + \left \frac{df}{d\alpha} \right|_{\alpha = 0} \alpha + R_1 \left(\|\xi(\alpha) - \xi (0) \|\right) & \geq \cancel{f(x^\ast)} \implies  \\
+		\implies \left(\nabla f(x^\ast)\right)^T  p_\xi + \frac{R_1 \left(\| \xi (\alpha)  - \xi (0) \| \right)}{\alpha} & \geq 0 \\
+	\end{align*}
+	
+	If $\alpha$ converges to 0, by continuity the inequality is preserved
+	$$ \lim_{\alpha \rightarrow 0} \left( \left(\nabla f(\tilde x)\right)^T p_\xi + \frac{R_1 \left( \xi (\alpha) - \xi (0)\right)}{\| \xi (\alpha) - \xi (0) \|} \frac{\| \xi (\alpha) - \xi (0) \|}{\alpha}\right) \geq 0 \implies $$
+	$$ \implies \left(\nabla f(\tilde x)\right)^T p_\xi \geq 0 $$
+\end{proof}
+
+Example: 
+\begin{align*}
+	\min f(x) & = x_2 \\ g_1 (x) & = x_1^2 + x_2^2 \ \leq 4
+\end{align*}
+with $\nabla f^T = [0 \ 1]$
+\begin{itemize}
+	\item Arc $\xi (\alpha) = \tilde x + \alpha [1 \ -1]^T$ is improving in $\tilde x = (-2, 0)$: therefore $\tilde x$ is not locally optimal
+	$$ \nabla f (-2, 0)^T p_\xi = [0 \ 1] \cdot [1 \ -1]^T = -1 < 0 $$
+	
+	\item Arc $\xi (\alpha) = \tilde x + \alpha[1 \ 1]^T$ is nonimproving in $\tilde x = (0, -2)$: $\tilde x$ could be locally optimal (remains candidate until disproval)
+	$$ \nabla f(0, -2)^T p_\xi = [0 \ 1] \cdot [1 \ 1]^T = 1 \geq 0 $$ 
+\end{itemize}
+
+%I don't get the "intuitive" reason this is true, to me it's just a formula
+
+The earlier code can be simplified (possibly missing some removals) to
+\begin{myalgo}{0.85}
+	$X^{KKT} := X$; \\
+	\tcp{(continuous set for $x$)}
+	\For{\texttt{each} $x \in X^{KKT}$}{
+		\tcp{(continuous set for $\xi$, interval for $\alpha$)}
+		\For{\texttt{each} arc $\xi(\alpha)$ in $x$ feasible for $X$}{
+			\tcp{($\xi (\alpha)$ is improving in $x$ for $f(\cdot)$)}
+			\If{{\color{red} $\nabla f(\tilde x)^T p_\xi < 0$}}{
+				$X^{KKT}:=X^{KKT} \setminus \{x\}$; \\
+			}
+		}
+	}
+	\Return{$X^{KKT}$;}
+\end{myalgo}
+
+\subsection{Feasibility condition}
+\label{subsec:feasibilitycondition}
+
+Given the analytic description of the feasible region
+$$ X = \left\{x \in \R^n \mid g_j (x) \leq 0 \text{ for } j = 1, \dots, m \right\}$$
+we approximate each function $g_j(\cdot)$ with Taylor's expansion.
+
+However, feasibility differs from improvement in two regards: 
+\begin{itemize}
+	\item It involves many inequalities, instead of a single objective
+	
+	\item It requires weak conditions, instead of a strict one \\
+\end{itemize}
+
+\begin{definition}
+	We denote as \textbf{active constraint} in a point $\tilde x \in X$ any constraint $g_j (x) \leq 0$ such that $g_j (\tilde x) = 0$. We'll indicate by $J_a (x) = \left\{j \in \{1, \dots, m\}: g_j (x) = 0\right\}$ the set of indices of the active constraints.
+\end{definition}
+
+Basically, the constraints exactly equal to zero when considered in point $\tilde x$, and $J_a$ is the set of indices for which this condition holds.
+
+Given point $\tilde x$ we partition the constraints into two classes
+\begin{enumerate}
+	\item The \textbf{active constraints} ($J_a (\tilde x)$) are exactly satisfied: $g_j (\tilde x) = 0$
+	
+	\item The nonactive constraints are largely satisfied: $g_j (\tilde x) < 0$
+\end{enumerate}
+
+Example: 
+\begin{align*}
+	\min f(x) & = (x_1 - 1)^2 + x_2 \\
+	g_1 (x) & = -x_1^2 - x_2^2 + 4 \leq 0 \\
+	g_2 (x) & = x_1 - 3/2 \leq 0
+\end{align*}
+
+Active constraints: 
+\begin{itemize}
+	\item for $x = (-2,-2)$, no active constraints: $J_a (-2, -2) = \emptyset$
+	
+	\item for $x = (3/2, 0)$, one active constraint: $J_a (3/2, 0) = \{2\}$
+	
+	\item for $x = (3/2, \sqrt{7}/2)$, two active constraints: $J_a (3/2, \sqrt{7}/2) = \{1,2\}$ \\
+\end{itemize}
+
+\begin{theo}
+	If $\xi (\alpha)$ is a feasible arc in $\tilde x \in$ for $X$, $p_\xi$ its tangent vector. Then
+	$$ \nabla g_j (\tilde x)^T p_\xi \leq 0, \quad \forall j \in J_a (\tilde x) $$
+\end{theo}
+\begin{proof}
+	If $\xi (\alpha)$ is an arc feasible in $\tilde x$, there exists a coefficient $\bar \alpha$ such that
+	$$ g_j (\xi (\alpha)) \leq 0, \quad \forall \alpha \in [0; \bar \alpha) \text{ and } j = 1, \dots, m $$
+	that is
+	\begin{align*}
+		g_j (\xi (\alpha)) & = g_j (\xi(0)) + \left \frac{dg_j}{d \alpha}\right|_{0} \alpha + R_1 (\|\xi(\alpha) - \xi(0) \|) = \\
+		& = g_j (\tilde x) + \alpha (\nabla g_j(\tilde x))^T p_\xi + R_1 (\| \xi(\alpha) - \xi (0)\|) \leq 0
+	\end{align*}
+	
+	The inequality is obvious for all constraints not active in $\tilde x$ and the other two terms converge to zero as $\alpha \rightarrow 0$. Therefore, by continuity, when $\alpha$ is sufficiently small, they cannot reverse the inequality. 
+	
+	For the constraints which are active in $\tilde x$, on the contrary, the inequality introduces a strict condition, in fact, for such constraints $g_j(\tilde x) = 0$ so that
+	$$ g_j (\xi (\alpha)) = \alpha (\nabla g_j (\tilde x))^T p_\xi + R_1 (\|\xi (\alpha) - \xi (0) \|) \leq 0 $$
+	Dividing both terms by $\alpha$ and considering the limit, by continuity the thesis follows
+	$$ \lim_{\alpha \rightarrow 0} \left[(\nabla g_j (\tilde x))^T p_\xi + \frac{R_1 (\| \xi (\alpha) - \xi (0) \|)}{\| \xi(\alpha) - \xi (0) \|} \frac{\| \xi (\alpha) - \xi (0) \|}{\alpha} \right] = (\Delta g_j (\tilde x))^T p_\xi \leq 0$$
+\end{proof}
+
+Special case: equality constraints $h_i (x) = 0$ are always active and can be treated as pairs of active inequalities: $h_i (x) \leq 0$ and $-h_i (x) \leq 0$
+$$
+\begin{cases}
+	\nabla h_i (\tilde x)^T p_\xi & \leq 0 \\
+	- \nabla h_i (\tilde x)^T p_\xi & \leq 0 \\
+\end{cases}
+\implies \nabla h_i (\tilde x)^T p_\xi = 0
+$$
+
+For any feasible arc $\xi (\alpha)$, vector $p_\xi$ satisfies the conditions above, but a vector $p$ that satisfies them is not always tangent to a feasible arc. Luckily, the problem concerns only some degenerate points.
+
+\subsubsection{Regular points}
+
+\begin{definition}
+	We denote as \textbf{regular point} for a given system of constraints $g_j (x) \leq 0$a point in which all active constraint have linearly independent gradients (\textbf{constraint qualification} condition).
+\end{definition}
+
+In a regular point, the conditions on the gradients of the active constraints are not only necessary, but also sufficient to guarantee that there exists a feasible arc with the given tangent vector. \\
+
+\begin{theo}
+	If $\tilde x$ is a regular point, then $\nabla g_j (\tilde x)^T p \leq 0$ for all $j \in J_a (\tilde x)$ if and only if there exists an arc $\xi (\alpha)$ in $\tilde x$ feasible for $X$ with tangent direction $p_\xi = p$.
+\end{theo}
+
+The necessary conditions for feasibility are also sufficient in regular points. The analytical conditions on the gradients can be used to check feasibility in all regular points, nonregular points must be explicitly tested (candidates by default). \\
+
+\begin{coro}
+	Let $f \in C^1 (X)$, $\tilde x \in X$ be a regular and local optimum point and $p$ a vector such that
+	$$ (\nabla g_j (\tilde x))^T p \leq 0, \quad \forall j \in J_a (\tilde x) $$
+	Then 
+	$$ (\nabla f(\tilde x))^T p \geq 0 $$
+\end{coro}
+
+The code now becomes:
+\begin{myalgo}{0.85}
+	$X^{KKT} := X \setminus$ NonRegular$(g, X)$; \\
+	\tcp{(continuous set for $x$)}
+	\For{\texttt{each} $x \in X^{KKT}$}{
+		\tcp{(arc $\xi (\alpha)$ in $x$ feasible for $X$)}
+		\For{\texttt{each} {\color{red} $p \in \R^n : \nabla g_j (x)^T p \leq 0$, $\forall j \in J_a (x)$}}{
+			\tcp{($\xi (\alpha)$ is improving in $x$ for $f(\cdot)$)}
+			\If{{\color{red} $\nabla f(\tilde x)^T p_\xi < 0$}}{
+				$X^{KKT}:=X^{KKT} \setminus \{x\}$; \\
+			}
+		}
+	}
+	$X^{KKT} := X^{KKT} \cup $ NonRegular$(g,X)$; \\
+	\Return{$X^{KKT}$;}
+\end{myalgo}
+
+%Should be end of L7, notes p128
