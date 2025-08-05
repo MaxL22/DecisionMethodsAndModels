@@ -326,15 +326,6 @@ Active constraints:
 	$$ \lim_{\alpha \rightarrow 0} \left[(\nabla g_j (\tilde x))^T p_\xi + \frac{R_1 (\| \xi (\alpha) - \xi (0) \|)}{\| \xi(\alpha) - \xi (0) \|} \frac{\| \xi (\alpha) - \xi (0) \|}{\alpha} \right] = (\Delta g_j (\tilde x))^T p_\xi \leq 0$$
 \end{proof}
 
-Special case: equality constraints $h_i (x) = 0$ are always active and can be treated as pairs of active inequalities: $h_i (x) \leq 0$ and $-h_i (x) \leq 0$
-$$
-\begin{cases}
-	\nabla h_i (\tilde x)^T p_\xi & \leq 0 \\
-	- \nabla h_i (\tilde x)^T p_\xi & \leq 0 \\
-\end{cases}
-\implies \nabla h_i (\tilde x)^T p_\xi = 0
-$$
-
 For any feasible arc $\xi (\alpha)$, vector $p_\xi$ satisfies the conditions above, but a vector $p$ that satisfies them is not always tangent to a feasible arc. Luckily, the problem concerns only some degenerate points.
 
 \subsubsection{Regular points}
@@ -352,6 +343,7 @@ In a regular point, the conditions on the gradients of the active constraints ar
 The necessary conditions for feasibility are also sufficient in regular points. The analytical conditions on the gradients can be used to check feasibility in all regular points, nonregular points must be explicitly tested (candidates by default). \\
 
 \begin{coro}
+	\label{cor:firstgeo}
 	Let $f \in C^1 (X)$, $\tilde x \in X$ be a regular and local optimum point and $p$ a vector such that
 	$$ (\nabla g_j (\tilde x))^T p \leq 0, \quad \forall j \in J_a (\tilde x) $$
 	Then 
@@ -375,4 +367,198 @@ The code now becomes:
 	\Return{$X^{KKT}$;}
 \end{myalgo}
 
+\subsubsection{Special case: equality constraints}
+\label{subsub:equalityconstraintsreplaced}
+Special case: equality constraints $h_i (x) = 0$ are always active and can be treated as pairs of active inequalities: $h_i (x) \leq 0$ and $-h_i (x) \leq 0$
+$$
+\begin{cases}
+	\nabla h_i (\tilde x)^T p_\xi & \leq 0 \\
+	- \nabla h_i (\tilde x)^T p_\xi & \leq 0 \\
+\end{cases}
+\implies \nabla h_i (\tilde x)^T p_\xi = 0
+$$
+
 %Should be end of L7, notes p128
+
+\subsection{A first geometric interpretation}
+\label{subsec:firstgeometricinterpretation}
+
+The property of Corollary \ref{cor:firstgeo} has a geometric interpretation that makes it quite intuitive. For each point $x$ taken into account, two sets of vectors are considered: 
+\begin{enumerate}
+	\item The \textbf{feasible cone} $C_{feas} (x)$ is the set of vectors that form angles $\geq 90^\circ$ with the gradients of all active constraints
+	$$ (\nabla g_j (x))^T p \leq 0, \quad \forall j \in J_a (x) $$
+	It's a cone because each active constraint identifies a half-space of directions pointing "on the opposite side" of its gradient, and intersecting them yields a cone. In regular points, these are the directions tangent to feasible arcs.
+	
+	\item The \textbf{improving half-space} $C_{impr} (x)$: it's the set of vectors that form angles $> 90^\circ$ with the gradient of the objective function
+	$$ (\nabla f(x))^T p < 0 $$
+\end{enumerate}
+
+Corollary \ref{cor:firstgeo} states \textit{the feasible cone must not intersect the improving half-space}. Notice that the former is closed, whereas the latter is open, so that the two sets can touch, but not share internal points. The reason is that the directions in which the two cones touch have zero scalar product with the gradient of the objective and with the gradient of the active constraints; in that case, the first order information is insufficient to determine whether the direction is actually improving or not and actually feasible or not. Therefore, such points cannot be rejected and must remain candidate.
+
+\section{Karush-Kuhn-Tucker conditions}
+\label{sec:kktcond}
+
+We want to turn the conditions of Corollary \ref{cor:firstgeo} into computationally tractable equivalent conditions, that is into solution of a system of equalities and inequalities. 
+
+We have modified the filtering approach using analytic conditions: 
+\begin{itemize}
+	\item nonregular points are identified and considered as candidates
+	
+	\item in regular points, analytic conditions identify feasible arcs 
+	
+	\item analytic conditions identify improving arcs
+\end{itemize}
+
+\subsection{Farkas' Lemma}
+\label{subsec:farkas}
+
+\begin{theo}[Farkas' Lemma]
+	Let $f \in \R^n$ and $g_j \in \R^n$ with $j = 1, \dots, m$ be a vector and a family of vectors in the Euclidean $n$-dimensional space. Then
+	$$ \exists \mu_j \geq 0 : f = \sum_{j = 1}^m \mu_j g_j \Leftrightarrow p^T f \leq 0, \quad \forall p : p^T g_j \leq 0, \ \text{ with } j = 1, \dots, m $$
+	In words, vector $f$ is a conical combination of vectors $g_j$ if and only if all vectors pointing on the opposite side of all $g_j$ also point on the opposite side of $f$.
+\end{theo}
+
+The direct implication is trivial, the converse will be given for granted (hard).
+
+Farkas' lemma states that: 
+\begin{itemize}
+	\item If $f$ falls within the cone of vectors $g$, then the cone that is opposite to vectors $g_j$ falls in the half-plane opposite to $f$
+	
+	\item If the cone that is opposite to vectors $g_j$ falls in the half-plane opposite to $f$ then $f$ falls within the cone of vectors $g$
+\end{itemize}
+
+The image below provides an example of geometric interpretation of this lemma, with $m = 3$ vectors $g_j$ in a $n = 2$-dimensional space.
+\begin{center}
+	\includegraphics[width=0.45\columnwidth]{img/bdm/mathprog/farkasex}
+\end{center}
+
+\subsubsection{Farkas' lemma and local optimality}
+
+We want to apply Farkas' lemma to sift candidate points. Let us map: 
+\begin{itemize}
+	\item The vectors $g_j$ onto the gradients of the active constraints $\nabla g_j (\tilde x)$
+	$$ g_j = \nabla g_j (\tilde x) $$
+	
+	\item Vector $f$ onto the \textit{antigradient} (opposite of the gradient) of the objective function $- \nabla f (\tilde x)$
+	$$ f = - \nabla f (\tilde x) $$
+\end{itemize}
+
+The statement of Farkas' lemma becomes
+$$ \exists \mu_j \geq 0 : \nabla f (\tilde x) + \sum_{j \in J_a (\tilde x)} \mu_j \nabla g_j (\tilde x) = 0 $$
+if and only if
+$$ (\nabla f (\tilde x))^T p \geq 0, \quad \forall p : (\nabla g_j (\tilde x))^T p \leq 0, \quad \forall j \in J_a (\tilde x) $$
+
+A vector $p$ with $p^T \nabla g_j (x) \leq 0$, $\forall j \in J_a (x)$ is tangent to a feasible arc. We remove point $x$ when $\nabla f(x)^T p < 0$ for all such vectors. Therefore, \textbf{$x$ is candidate when} $\nabla f(x)^T p \geq 0$ for all feasible tangents, i.e., the second expression in Farkas' lemma, as stated above.
+
+Replacing it with the equivalent first expression, we can tell when a regular point is candidate for local optimality (the first expression is the condition). Don't loop an all $x$ and $p$: solve a system of equations in $\mu$ and $x$.
+
+\subsection{Second geometric interpretation}
+
+The antigradient $- \nabla f(x)$ is the direction of quickest improvement. The gradients of the active constraint $\nabla g_j (x)$ are the directions of quickest violation.
+
+Multipliers $\mu_j \geq 0$ let combination $\sum_{j \in J_a (x)} \mu_j g_j (x)$ describe a cone, denoted as $C_g$, the cone of the gradients of the active constraints.
+
+In candidate points, the antigradient of the objective falls in $C_g$
+$$ - \nabla f(x) = \sum_{j \in J_a (x)} \mu_j \nabla g_j (x) $$
+
+When $-\nabla f(x) \in C_g (x)$ the objective improves only violating constraints (\textit{no vector is tangent  to a feasible and improving arc}).
+
+\subsection{Standard form of Karush-Kuhn-Tucker conditions}
+
+In general, KKT-conditions are reported in an equivalent standard form, that has two small modifications. 
+
+The first problem of the analytic conditions is that
+$$ \nabla f(x) + \sum_{j \in J_a (x)} \mu_j \nabla g_j (x) = 0 $$
+The sum applies only to the constraints active in an unknown point $x$. \textit{How to find them?}
+
+The conditions are reformulated
+\begin{enumerate}
+	\item Adding the gradients of the nonactive constraints
+	$$ \nabla f(x) + \sum_{j = 1}^m \mu_j \nabla g_j (x) = 0 $$
+	
+	\item Forcing to zero the multipliers of the nonactive constraints 
+	$$ \mu_j g_j (x) = 0, \ \text{ for } j = 1, \dots, m $$
+\end{enumerate}
+These equalities are called the \textbf{complementarity conditions}, as they are equivalent to $g_j (x) < 0 \implies \mu_j = 0$.
+
+Second, we have already seen how equality constraints can be replaced by pairs of inequalities (see \ref{subsub:equalityconstraintsreplaced})., but it's simpler to
+\begin{enumerate}
+	\item Use a single multiplier $\lambda_i$
+	
+	\item Relax the nonnegativity condition on the multiplier: $\lambda_i \in \R$
+\end{enumerate}
+
+Two opposite gradients with multipliers $\geq 0$ can always be replaced by a single gradient with a multiplier equal to the difference of the original two. In fact
+$$ \begin{cases}
+	\nabla g_{j_i'} (x) & = \nabla h_i (x) \\
+	\nabla g_{j_i''} (x) & = - \nabla h_i (x)
+\end{cases}$$
+and 
+$$ \mu_{j_i'} \nabla g_{j_i'} (x) + \mu_{j_i''} \nabla g_{j_i''} (x) = \left(\mu_{j_i'} - \mu_{j_i''}\right) \nabla h_i (x) = \lambda_i \nabla h_i (x) $$
+with $\mu_{j_i'} \geq 0$, $\mu_{j_i''} \geq 0$ and $\mu_{j_i'} - \mu_{j_i''} = \lambda_i$ free in $\R$. \\
+
+\begin{theo}[KKT-conditions]
+	Let $X = \left\{x \in \R^n \mid h_i (x) = 0, g_j (x) \leq 0\right\}$, with $i = 1, \dots, s$ and $j = 1, \dots, m$ and $f, h_i, g_j \in C^1 (X)$ for $i = 1, \dots, s$ and $j = 1, \dots, m$. If $x^\ast$ is a regular point in $X$ and a local optimum point for $f$ in $X$, then there exists free multipliers $\lambda_i$ and nonnegative multipliers $\mu_j$ such that:
+	$$
+	\renewcommand{\arraystretch}{1.35}
+	\begin{array}{r l}
+		\nabla f \left(x^\ast\right) + \sum_{i = 1}^s \lambda_i \nabla h_i \left(x^\ast \right) + \sum_{j = 1}^m \mu_j \nabla g_j (x^\ast) = 0 & \\
+		\mu_j g_j \left(x^\ast \right) = 0 & j = 1, \dots, m \\
+		h_i \left(x^\ast \right) = 0 & i = 1, \dots, s \\
+		g_j \left(x^\ast\right) \leq 0 & j = 1, \dots, m \\
+		\mu_j \geq 0 & j = 1, \dots, m
+	\end{array}
+	$$
+\end{theo}
+
+The "sifting", therefore, does not consist in scanning all points and directions, but it consists of solving a system of equalities and inequalities, identifying all points that satisfy it.
+
+The system consists of $n + s + m$ equations: 
+\begin{itemize}
+	\item $n$ equations from Farkas' lemma
+	
+	\item $s$ equations from equality constraints 
+	
+	\item $m$ equations from the complementarity conditions
+\end{itemize}
+imposed on $n + s + m$ variables:
+\begin{itemize}
+	\item $n$ variables to determine the solution $x$ 
+	
+	\item $s$ variables to determine the multiplier vector $\lambda$
+	
+	\item $m$ variables to determine the multiplier vector $\mu$
+\end{itemize}
+and is therefore balanced.
+
+The $2m$ inequalities
+\begin{itemize}
+	\item $m$ constraints on the solution
+	
+	\item $m$ nonnegativity conditions on the multipliers
+\end{itemize}
+remove solutions, but do not decrease freedom degrees (\textit{the number of solutions is probably finite}).
+
+%\subsubsection{Relevant particular cases}
+%
+%\paragraph{Unconstrained problems} Solved by the classical condition on first derivatives
+%$$ \nabla f(x) = 0 \Leftrightarrow \frac{\partial f}{\partial x_i} = 0, \quad \forall i = 1, \dots, n $$
+%
+%\paragraph{Linear programming} Solved imposing:
+%\begin{itemize}
+%	\item Farkas' lemma, that corresponds to dual constraints
+%	
+%	\item The complementarity conditions, that correspond to complementary slackness
+%	
+%	\item The feasibility constraints, that correspond to the primal constraints
+%	
+%	\item The nonnegativity conditions, that correspond to the nonnegativity of the dual variables
+%\end{itemize}
+%
+%\paragraph{Discrete problems} On such problems, the conditions are correct, but useless: the integrality constraint
+%$$ X \subseteq \Z^n \Leftrightarrow h_i (x) = \sin (\pi x_i) = 0$$
+%occurs explicitly in the system and every feasible point is candidate: the KKT condition reduce to the exhaustive algorithm. This is obvious considering that isolated points are locally optimal.
+%
+%More on the lecture notes.
+
+% End L8
