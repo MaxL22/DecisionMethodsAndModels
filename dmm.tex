@@ -23,6 +23,10 @@
 \usepackage{xparse}
 \usepackage{xcolor}
 \usepackage{array}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{intersections}
 
 \newtheorem{theo}{Theorem}
 \newtheorem{coro}{Corollary}
@@ -35,6 +39,7 @@
 \DeclareMathOperator{\Z}{\mathbb{Z}}
 \DeclareMathOperator{\I}{\mathcal{I}}
 \DeclareMathOperator{\U}{\mathcal{U}}
+\DeclareMathOperator{\supp}{Supp}
 
 \newcommand{\wpref}[1]{\preceq_{#1}}
 \newcommand{\indiff}[1]{\text{Ind}_{#1}}
@@ -58,6 +63,8 @@
 	\end{center}
 }{}
 
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
 \begin{document}
 	\maketitle
 	\tableofcontents
@@ -74,7 +81,9 @@
 	\include{chapters/bdm/structpref}
 	\include{chapters/bdm/mathprog}
 	
+	\part{Models with complex preferences}
 	
+	\include{chapters/mcp/paretian}
 	
 	
 \end{document}
