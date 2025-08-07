@@ -1,0 +1,98 @@
+% !TeX spellcheck = en_US
+\chapter{Models of Uncertainty}
+\label{ch:uncertainty}
+
+The \textit{Programming in conditions of uncertainty} deals with decision problems in which the choice is among alternatives whose impact depends not only on the choice of the decision-maker, but also on external factors that cannot be exactly predicted.
+
+These problems are characterized by having:
+\begin{itemize}
+	\item A preference relation $\Pi$ that is a weak order with a known consistent value function $u(f)$ (replaced by a cost $f$, a single objective)
+	
+	\item A single decision maker: $|D| = 1 \implies \Pi_d$ reduces to $\Pi$
+	
+	\item A uncertain environment: $|\Omega| > 1$, the impact of the decision depends also on variables which are not under the control of the decision-maker and about whose value only partial information is available
+\end{itemize}
+
+Such problem can be formulated as
+$$ \min_{x \in X} f(x, \omega) $$
+$$ \omega \in \Omega $$
+
+Where:
+\begin{itemize}
+	\item $X$ is the set of the alternatives or solutions $x$ 
+	
+	\item $\Omega$ is the set of the scenarios $\omega$ (in statistics, \textit{sample space})
+	
+	\item $f(x, \omega)$ is the impact of solution $x$ and scenario $\omega$, $\in \R$
+	
+	\item Lower impacts are preferable to high ones (or vice versa)
+\end{itemize}
+
+The decision maker can choose the alternative $x$, but not the scenario $\omega$, and the choice of $x$ precedes the unraveling of $\gamma$. If $x$ were chosen after $\omega$, the problem would reduce to a Mathematical Programming problem parametrized in $\omega$.
+
+The problems in conditions of uncertainty include two main classes, though other ones have been proposed: 
+\begin{itemize}
+	\item Decisions in condition of \textit{ignorance}: the only information on scenario $\omega$ is that it falls within $\Omega$
+	
+	\item Decisions in conditions of \textit{risk}: the probability $\pi_\omega$ of each scenario $\omega \in \Omega$ is known (if $\Omega$ is a discrete set) ot the probability density $\pi (\omega)$ is known (if $\Omega$ is a continuous set)
+\end{itemize}
+
+In all these classes, it's possible to define relations of dominance that allow to reduce the set of interesting solutions. In general, these relations will not lead to a single choice, as they typically are partial orders (reflexive, transitive but incomplete).
+
+\section{Dominance relations}
+\label{sec:domrel}
+
+\begin{definition}
+	We say that alternative $x$ \textbf{strongly dominates} alternative $x'$ when its impact is at least as good in all scenarios $\omega \in \Omega$
+	$$ x \wpref{} x' \Leftrightarrow f (x, \omega) \leq f(x', \omega), \quad \forall \omega \in \Omega $$
+\end{definition}
+
+Similarly to the concept of Paretian preference, the alternative which are strictly dominated can be rejected a priori. \\
+
+\begin{definition}
+	In the finite case, the impact $f (x, \omega)$ can be represented with an \textbf{evaluation matrix} $U$, having the alternatives $x$ on the rows and all the scenarios on the columns.
+\end{definition}
+
+In order to find the nondominated alternatives, one must perform pairwise comparisons on the rows of the matrix, exactly as in the Paretian case. \\
+
+\begin{definition}
+	We say that alternative $x$ \textbf{probabilistically dominates} alternative $x'$ when for any threshold $\bar f$ the probability that $x$ have impacts not worse than the threshold is not inferior to that of $x'$.
+	$$ x \wpref{} x' \Leftrightarrow P \left[f(x, \omega) \leq \bar f\right] \geq P \left[f (x', \omega) \leq \bar f\right], \quad \forall \bar f \in \R $$
+\end{definition}
+
+\section{Models of uncertainty}
+\label{sec:modelsuncert}
+
+There are two main ways to describe uncertain situations, that reflect into two main forms of the scenario set $\Omega$: 
+\begin{itemize}
+	\item \textit{Scenario description:} $\Omega$ is a finite set, in which the single scenarios are explicitly listed
+	$$ \Omega = \left\{\omega^{(1)}, \dots, \omega^{(|\Omega|)}\right\} $$
+	
+	\item \textit{Interval description:} $\Omega$ is the Cartesian product of a finite number of real intervals $s$ on the exogenous variables
+	$$ \Omega = \left[\omega_1^{\min}, \omega_1^{\max}\right] \times \dots \times \left[\omega_s^{\min}, \omega_s^{\max}\right]$$
+\end{itemize}
+
+These are not the only possible cases, $\Omega$ could assume more sophisticated forms. However they are two frequent special cases.
+
+\textit{How to choose?} The appropriate description depends on: 
+\begin{itemize}
+	\item The precision of the representation
+	
+	\item The simplicity of the solution process
+\end{itemize}
+
+On one hand, the scenario description has a finite number of cases: 
+\begin{itemize}
+	\item Are they all and only the possible cases? 
+	
+	\item Are they few or combinatorially many? 
+\end{itemize}
+
+On the other hand, the interval description: 
+\begin{itemize}
+	\item Implies that the exogenous variables are independent (precision)
+	
+	\item The scenarios are infinitely many, but the worst scenario might be the same for all solutions or easy to find
+\end{itemize}
+
+% End L15? This was easy, p247 notes
