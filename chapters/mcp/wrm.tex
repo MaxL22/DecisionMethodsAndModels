@@ -1,0 +1,246 @@
+% !TeX spellcheck = en_US
+\chapter{Weak rationality methods}
+\label{ch:wrm}
+
+\section{Partially inconsistent decision-makers}
+\label{sec:partiallyinconsistent}
+
+The process of MAUT is tedious, complex and error prone. In practice, the problem is that decision-makers are usually unable to estimate correctly the rates of substitution as required by the theory, because they also consider indifferent pairs of impact between which there is a slight preference. The result is that the computation of the weights $w_l$ based on $p-1$ pairs of indifferent impacts is unreliable.
+
+We assume:
+\begin{itemize}
+	\item A preference relation $\Pi$ that is a weak order with an additive utility
+	
+	\item A certain environment: $|\Omega| = 1 \implies f(x, \omega)$ reduces to $f(x)$
+	
+	\item A single decision maker: $|D| = 1 \implies \Pi_d$ reduces to $\Pi$
+\end{itemize}
+
+However: 
+\begin{itemize}
+	\item The pairwise comparison matrix $\tilde \Lambda$ is incorrect
+	
+	\item The normalized utilities $\mu u(f_l)$ are incorrect
+\end{itemize}
+Therefore, $u(f) = \sum_{l \in P} w_l \tilde u_l (f_l)$ makes no sense-
+
+The normalized utilities $\tilde u _l (x)$ and the pairwise comparison coefficients $\tilde \lambda_{lm}$ are only approximated ($\tilde \Lambda$ is typically positive and reciprocal, but inconsistent, giving nonunivocal weight vectors), and the approximations of $w_l$ and $\tilde u_l (x)$ combine in cascade.
+$$ \tilde u(x) = \sum_{l \in P} \left(w_l \pm \delta w_l \right) \left(\tilde u_l (x) \pm \delta \tilde u_l (x)\right) $$
+
+\section{Reconstructing consistent matrices}
+\label{sec:reconstrconsistent}
+
+A possible approach is to force consistency modifying $\tilde \Lambda$ as little as possible. This requires a definition of distance between matrices.
+
+Given a metric $d: \R^{p^2} \times \R^{p^2} \rightarrow \R$, we can solve the problem
+$$ \min d\left(W, \tilde \Lambda \right) $$
+$$ W_{lm} = \frac{w_l}{w_m} $$
+$$ w_l > 0, \quad l \in P, \quad \sum_{l \in P} w_l = 1$$
+where the unknown variables are the weights $w_l$, $W$ denotes the matrix composed by the ratios $w_l/w_m$, $\tilde \Lambda$ the matrix denoted by the ratios estimated by the decision-maker and $d$ is a distance.
+
+This is done in order to determine an unknown matrix $W$ that is 
+\begin{itemize}
+	\item positive, reciprocal and consistent
+	
+	\item as close as possible to the known matrix $\tilde \Lambda$
+\end{itemize}
+
+There are infinite possible definitions of distances, the choice is arbitrary, and the optimal matrix $W^\circ$ depends on the distance chosen. Examples: 
+\begin{itemize}
+	\item Manhattan distance $L_1$:
+	$$ d_1 \left(W, \tilde \Lambda\right) = \sum_{l,m \in P} \left|\frac{w_l}{w_m} - \tilde \lambda_{lm} \right|$$
+	
+	\item Euclidean distance $L_2$:
+	$$ d_2 \left(W, \tilde \Lambda\right) = \sqrt{\sum_{l,m \in P} \left(\frac{w_l}{w_m} - \tilde \lambda_{lm} \right)^2} $$
+	
+	\item $L_{\infty}$ distance:
+	$$ d_{\infty} \left(W, \tilde \Lambda\right) = \max_{l,m \in P} \left|\frac{w_l}{w_m} - \tilde \lambda_{lm} \right| $$
+\end{itemize}
+
+\subsubsection{The eigenvalue method}
+
+Another way to achieve consistency exploits the following properties: given a square matrix $\tilde \Lambda$ of order $p \times p$
+\begin{itemize}
+	\item eigenvalues are the $p$ solutions of equation $|\lambda l - \tilde \Lambda|$
+	
+	\item eigenvectors associated to $\lambda$ are the $\infty$ nonzero solutions of $\lambda x = \tilde \Lambda x$
+\end{itemize}
+
+If $\tilde \Lambda$ is positive, reciprocal and consistent
+\begin{itemize}
+	\item The dominant (maximum absolute value) eigenvalue is $\lambda_{\max} = p$
+	
+	\item The other $p-1$ eigenvalues are equal to zero ($\tilde \Lambda$ has rank 1)
+	
+	\item The eigenvectors associated to $\lambda_{\max}$ are proportional to the weight vector, and $w$ is the normalization of any dominant eigenvector $x_{\max}$
+\end{itemize}
+
+Consequently, the \textbf{eigenvalue method} proposes to
+\begin{enumerate}
+	\item Compute the eigenvalues and identify the dominant one $\lambda_{\max}$
+	
+	\item Compute the associated dominant eigenvector $x_{\max}$
+	
+	\item Normalize it to obtain the weight vector $w = \frac{x_{{\max}}}{\|x_{\max}\|}$
+	
+	\item Build the correct matrix as $W = \left\{\frac{w_l}{w_m}\right\}$
+\end{enumerate}
+
+But the resulting matrix $W$ can be far from $\tilde \Lambda$, other consistent matrices could be closer. Can a forcedly consistent matrix be safely used? This is subject of debate.
+
+An alternative approach is to 
+\begin{itemize}
+	\item Consciously accept imprecise values for $w_l$ and $\tilde u_l (x)$ 
+	
+	\item Compute them based on the stronger aspects of human psychology
+	
+	\item Aim at a qualitative ranking, instead of a quantitative one
+\end{itemize}
+
+\section{Analytic Hierarchy Process AHP}
+\label{sec:ahp}
+
+The Analytic Hierarchy Process (AHP) by Saaty (1980): 
+\begin{itemize}
+	\item Replaces absolute measures with relative ones
+	
+	\item Replaces quantitative ratios with qualitative scales 
+	
+	\item Builds a hierarchy of indicators in order to compare only conceptually similar quantities
+\end{itemize}
+
+\subsection{Computation of the utilities with pairwise comparisons}
+
+Given an indicator $f_l$, the classical method tries to reconstruct the whole absolute profile of a utility function $\tilde u_l (f_l)$, but psychology says that it's difficult for a human decision-maker to associate quantitative utility values to the values of the indicator.
+
+The AHP focuses on pairs of solutions and on the strength of the relative preference between the values of an indicator in the two solutions of the pair. A matrix $\Lambda_l = \left\{\lambda_{xy}^{(l)}\right\}$ is built, whose element $\lambda_{xy}^{(l)}$ is associated to a pair of alternatives $(x,y) \in X \times X$ and evaluates how much $f_l (x)$ is preferable to $f_l (y)$.
+
+This process evaluates the strength ratio between given pairs of alternatives, i a similar fashion to a utility ratio $\tilde u_l (f_l (x)) / \tilde u_l (f_l (x))$.
+
+Since it requires the explicit enumeration of all solution pairs, the AHP can be applied \textbf{only to finite problems} and with a small number of solutions, or to problems whose solution set has been preliminarily pruned reducing it to a small finite set.
+
+\subsection{Qualitative scales}
+
+The second idea of the AHP is to measure the preference between values not with a quantitative scale but with a qualitative one, denoted as \textit{Saaty's scale}:
+\begin{itemize}
+	\item $\lambda_{xy}^{(l)} = 1$ for $f_l (x)$ \textit{equally good} as $f_l (y)$
+	
+	\item $\lambda_{xy}^{(l)} = 3$ for $f_l (x)$ \textit{moderately better} than $f_l (y)$
+	
+	\item $\lambda_{xy}^{(l)} = 5$ for $f_l (x)$ \textit{strongly better} than $f_l (y)$
+	
+	\item $\lambda_{xy}^{(l)} = 7$ for $f_l (x)$ \textit{very strongly better} than $f_l (y)$
+	
+	\item $\lambda_{xy}^{(l)} = 9$ for $f_l (x)$ \textit{absolutely better} than $f_l (y)$
+\end{itemize}
+
+The weights $2$, $4$, $6$ and $8$ are used for intermediate evaluations. The values are arbitrary, but they derive from the psychological fact that human decision-makers can't discriminate between more that $5$ levels in a reliable way.
+
+Moreover, the use of a qualitative scale allows to compare heterogeneous quantities not expressed in a quantitative way, translating verbal judgments into numerical values. The idea is to give for granted that the values used are only a rough approximation, automatically raising an alert against trusting them too much. 
+
+Building a whole pairwise comparison matrix also allows to evaluate its inconsistency and to tune it \textit{a posteriori} in order to make it consistent, instead of forcing a fictitious consistency since the beginning, which could introduce errors. \\
+
+\begin{definition}
+	We denote as \textbf{evaluation matrix} a matrix $U = \{u_{xl}\}$ containing the evaluation $u_{xl}$ of each alternative $x \in X$ with respect to each indicator $l \in P$, obtained starting from the pairwise comparison matrix $\Lambda_l$.
+\end{definition}
+
+The same qualitative process is followed for the weight ratios $\tilde \lambda_{lm} = \frac{w_l}{w_m}$ for each $l,m \in P$:
+\begin{itemize}
+	\item Choose representative qualitative values $\lambda_{lm}$
+	
+	\item Impose consistency 
+	
+	\item Derive pseudoweights $w_l$ from the consistent matrix
+\end{itemize}
+
+\subsection{Hierarchical structuring of the attributes}
+
+Humans are bad at comparing nonhomogeneous things, so the idea is to build an indicator tree and compare only siblings indicators:
+\begin{itemize}
+	\item The level of the leaves includes the elementary attributes
+	
+	\item At the upper levels summarizing attributes appear, progressively more general
+	
+	\item The root corresponds to a sort of general objective
+\end{itemize}
+
+The idea of this process has already been discussed in Chapter \ref{ch:cases}.
+
+Instead of comparing $l$ and $m$ for each $l,m \in P$
+\begin{itemize}
+	\item Estimate weight ratio $\lambda_{lm}$ only when $l$ and $m$ have the same father
+	
+	\item Perform comparisons at all levels of the indicator tree, not only between indicators, but also between indicator groups
+\end{itemize}
+Replace a single big pairwise comparison matrix with many small ones.
+
+The advantages of structuring the attributes into a hierarchy are:
+\begin{itemize}
+	\item Only homogeneous attributes are compared with each other
+	
+	\item Each subset of pairwise comparisons can be assigned to an expert decision-maker, specialized in a specific field, so as to obtain more meaningful indications
+	
+	\item The total number of pairwise comparisons strongly decreases
+\end{itemize}
+
+The fundamental disadvantage is that the pairwise comparisons at the level of the leaves consider concrete and well-defined attributes, whereas those at the upper levels consider abstract and general objectives, for which a quantitative measure does not even make sense.
+
+\subsection{Hierarchical recomposition}
+
+The weights are normalized within each group of children nodes, but are not comparable with those of other group. The tree structure, however, allows to progressively build the attribute weight vector scanning the tree level-by-level from the leaves up to the root.
+
+At each level, one builds a pairwise comparison matrix between the children of the same node, and derives from it a vector of weights with the methods described above. The weights in each vector have sum equal to one, and describe the relative weight between each other. In order to compare such weights with those of the other nodes of the whole tree, it is enough to renormalize them so that their sum coincides with the weight of the father node, that is simply to multiply them by the weight of the father node.
+
+Given the pseudoutilities $\tilde u_{lx}$ and the pseudoweights $w_l$: 
+\begin{itemize}
+	\item Combine them with convex combinations
+	
+	\item Combine the pseudoweights with products from root to leaf, this corresponds to normalizing each set of sibling nodes
+	$$ u(x) = \sum_{l \in P} \prod_{\ell \in \gamma_l} w_\ell \tilde u_{lx} $$
+\end{itemize}
+
+\subsection{Rank reversal}
+
+The main defect of the AHP is the phenomenon of \textbf{rank reversal}: the order of the alternatives substantially depends on what alternatives are present. This happens because evaluations are pairwise comparisons and not absolute utility values, and therefore depend on the values actually compared.
+
+In the AHP adding or removing alternatives can change the ranking, and alternatives can be generated in different phases, modifying the feasible region $X$.
+
+A result depending on $X$ is undesirable, because. 
+\begin{itemize}
+	\item $X$ is not always given a priori
+	
+	\item Modifying $X$ allows to manipulate the result
+\end{itemize}
+
+Unfortunately, all decision processes based on pairwise comparisons between alternatives suffer from rank reversal (e.g., sport tournaments).
+
+\subsubsection{Absolute scales, or \textit{a priori} estimate method}
+
+In order to avoid rank reversal, Saaty proposed a system using absolute scales and a priori estimates: 
+\begin{itemize}
+	\item Fix a (finite) set of absolute levels for each indicator
+	
+	\item Make pairwise comparisons on levels, instead of alternatives 
+	
+	\item Evaluate each alternative assigning it to a level for each indicator
+\end{itemize}
+
+In this way, the pseudoutilities refer to absolute levels, fixed once for all, and not depending on the alternatives. Basically, define a number of levels and assign a value among these levels to each indicator.
+
+The use of absolute classes also allows:
+\begin{itemize}
+	\item Open decision processes, in which alternatives arrive gradually
+	
+	\item Very long decision processes, in which alternatives arriving at far away times cannot be compared significantly
+	
+	\item To end the process as soon an alternative reaches a satisfactory threshold 
+\end{itemize}
+
+However, the trick also introduces further approximations:
+\begin{itemize}
+	\item Rather different values can be flattened putting them into the same class 
+	
+	\item Very similar values can be strongly differentiated putting them into separate classes
+\end{itemize}
+
+% End L13, p220 notes
