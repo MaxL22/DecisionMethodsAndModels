@@ -1,0 +1,280 @@
+% !TeX spellcheck = en_US
+\chapter{Programming in conditions of risk}
+\label{ch:risk}
+
+This models not only includes the possible scenario set $\Omega$, but also a formalization of their probability. For each given solution $x$, the associated impact $f (x, \omega)$ is a \textit{random variable} depending on the scenario $\omega$. 
+
+Exactly as for the impact function $f(x, \omega)$ the values of $\pi (\omega)$ derive from descriptive models (we'll assume they are given). They might be more or less reliable and this should be taken into account.
+
+We assume:
+\begin{itemize}
+	\item A preference relation $\Pi$ that is a weak order with a known consistent value function $u(f)$ (replaced by a cost $f$)
+	
+	\item A uncertain environment: $|\Omega| > 1$ with probabilistic information
+	
+	\item A single decision-maker: $|D|>1 \implies \Pi_d$ reduces to $\Pi$
+\end{itemize}
+
+We then assume:
+\begin{itemize}
+	\item in the discrete case, a function $\pi_\omega$ assigning to each scenario a \textit{probability value}
+	$$ \pi: \Omega \rightarrow [0;1] \ \text{ with } \ \sum_{\omega \in \Omega} \pi_\omega = 1 $$
+	
+	\item in the continuous case, a function $\pi (\omega)$ assigning to each scenario a \textit{probability density} value
+	$$ \pi: \Omega \rightarrow \R^+ \ \text{ with } \ \int_{\omega \in \Omega} \pi (\omega) d \omega = 1 $$
+\end{itemize}
+We'll consider only finite spaces.
+
+The main approaches consist in reducing the problem to the optimization of an auxiliary function $\phi_{\Omega, \pi} (x)$ (to be maximized or minimized), which removes dependency on the scenario $\omega$.
+
+\section{Definitions of probability}
+\label{sec:probdef}
+
+Contrary to the impact, probability is a debated concept with definitions obtained from different sources, with different meanings and possibly contradictory.
+
+The \textit{classical} definition indicates as probability the ratio between the number of elementary cases that form a scenario and the total number of possible elementary cases. This definition assumes that there exists a finite number of elementary cases with same probability, and typically is applied to simple examples.
+$$ \pi (\omega) = \frac{n (\omega)}{n (\Omega)} $$
+
+Problems
+\begin{itemize}
+	\item What is an elementary case? 
+	
+	\item Why are the elementary cases equally likely?
+\end{itemize}
+\textit{It looks like a circular definition.} This works well when everything is under control, such as for games.
+
+The \textit{frequentist} definition indicates as probability of a scenario the limit to which its relative frequency tends as the number of observations, or experiments, increases. It does not require to identify elementary cases, it allows nonuniform probabilities but it requires a historical set of observations.
+$$ \pi (\omega) = \lim_{n \rightarrow + \infty} \frac{n(\omega)}{n} $$
+Problems:
+\begin{itemize}
+	\item The empirical information must be of good quality
+	
+	\item The quantity of observation must be very large (we're approximating a limit with a finite number)
+	
+	\item The future behavior must be similar to the past (we're using past data to take decisions for the future)
+\end{itemize}
+
+The \textit{subjective} definition indicates as probability of a scenario the price an individual would consider fair to pay in order to receive $1$ if the scenario occurs and $0$ if it does not. This definition is clearly related to decision problems, as it is based on the idea of having gain or not, and is typically used in economics and finance. It provides value that varies from individual to individual.
+$$ \pi(\bar \omega) = u(f(\omega))  \ \text{ where } \ f(\omega) = \begin{cases}
+	1 & \text{ if } \omega = \bar \omega \\
+	0 & \text{ if } \omega \in \Omega \setminus \{\bar \omega\}
+\end{cases}$$
+It's the result of a gamble, based on economic reasoning, it does not require repeated experiments in identical conditions and it can exploit any kind of information. 
+
+Problem: it depends on the personal subjective opinion of the modeler. \textit{The personal attitudes are no longer limited to the preference}.
+
+The \textit{axiomatic} definition indicates as probability any function that associates values to scenarios respecting the basic axioms of probability theory (Kolmogorov):
+\begin{itemize}
+	\item Being restricted in $[0,1]$ for all $\omega \in \Omega$
+	
+	\item Summing to 1 over all $\omega \in \Omega$
+	
+	\item Being additive over sets of disjoint scenarios
+\end{itemize}
+The theory that derives from it is perfectly consistent, but the definition does not indicate how to obtain the values in practical applications.
+
+In practice, one adopts frequentist or subjective values (or a mix) on a case-by-case basis and gets prepared to handle estimation errors.
+
+\section{Expected value criterium}
+\label{sec:expectedvaluecrit}
+
+\href{https://en.wikipedia.org/wiki/Blaise_Pascal}{\texttt{Blaise Pascal}} proposed the \textbf{expected value criterium}, that sums up the impacts of a solution over all scenarios with the convex combination of impacts with probabilities
+$$ \phi_{EV} (x) = E \left[f (x, \omega)\right] = \begin{cases}
+	\sum_{\omega \in \Omega} \pi (\omega) f(x, \omega) & \text{ (discrete case)} \\
+	\int_{\omega \in \Omega} \pi(\omega) f(x, \omega) d \omega & \text{ (in the continuous case)}
+\end{cases} $$
+
+In the finite case, this corresponds to the product of the evaluation matrix $U = \{f (x, \omega)\}$ times the probability vector:
+$$ \phi_{EV} (x) = U \cdot \pi $$
+
+It's a "position measure" of the distribution impact values: 
+\begin{itemize}
+	\item It lies in the range of these values 
+	
+	\item It tends to lie in the "middle" of this range
+	
+	\item It's closer to the values with larger probability 
+\end{itemize}
+
+Basically, just the expected values, as in weighted probability: the $f(x, \omega)$ considered times the probability of said scenario, summed for all possible scenarios of a solution, for each solution.
+
+\section{Sensitivity analysis in the probability space}
+\label{sec:sensanalysisprobspace}
+
+The probabilities of the single scenarios are often obtained by sampling or estimated based on models, \textit{what if they are wrong?} It is often useful, therefore, to evaluate the dependency of the solution suggested by a criterium form the probabilities of the scenarios, in order to understand whether a possible error can imply a wrong decision, and how large would the mistake be. This corresponds to identifying in the probability space the regions in which alternative is optimal. \\
+
+\begin{definition}
+	We denote as \textbf{probability space} the region
+	$$ \P (\Omega) = \left\{\pi_\omega \in [0;1]^r \mid \sum_{\omega \in \Omega} \pi_\omega = 1,\ \pi_\omega \geq 0, \ \forall \omega \in \Omega \right\} $$
+	where $r = |\Omega|$.  \\
+\end{definition}
+
+\begin{definition}
+	We denote as \textbf{probabilistic support} of a solution $x \in X$ for a given choice criterium the subset $\Omega_x$ of the probability space $\P (\Omega)$ in which $x$ is optimal according to the choice criterium adopted.
+	$$ \supp (x) = \left\{\pi \in \P (\Omega) \mid x \in \arg \min_{x' \in X} \phi_{EV} (x') \right\}$$
+\end{definition}
+
+If the alternative chosen based on the estimated probabilities $\pi$ is optimal in a wide region around point $\pi$, one can feel rather safe. In the opposite case, one should take into account for further analysis the other solutions nearby, or the estimate of the probabilities should be improved. 
+
+A complete sensitivity analysis partitions $\P (\Omega)$ into the various supports. We consider a simplified analysis: 
+\begin{itemize}
+	\item One scenario $\bar \omega$ has a very uncertain probability
+	
+	\item The other scenarios (consequently) have an overall very uncertain probability, but reliable ratios to each other
+\end{itemize}
+
+Assume a nominal probability value $\pi^\circ (\omega)$ for each scenario $\omega \in \Omega$ and study the sensitivity variations of $\pi \left(\omega^{(3)}\right) = \alpha$
+$$
+\begin{array}{c|cccc }
+	f(x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)}  \\
+	\hline
+	x^{(1)} & 1 & 3 & 4 & 6 \\
+	x^{(2)} & 2 & 2 & 2 & 4 \\ 
+	x^{(3)} & 3 & 2 & 1 & 9 \\
+	x^{(4)} & 6 & 6 & 1 & 3 \\
+	\hline
+	\pi^\circ (\omega) & 0.20 & 0.25 & 0.50 & 0.05
+\end{array}
+$$
+
+Let use denote: 
+\begin{itemize}
+	\item $\pi_k^\circ$ the nominal probability $\pi^\circ \left(\omega^{(k)}\right)$
+	
+	\item $\pi_k$ the unknown real probability $\pi\left(\omega^{(k)}\right)$
+	
+	\item $\pi_k'$ the conditional probability $\pi\left(\omega^{(k)} \mid \left(\Omega \setminus \left\{\omega^{(3)}\right\}\right)\right)$ (for $k \neq 3$)
+\end{itemize}
+
+Setting $\pi_3 = \alpha$, we obtain that
+$$ 
+\begin{cases}
+	\pi_k^\circ = (1 - \pi_3^\circ) \pi_k' & \text{ for } k \neq 3 \\
+	\pi_k = (1 - \alpha)\pi_k' & \text{ for } k \neq 3
+\end{cases}
+\implies \pi_k = \pi_k^\circ \frac{1 - \alpha}{1 - \pi_3^\circ} \ \text{ for } k \neq 3
+$$
+
+All probabilities are linear functions in $\alpha$, consequently, also $\phi_{EV} (x)$ is linear in $\alpha$. In the present case, $1 - \pi_3^\circ = (1 - 0.5)$, from which: 
+$$
+\begin{array}{c | c c c c}
+	& \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)} \\
+	\hline
+	\phi_{EV} (x) & (2.5 + 1.5\alpha) & (2.2 - 0.2\alpha) & (3.1 - 2.1\alpha) & (5.7 - 4.7 \alpha)
+\end{array}
+$$
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			xlabel={$\alpha$},
+			ylabel={$u$},
+			grid=major,
+			legend pos=north east,
+			domain=0:1,
+			samples=100,
+			width=10cm,
+			height=8cm
+			]
+			%Functions
+			\addplot[red, thick, name path=4] {2.5+1.5*x};
+			\addlegendentry{$u(x_1)$}
+			\addplot[green, thick, name path=1] {2.2-0.2*x};
+			\addlegendentry{$u(x_2)$}
+			\addplot[blue, thick, name path=2] {3.1-2.1*x};
+			\addlegendentry{$u(x_3)$}
+			\addplot[magenta, thick, name path=3] {5.7-4.7*x};
+			\addlegendentry{$u(x_4)$}
+			\fill (0.47,2.1) circle (2pt) node[below] {$A$};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+Two solutions have nonempty support (the ones with no other functions below), and the threshold is obtained by intersecting their impact values
+$$ 2.2 - 0.2 \alpha = 3.1 - 2.1 \alpha \implies \alpha = \frac{9}{19} $$
+So that $\supp\left(x^{(2)}\right) = \left[0, \frac{9}{19}\right]$ and $\supp\left(x^{(3)}\right) = \left[\frac{9}{19}, 1\right]$.
+
+\section{Formal defects of the expected value criterium}
+\label{sec:formdefexpectedvalue}
+
+Since the Seventeenth century, the expected value criterium was criticized for the unrealistic consequences (sometimes even paradoxical) it leads to.
+
+Some strong defects of the expected value criterium:
+\begin{enumerate}
+	\item The actual preferences are inconsistent with the expected values
+	
+	\item Extreme values of probability and impact have paradoxical effects
+\end{enumerate}
+
+\subsection{Inconsistency between expected value and actual preferences}
+
+According to the expected value criterium, all the combinations of impacts and probabilities producing the same result are reciprocally indifferent. In practice, this is often false: if one proposes to a decision-maker different combinations of impacts and probabilities with the same expected value, nearly always the decision maker shows a preference, even if this changes depending on the decision-maker. 
+
+Consider the following alternatives:
+\begin{itemize}
+	\item Throw a die and gain 100 Euros for all outcomes
+	
+	\item Throw a die and gain 200 Euros for 4,5 and 6
+	
+	\item Throw a die and gain 600 Euros for 6
+	
+	\item Throw a die and gain 200 Euros for 2,3,4,5,6 and -400 Euros for 1
+\end{itemize}
+
+All alternatives have equal expected value: $\phi_{EV} (x) = 100$, $\forall x \in X$, most decision-makers however would consider them very different.
+
+\subsection{Infinite expected values and infinitesimal probabilities}
+
+There are thought experiments which show inconsistencies between practical preferences and the expected value criterium when applied to situations in which some impacts are unlimitedly large and some probabilities are unlimitedly small. 
+
+In general, with this method, combining small probabilities with large impacts looks problematic.
+
+\paragraph{Saint Petersburg's Paradox} The situation concerns a gamble:
+\begin{itemize}
+	\item The gambler pays $P$ to take part to the game
+	
+	\item We flip a coin until a tail is obtained
+	
+	\item The gambler wins a sum depending on the number of flips before the end of the game
+\end{itemize}
+
+The model of the game is the following;
+\begin{itemize}
+	\item Alternatives: play or do not play
+	
+	\item Scenarios: the coin is flipped $k$ times obtaining heads before the first tail ($\Omega = \N$)
+	
+	\item Probability function: $\pi_k = \frac{1}{2^{k+1}}$
+	
+	\item Impact function: 
+	\begin{itemize}
+		\item if we do not play, $f(P, k) = 0$
+		
+		\item if we do play, $f(P,k) = 2^k - P$
+	\end{itemize}
+\end{itemize}
+\textit{What is the largest $P$  one should be willing to pay to play the game?}
+
+Let's apply the expected value criterium:
+\begin{itemize}
+	\item If we do not play, $\phi_{EV} (P) = 0$
+	
+	\item If we do play, $\phi_{EV} (P) = \sum_{k \in \N} \frac{2^k - P}{2^{k+1}} = \sum_{k \in \N} \frac{1}{2} - \sum_{k \in \N} \frac{P}{2^{k+1}} = + \infty$
+\end{itemize}
+
+Playing pays out an infinite gain: any cost $P$ is justified. However, in real life nobody would pay a large sum.
+
+\paragraph{A possible way out} Bernouilli suggested not to multiply probabilities and impacts: 
+\begin{itemize}
+	\item For finite creatures the utility for a gain is not proportional to it
+	
+	\item The marginal increase in utility is decreasing
+\end{itemize}
+
+Bernouilli suggested that \textit{utility increases logarithmically with the gain}
+$$ u = \log (f) $$
+
+This solves the original Saint Petersburg's paradox, but not a variant with gains $f$ increasing more than exponentially at each coin flip.
+
+The paradox disappears only when the utility function is upper bounded.
+
+%End L17, p288 notes
