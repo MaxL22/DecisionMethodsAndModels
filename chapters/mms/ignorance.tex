@@ -1,0 +1,399 @@
+% !TeX spellcheck = en_US
+\chapter{Decisions in conditions of ignorance}
+\label{ch:ignorance}
+
+Full ignorance is the most problematic situation for a decision-maker, since the information on the exogenous part of the problem reduces to knowing that the scenario falls within a given set.
+
+We assume:
+\begin{itemize}
+	\item A preference relation $\Pi$ that is a weak order with a known consistent value function $u(f)$ (replaced by a cost $f$)
+	
+	\item A uncertain environment: $|\Omega| > 1$ and we have no other information
+	
+	\item A single decision-maker: $|D = 1| \implies \Pi_d$ reduces to $\Pi$
+\end{itemize}
+
+The idea is to aggregate all scenarios of $\Omega$ and reduce $f(x, \omega)$ to $\phi_\Omega (x)$. Various ways have been proposed, no approach can satisfy all desirable properties. \\
+
+\begin{definition}
+	We denote as \textbf{choice criterium} every definition of $\phi_\Omega (x)$ aimed to replace the impact $f(x, \omega)$.
+\end{definition}
+
+Each of the criteria we'll propose has some advantages, but none satisfies all the properties desirable for a rationally founded decision. 
+
+We'll apply each criterium to an example with four alternatives ($X = \{x^{(1)}, x^{(2)}, x^{(3)}, x^{(4)}\}$) and four scenarios ($\Omega = \{\omega^{(1)}, \omega^{(2)}, \omega^{(3)}, \omega^{(4)} \}$), whose evaluation matrix is reported below (values are costs).
+
+\begin{table}[h!]
+	\centering
+	\label{tab:fxomega}
+	$$
+	\begin{array}{c|cccc}
+		f(x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)} \\
+		\hline
+		x^{(1)} & 2 & 2 & 4 & 3 \\
+		x^{(2)} & 3 & 3 & 3 & 3 \\
+		x^{(3)} & 4 & 0 & 4 & 6 \\
+		x^{(4)} & 3 & 1 & 4 & 4 \\
+	\end{array}
+	$$
+\end{table}
+
+
+\section{Worst-case criterium}
+\label{sec:wcc}
+
+This criterium, also known as \textit{pessimism criterium} or \textit{Wald criterium} (from its inventor, \href{https://en.wikipedia.org/wiki/Abraham_Wald}{\texttt{Abraham Wald}}), consists in being pessimist and assuming that for each chosen solution $x$ the future prepare the scenario implying the largest cost
+$$ w^\dag (x) = \arg \max_{\omega \in \Omega} f(x, \omega)$ $
+
+This allows to compute the impact as a function only of the decision variable $x$, reducing the problem to the minimization of $\phi_{worst}(x) = f\left(x, \omega^\dag (x) \right)$
+$$ \min_{x \in X} \phi_{worst} (x) = \min_{x \in X} \max_{\omega \in \Omega} f(x, \omega) $$
+
+The table reports, for each alternative, the value of the criterium and the scenario that produces it.
+$$
+\begin{array}{c|cccc | c c}
+	f(x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)}  & \phi_{worst} (x) & \omega^\dag (x) \\
+	\hline
+	x^{(1)} & 2 & 2 & 4 & 3 & 4 & \omega^{(3)} \\
+	x^{(2)} & 3 & 3 & 3 & 3 & 3  & \omega^{(1)}, \omega^{(2)}, \omega^{(3)}, \omega^{(4)} \\
+	x^{(3)} & 4 & 0 & 4 & 6 & 6 & \omega^{(4)} \\
+	x^{(4)} & 3 & 1 & 4 & 4 & 4 & \omega^{(3)}, \omega^{(4)} \\
+\end{array}
+$$
+
+Now it's enough to select the best alternative, i.e., the cheapest one. The worst-case criterium suggests to order the alternatives as follows
+$$ x^{(2)} \prec x^{(1)} \sim x^{(4)} \prec x^{(3)} $$
+
+It's a conservative approach: avoid losses, even giving up opportunities.
+
+\section{Best-case criterium}
+\label{sec:bcc}
+
+The best-case criterium, also known as \textit{optimism criterium}, is complementary to that of the worst-case: for each solution $x$, assume that the scenario is the best possible
+$$ \omega^\ast (x) = \arg \min_{\omega \in \Omega} f (x, \omega) $$
+
+Similarly to before, this allows to compute the impact as a function only of the decision variable $x$, reducing the problem to a minimization of function $\phi_{best} (x) = f (x, \omega^\ast (x))$
+$$ \min_{x \in X} \phi_{best} (x) = \min_{x \in X} \min_{\omega \in \Omega} f(x, \omega) $$
+
+The table reports, for each alternative, the value of the criterium and the scenario that produces it.
+$$
+\begin{array}{c|cccc | c c}
+	f(x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)}  & \phi_{best} (x) & \omega^\ast (x) \\
+	\hline
+	x^{(1)} & 2 & 2 & 4 & 3 & 2 & \omega^{(1)} \\
+	x^{(2)} & 3 & 3 & 3 & 3 & 3  & \omega^{(1)}, \omega^{(2)}, \omega^{(3)}, \omega^{(4)} \\
+	x^{(3)} & 4 & 0 & 4 & 6 & 0 & \omega^{(2)} \\
+	x^{(4)} & 3 & 1 & 4 & 4 & 1 & \omega^{(2)} \\
+\end{array}
+$$
+
+This suggests the ordering
+$$ x^{(3)} \prec x^{(4)} \prec x^{(1)} \prec x^{(2)} $$
+
+It's an opportunistic approach: believe in opportunities, ignoring dangers.
+
+\section{Hurwicz criterium}
+\label{sec:hurwicz}
+
+The first two criteria are too biased towards extreme conditions. To have a stronger balance, \href{https://en.wikipedia.org/wiki/Leonid_Hurwicz}{\texttt{Leonid Hurwicz}} proposed a choice criterium making a convex combination of the two:
+\begin{align*}
+	\min_{x \in X} \phi_{Hurwicz} (x) & = \min_{x \in X} \left[\rho \phi_{worst}(x) + (1- \rho) \phi_{best} (x) \right] \\
+	& = \min_{x \in X} \left[\rho \max_{\omega \in \Omega} f (x, \omega) + (1-\rho) \min_{\omega \in \Omega} f(x, \omega)\right]
+\end{align*}
+Where $\rho \in [0,1]$ is the \textit{pessimism coefficient}, as it weighs the worst impact, allowing to tune the weights of the two scenarios.
+
+The table reports, for each alternative, the value of the criterium.
+$$
+\begin{array}{c|cccc | c}
+	f(x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)}  & \phi_{Hurwicz} (x) (\rho = 0.6) \\
+	\hline
+	x^{(1)} & 2 & 2 & 4 & 3 & 0.6 \cdot 4 + 0.4 \cdot 2 = 3.2 \\
+	x^{(2)} & 3 & 3 & 3 & 3 & 0.6 \cdot 3 + 0.4 \cdot 3 = 3 \\
+	x^{(3)} & 4 & 0 & 4 & 6 & 0.6 \cdot 6 + 0.4 \cdot 0 = 3.6 \\
+	x^{(4)} & 3 & 1 & 4 & 4 & 0.6 \cdot 4 + 0.4 \cdot 1 = 2.8 \\
+\end{array}
+$$
+
+This suggests the ordering
+$$ x^{(4)} \prec x^{(2)} \prec x^{(1)} \prec x^{(3)} $$
+
+\subsection{Tuning the pessimism coefficient}
+
+A possible approach to tune $\rho$ is to find (possibly, to invent) a pair of reciprocally indifferent alternatives, to impose the equality of the corresponding values of criterium $\phi_{Hurwicz} (x)$ and solve the resulting equation in $\rho$.
+
+The simplest wa to do that is to choose an alternative $x$, then ask the decision-maker to indicate its \textit{certainty equivalent}, that is an alternative $y$, that in general is not a true alternative of the problem, with a uniform impact in all scenarios and that is overall indifferent to $x$.
+
+Let us choose alternative $x^{(3)}$:  if the decision-maker states that an alternative $y$ with a uniform cost of 4 would be indifferent to $x^{(3)}$, we can conclude that $\phi_{Hurwicz}(x^{(3)}) = \phi_{Hurwicz} (y)$, that is
+$$ \rho \phi_{worst} f (x^{(3)}) + (1 - \rho) \phi_{best} f(x^{3}) = \rho \phi_{worst} f(y) + (1-\rho) \phi_{best} (y) $$
+$$ \implies 6 \rho + 0(1-\rho) = 4 \rho + 4(1-\rho) \implies \rho = \frac{2}{3} $$
+
+It is not at all obvious that the decision-maker is able to indicate a certainty equivalent.
+
+\subsection{Sensitivity analysis}
+
+If the ranking is unclear and the value of $\rho$ imprecise, find the support of each solution $x$, i.e. the range of $\rho$ in where $x$ is optimal for $\phi_{Hurwicz} (x)$
+$$ \supp (x) = \left\{\rho \in [0,1] \mid x \in \arg \min_{x \in X} \phi_{Hurwicz} (x) \right\}$$
+
+The choice criterium $\phi_{Hurwicz} (x)$ becomes a linear function in $\rho$
+\begin{itemize}
+	\item $\phi_{Hurwicz} \left(x^{(1)}\right) = 4 \rho + 2(1 - \rho) = 2 \rho + 2$
+
+	\item $\phi_{Hurwicz} \left(x^{(2)}\right) = 3 \rho + 3(1 - \rho) = 3$
+	
+	\item $\phi_{Hurwicz} \left(x^{(3)}\right) = 6\rho + 0(1 - \rho) = 6 \rho$ 
+	
+	\item $\phi_{Hurwicz} \left(x^{(4)}\right) = 4 \rho + 1 (1 - \rho) = 3 \rho + 1$
+\end{itemize}
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			xlabel={$w$},
+			grid=major,
+			legend pos=south east,
+			domain=0:1,
+			samples=100,
+			width=10cm,
+			height=8cm
+			]
+			%Functions
+			\addplot[blue, thick, name path=1] {2*x+2};
+			\addlegendentry{$u(x_1)$}
+			\addplot[green, thick, name path=2] {3};
+			\addlegendentry{$u(x_2)$}
+			\addplot[cyan, thick, name path=3] {6*x};
+			\addlegendentry{$u(x_3)$}
+			\addplot[red, thick, name path=4] {3*x+1};
+			\addlegendentry{$u(x_4)$}
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+The lower envelope of their profiles identifies the support. Basically, the part oof the domain for which that function does not have another function below it.
+
+Notice that: 
+\begin{itemize}
+	\item The strictly dominated solutions are never optimal 
+	
+	\item Also some nondominated solutions have empty support (unsupported)
+\end{itemize}
+
+This is similar to the weighted sum method for Paretianity, but stronger: even solutions that are the best in a scenario can have empty support ($a_1$ is the best in $\omega_1$, but still unsupported).
+
+The solution is
+\begin{itemize}
+	\item $x_3$ for $\rho \in \left[0, \frac{1}{3}\right]$
+	
+	\item $x_4$ for $\rho \in \left[\frac{1}{3}, \frac{2}{3}\right]$
+	
+	\item $x_2$ for $\rho \in \left[\frac{2}{3}, 1 \right]$
+\end{itemize}
+
+Notice that the result of all criteria considered depends on $\Omega$.
+
+\section{Equiprobability criterium}
+\label{sec:equiprob}
+
+The equiprobability criterium, also known as \textit{Laplace criterium}, modifies Hurwicz criterium considering all scenarios, instead of only the extreme ones, applying the same weight on all of them:
+$$ \min_{x \in X} \phi_{Laplace} (x) = \min_{x \in X} \frac{\sum_{\omega \in \Omega} f(x, \omega)}{|\Omega|} $$
+when $f$ is a cost. This leads to a simple arithmetic mean of the impacts on the scenarios.
+
+The table reports, for each alternative, the value of the criterium.
+$$
+\begin{array}{c|cccc | c}
+	f(x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)}  & \phi_{Laplace} (x)\\
+	\hline
+	x^{(1)} & 2 & 2 & 4 & 3 & (2+2+4+3)/4 = 2.75 \\
+	x^{(2)} & 3 & 3 & 3 & 3 & (3+3+3+3)/4 = 3.00 \\
+	x^{(3)} & 4 & 0 & 4 & 6 & (4+0+4+6)/4 = 3.50 \\
+	x^{(4)} & 3 & 1 & 4 & 4 & (3+1+4+4)/4 = 3.00 \\
+\end{array}
+$$
+
+This suggests the ordering
+$$ x^{(1)} \prec x^{(2)} \sim x^{(4)} \prec x^{(3)} $$
+
+This is obviously possible only for finite scenario sets (actually, a generalization is possible). It's a balanced approach that keeps all scenarios into account.
+
+\section{Regret criterium}
+\label{sec:regret}
+
+This criterium, also known as \textit{Savage criterium}, consists in evaluating the regret that the decision-maker would feel if the decision taken were wrong. The concept behind is that a solution should be compared with alternative ones scenario by scenario.
+
+The idea is to introduce a regret function $\rho (x, \omega)$ to measure in each scenario the regret caused by the choice of a nonoptimal alternative
+$$ \rho (x, \omega) = f (x, \omega) - \min_{x' \in X} f (x', \omega) $$
+when $f$ is a cost. Then apply the worst-case criterium to the regret function: 
+$$ \min_{x \in X} \phi_{regret} (x) = \min_{x \in X} \max_{\omega \in \Omega} \rho (x, \omega) $$
+
+The criterium works in subsequent phases:
+\begin{enumerate}
+	\item Determine the best alternative for each scenario
+	$$ x^\ast (\omega) = \arg \min_{x \in X} f(x, \omega) $$
+	
+	\item Evaluate the regret $\rho (x, \omega)$ associated to each alternative $x$ and each scenario $\omega$
+	$$ \rho(x, \omega) = f (x, \omega)  - f(x^\ast (\omega), \omega) $$
+	
+	\item For each alternative $x \in X$, find the worst scenario
+	$$ \omega^\dag (x) = \arg \max_{\omega \in \Omega} f (x, \omega)$$
+	
+	\item Reduce $\rho (x, \omega)$ to $\phi_{regret} (x) = \rho (x, \omega^\dag (x))$, assigning to each solution $x \in X$ the value of the maximum regret over all scenarios
+	$$ \phi_{regret} (x) = \rho (x, \omega^\dag (x)) = f(x, \omega^\dag (x)) - f(x^\ast(\omega), \omega^\dag (x)) $$
+	 
+	\item Rank the alternatives based on $\phi_{regret} (x)$, the best one being
+	$$ \min_{x \in X} \phi_{regret} (x) = \min_{x \in X} \max_{\omega \in \Omega} \left[f(x, \omega) - \min_{x \in X} f (x, \omega) \right] $$
+\end{enumerate}
+
+The table reports, for each alternative, the value of the criterium.
+$$
+\begin{array}{c|cccc}
+	f(x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)} \\
+	\hline
+	x^{(1)} & 2 & 2 & 4 & 3 \\
+	x^{(2)} & 3 & 3 & 3 & 3 \\
+	x^{(3)} & 4 & 0 & 4 & 6 \\
+	x^{(4)} & 3 & 1 & 4 & 4 \\
+	\hline
+	x^\ast (\omega) & x^{(1)} & x^{(3)} & x^{(2)} & x^{(1)}, x^{(2)} \\
+	& 2 & 0 & 3 & 3 \\
+\end{array}
+$$
+$$
+\begin{array}{c|cccc | c c}
+	\rho (x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)} & \phi_{regret} (x) & \omega^\dag (x)\\
+	\hline
+	x^{(1)} & 0 & 2 & 1 & 0 & 2 & \omega^{(2)} \\
+	x^{(2)} & 1 & 3 & 0 & 0 & 3 & \omega^{(2)} \\
+	x^{(3)} & 2 & 0 & 1 & 3 & 3 & \omega^{(4)} \\
+	x^{(4)} & 1 & 1 & 1 & 1 & 1 & \omega^{(1)}, \omega^{(2)}, \omega^{(3)}, \omega^{(4)} \\
+\end{array}
+$$
+
+This suggests the ordering
+$$ x^{(4)} \prec x^{(1)} \prec x^{(2)} \sim x^{(3)} $$
+
+Notice that there is at least a 0 in each column, the best solution in each scenario.
+
+It's a comparative approach: care only about unnecessary losses.
+
+\section{Surplus criterium}
+\label{sec:surplus}
+
+Complimentary to the regret criterium: it considers in each scenario the surplus that the decision-maker obtains with respect to the worst alternative, and tries to maximize the surplus in the worst possible case. 
+
+The idea is to introduce a surplus function $\sigma (x, \omega)$ to measure in each scenario the extra gain obtained from the choice of a nonpessimal alternative
+$$ \sigma (x, \omega) = \max_{x' \in X} f(x', \omega) - f(x, \omega) $$
+then apply the worst-case criterium to the surplus function
+$$ \max_{x \in X} \phi_{surplus} (x) = \max_{x \in X} \min_{\omega \in \Omega} \sigma (x, \omega) $$
+Contrary to the regret, the surplus is a \textit{benefit}.
+
+In summary: 
+\begin{enumerate}
+	\item Find for each scenario the worst alternative 
+	$$x^\dag (\omega) = \arg \max_{x \in X} f(x, \omega) $$
+	
+	\item Compute the surplus of all alternatives as the distance from the worst
+	$$ \sigma (x, \omega) = f(x^\dag (\omega), \omega) - f(x, \omega) $$
+	
+	\item For each alternative $x \in X$ find the worst scenario
+	$$ \omega^\dag (x) = \arg \max_{\omega \in \Omega} f (x, \omega) $$
+	
+	\item Reduce $\sigma (x, \omega)$ to $\phi_{surplus} (x) = \sigma (x, \omega^\dag (x))$, assigning to each solution the value of minimum surplus over all scenarios
+	$$ \phi_{surplus} (x) = \sigma (x, \omega^\dag (x)) = f(x^\dag (\omega), \omega^\dag (x)) - f(x, \omega^\dag (x)) $$
+	
+	\item Rank the alternatives based on $\phi_{surplus} (x)$, the best one being the one with the largest minimum surplus
+	$$ \max_{x \in X} \phi_{surplus} (x) = \max_{x \in X} \min_{\omega \in \Omega} \left[\max_{x \in X} f (x, \omega) - f(x, \omega) \right]$$
+\end{enumerate}
+
+%TODO: non sono sicuro della correttezza delle formule negli step 3 e 4 in regret e surplus
+
+The table reports, for each alternative, the value of the criterium.
+$$
+\begin{array}{c|cccc}
+	f(x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)} \\
+	\hline
+	x^{(1)} & 2 & 2 & 4 & 3 \\
+	x^{(2)} & 3 & 3 & 3 & 3 \\
+	x^{(3)} & 4 & 0 & 4 & 6 \\
+	x^{(4)} & 3 & 1 & 4 & 4 \\
+	\hline
+	x^\dag (\omega) & x^{(3)} & x^{(2)} & x^{(1)}, x^{(3)}, x^{(4)} & x^{(3)} \\
+	& 4 & 3 & 4 & 6 \\
+\end{array}
+$$
+$$
+\begin{array}{c|cccc | c c}
+	\sigma (x,\omega) & \omega^{(1)} & \omega^{(2)} & \omega^{(3)} & \omega^{(4)} & \phi_{surplus} (x) & \omega^\dag (x) \\
+	\hline
+	x^{(1)} & 2 & 1 & 0 & 3 & 0 & \omega^{(3)} \\
+	x^{(2)} & 1 & 0 & 1 & 3 & 0 & \omega^{(2)} \\
+	x^{(3)} & 0 & 3 & 0 & 0 & 0 & \omega^{(1)}, \omega^{(3)}, \omega^{(4)} \\
+	x^{(4)} & 1 & 2 & 0 & 2 & 0 &\omega^{(3)} \\
+\end{array}
+$$
+
+This suggests the ordering
+$$ x^{(1)} \sim x^{(2)} \sim x^{(3)} \sim x^{(4)} $$
+Each solution is the worst one in at least one scenario.
+
+Notice that there is at least a 0 in each column, the worst solution in each scenario.
+
+It's a comparative approach: care only about nonguaranteed gains.
+
+\section{Formal defects of the choice criteria}
+\label{sec:formaldefects}
+
+The six criteria give completely different rankings, \textit{how to choose the most appropriate one?}
+
+We want an algorithm to build a dominance relation on $X$ (pairs $(x, x')$) from scenario set $\Omega$ and impacts $f(x, \omega)$ and $f(x', \omega)$ (functions on $\Omega$).
+
+The axiomatic approach consists in: 
+\begin{itemize}
+	\item Listing the formal properties of the desired algorithm
+	
+	\item Building an algorithm that satisfies them, or prove that none exists (\textit{we're in the second case})
+\end{itemize}
+
+All criteria presented respect the first four properties:
+\begin{itemize}
+	\item \textbf{Weak ordering:} the dominance relation is a weak order. All criteria generate a choice criterium $\phi_\Omega (x)$, implying a weak order
+	
+	\item \textbf{Labeling independence:} the dominance relation is independent from the names and order of alternatives and scenarios. All criteria satisfy this property (example of criteria which do NOT satisfy the property: choose the first alternative, choose the best alternative in the first scenario)
+	
+	\item \textbf{Scale invariance:} impacts $f$ and $f' = \alpha f + \beta$ yield the same dominance relation for every $\alpha > 0$ and every $\beta \in \R$, meaning the result is independent from unit of measure and offset. The six criteria are scale-invariant because $\phi_\Omega'(x) = \alpha \phi_\Omega (x) + \beta$
+	
+	\item \textbf{Strong dominance:} the dominance relation includes the strong dominance relation
+	$$ f(x, \omega) \leq f(x', \omega), \ \forall \omega \in \Omega \implies x \wpref{} x'$$
+	The six criteria preserve strong dominance (can be proved by contradiction)
+\end{itemize}
+
+However, the other three are not always respected (each criteria breaks at least one):
+\begin{enumerate}
+	\setcounter{enumi}{4}
+	\item \textbf{Independence from irrelevant alternatives:} rank reversal never occurs. Adding or removing alternatives never modifies the other ranks
+	\begin{itemize}
+		\item worst-case, best-case, Hurwicz and Laplace satisfy the property: $\phi_\Omega$ depends on only a single row $f(x, \cdot)$, the others are ininfluent
+		
+		\item regret and surplus can violate the property
+	\end{itemize}
+	
+	\item \textbf{Independence from scenario duplication:} the dominance relation does not change adding scenarios with identical impacts
+	\begin{itemize}
+		\item worst-case, best-case, Hurwicz, regret and surplus satisfy the property: minimum and maximum do not change
+		
+		\item Laplace in general violates the property: the weight of the duplicated scenario in the average increases
+	\end{itemize}
+	
+	\item \textbf{Uniform variations of a scenario:} the dominance relation does not change if $f(x, \omega)$ (in scenario $\bar \omega$) varies by a uniform amount $\delta f$, i.e., the scenario becomes equally better or worse for all alternatives
+	\begin{itemize}
+		\item Laplace satisfies the property: $\phi_{Laplace} (x)$ varies by $\frac{\delta f}{|\Omega|}$, $\forall x \in X$
+		
+		\item regret and surplus satisfy the property: if column $\bar \omega$ changes by $\delta f$, minimum and maximum also do; regret and surplus do not change
+		
+		\item worst-case, best-case, Hurwicz can violate the property: changing $f(x, \bar \omega)$ can vary minimum and maximum of $f(x, \omega)$ on all scenarios \\
+	\end{itemize}
+\end{enumerate}
+
+\begin{theo}
+	The above mentioned properties are mutually exclusive: no algorithm can satisfy all of them (without additional information).
+\end{theo}
+
+% End L16, p281 notes probably
