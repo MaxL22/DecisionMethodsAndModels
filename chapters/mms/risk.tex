@@ -278,3 +278,264 @@ This solves the original Saint Petersburg's paradox, but not a variant with gain
 The paradox disappears only when the utility function is upper bounded.
 
 %End L17, p288 notes
+
+\section{Stochastic utility theory}
+\label{sec:stochastic}
+
+We aim to overcome the limits of the expected value criterium, by introducing a number of desired properties (axioms) and building a choice criterium that by construction satisfies them. 
+
+We assume:
+\begin{itemize}
+	\item A preference relation $\Pi$ that is a weak order with a known constant value function $u(f)$ (replaced by a cost $f$)
+	
+	\item An uncertain environment: $|\Omega| > 1$ with probabilistic information
+	
+	\item A single decision-maker: $|D| = 1 \implies \Pi_d$ reduces to $\Pi$
+\end{itemize}
+
+The basic idea is to assume that the decision-maker is able to establish a preference relation $\Pi$ not only between pairs of deterministic impacts, but also between pairs of uncertain impacts, described as random variables. \\
+
+\begin{definition}
+	We denote as \textbf{finite simple lottery} $\ell_{f, \pi}$ a pair of functions $(f(\omega), \pi (\omega))$, where $f(\omega): \Omega \rightarrow F$ is a random variable on a finite sample space $\Omega$, while $\pi (\omega): \Omega \rightarrow [0;1]$ is a probability function on $\Omega$.
+\end{definition}
+
+The set of all finite lotteries on $F$ and $\Omega$ is therefore  
+$$ \lottset = F^{|\Omega|} \times \P (\Omega) $$
+as it contains all pairs of vectors such that the former has $|\Omega|$ components  in $F$ and the latter belongs to the probability space on $\Omega$. 
+
+In a decision problem in conditions of risk, each alternative $x \in X$ corresponds to a lottery $\ell (x) \in L_x \subset L_{f, \Omega}$
+$$ x \leftarrow \ell (x) = \left(f(x, \omega_1), \pi (\omega_1)\right) \oplus \dots \oplus \left(f(x, \omega_r), \pi (\omega_r)\right)$$
+where we skip the terms of zero probability for the sake of brevity. \textit{This notation is nonstandard}. \\
+
+\begin{definition}
+	We denote as \textbf{degenerate lottery} a lottery where a single scenario has probability of 1
+	$$ \ell_f = (f, 1) $$
+\end{definition}
+
+A single deterministic impact in $F$ is equivalent to a degenerate lottery. \\
+
+\begin{definition}
+	We denote as \textbf{binary lottery} a lottery where two scenarios have positive probability
+	$$ \ell_{f, \alpha, f'} = (f, \alpha) \oplus (f', 1-\alpha)$$
+\end{definition}
+
+The simple lottery set $\lottset$ extends by recursion to lottery with multiple phases, where the impact obtained in each scenario is allowed to be a lottery; only the final phase provides deterministic gains and losses. \\
+
+\begin{definition}
+	We denote as \textbf{compound lottery} a lottery whose impacts are other lotteries (possibly degenerate).
+\end{definition}
+
+Compound lotteries model
+\begin{itemize}
+	\item lotteries taken in subsequent phases
+	
+	\item decisions taken before a sequence of uncertain events
+\end{itemize}
+
+They admit a graphical tree representation with:
+\begin{itemize}
+	\item Uncertain events on the internal nodes
+	
+	\item Deterministic impacts on the leaves
+	
+	\item Conditional probabilities on the arcs
+	
+	\item Probabilities summing to 1 on the arcs going out of each node \\
+\end{itemize}
+
+\begin{definition}
+	We denote as $\lottset$, the set of all possible lotteries, simple or compound, on $F$ and $\Omega$.
+\end{definition}
+
+Given a finite decision problem in condition of risk, for any generic alternative $\bar x \in X$, the impact $f(\bar x, \omega)$ and the probability $\pi$ respect the definition of finite lottery. Therefore, any $x \in X$ corresponds to a lottery $\ell (x) \in \lottset$ and a method allowing to compare lotteries also allows to compare alternatives.
+
+\subsection{Fundamental axioms of stochastic utility}
+
+The stochastic utility theory first defines the properties that a preference relation between lotteries should respect in order to be rational. Then it proves that only a well-determined family of preference relation satisfies such properties, and that such relations can be represented by real-valued consistent functions. In this way, the selection of an alternative (lottery) among the feasible ones is equivalent to the optimization of the consistent function. \\
+
+\begin{definition}
+	A \textbf{preference relation between lotteries} is a binary relation on the lottery set
+	$$ \Pi  \subset 2^{\lottset \times \lottset} $$
+\end{definition}
+
+\begin{definition}
+	A preference relation between lotteries $\Pi \subset 2^{\lottset \times \lottset}$ admits a \textbf{consistent stochastic utility function} $u: \lottset \rightarrow \R$ when, for every pair of lotteries $\ell$ and $\ell'$, the utility of the preferred one exceeds the utility of the other one
+	$$ \ell \wpref{} \ell' \Leftrightarrow u(\ell) \geq u(\ell') $$
+\end{definition}
+
+Von Neumann and Morgenstern
+\begin{enumerate}
+	\item Assume the existence of a preference relation $\Pi$ on lotteries
+	
+	\item Impose suitable conditions on $\Pi$
+	
+	\item Build a stochastic utility function $u(\ell)$ that is consistent with $\Pi$
+	
+	\item Reduce the decision problem in conditions of risk to
+	$$ \max u(\ell (x)) $$
+	$$ x \in X \Leftrightarrow \ell (x) \in L_X $$
+	where feasible region $X$ corresponds to the feasible lotteries $L_X \subset \lottset$
+\end{enumerate}
+
+The properties required from a rational preference between lotteries, or axioms of stochastic utility, are the following: 
+\begin{enumerate}
+	\item \textbf{Weak ordering:} the preference relation between lotteries $\Pi$ is reflexive, transitive and complete
+	
+	\item \textbf{Monotony:} lotteries (both simple and compound) that assign larger probabilities to better impacts or lotteries are preferable
+	$$ \alpha \geq \beta \Leftrightarrow (\ell, \alpha) \oplus (\ell', 1 - \alpha) \wpref{} (\ell, \beta) \oplus (\ell', 1 - \beta), \quad \forall \ell \wpref{} \ell' $$
+	
+	\item \textbf{Continuity:} any intermediate impact between two lotteries admits an equivalent compound lottery with the two given ones as outcomes: 
+	$$ \ell \wpref{} f \wpref{} \ell' \implies \exists \alpha \in [0;1] : f \sim (\ell, \alpha) \oplus (\ell', 1 - \alpha) $$
+	For any intermediate impact between lotteries, there exists a suitable probability value which allows to compose the two given lotteries into a lottery indifferent to the impact. Changing in a continuous way the probabilities modifies the preference continuously, leaving no impact "uncovered".
+	
+	\item \textbf{Independence} (or \textbf{substitution})\textbf{:} the preference between two lotteries does not change combining them with the same lottery with the same probability:
+	$$ \ell \wpref{} \ell' \Leftrightarrow (\ell, \alpha) \oplus (\ell'', 1 - \alpha) \wpref{} (\ell', \alpha) \oplus (\ell'', 1-\alpha), \quad \forall \alpha \in (0;1] $$
+	
+	\item \textbf{Reduction:} any compound lottery is indifferent to the simple lottery with: 
+	\begin{itemize}
+		\item the same final impacts
+		
+		\item probabilities given by the laws of
+		\begin{itemize}
+			\item conditional probabilities: multiply along each path
+			
+			\item total probabilities: sum on disjoint path
+		\end{itemize}
+	\end{itemize}
+	Impacts and probabilities are relevant, the lottery structure is not. Basically, we can keep just a simple lottery with all final impacts and probabilities suitably adjusted.
+\end{enumerate}
+
+\subsection{Von Neumann-Morgenster stochastic utility theorem}
+
+The following theorem proves that, under the axioms discussed above, it's always possible to build a consistent stochastic utility function to compare lotteries. Moreover, it's possible to build infinitely many such functions, that coincide with one another up to a linear scaling, so that there is one and only one normalized utility function. Since the proof is constructive, it also shows how to build such function. \\
+
+\begin{theo}
+	Given a set of impacts $F$ not all reciprocally indifferent, a sample space $\Omega$ and a preference relation $\Pi$ between lotteries on $F$ and $\Omega$ that respects the five axioms of Von Neumann and Morgenstern, there exists one and only one utility function $u (\ell): \lottset \rightarrow [0,1]$ consistent with $\Pi$ and normalized so as to have value 0 in the worst impact and 1 in the best impact.
+\end{theo}
+
+\begin{proof}
+	The existence of a weak order on $F$ guarantees that there exists at least one worst impact $f^\dag$ and one best impact $f^\circ$ in $F$. Let $\ell^\dag = (f^\dag, 1)$ be the degenerate lottery that certainly returns the worst impact and $\ell^\circ = (f^\circ, 1)$ the degenerate lottery that certainly returns the best impact.  Since all impacts are not reciprocally indifferent
+	$$ f^\circ \prec f^\dag \ \text{ that is } \ \ell^\circ \prec \ell^\dag $$
+	
+	Now we can assign extreme conventional values to the utility of these two lotteries
+	$$ u(\ell^\dag) = 0 \ \text{ and } \ u(\ell^\circ) = 1 $$
+	
+	As a second step, we build the utility values for all degenerate lotteries, that is for all impacts in $F$, exploiting the continuity axiom. For every impact $f \in F$ there exists certainly a probability $\alpha_f \in [0;1]$ that produces a lottery between the two extreme impacts and is indifferent with respect to the degenerate lottery corresponding to $f$: 
+	$$ \exists \alpha_f \in [0;1] : (\ell^\circ, \alpha_f) \oplus (\ell^\dag, 1 - \alpha_f) \sim f $$
+	
+	The value of $\alpha_f$ is unique thanks to the monotony axiom.
+	
+	As a third step, we build utility values for general lotteries. In order to do that, we exploit the substitution and reduction axioms. Every possible final impact $f \in F$ of a lottery can be seen as a degenerate lottery $\ell_f$, which is equivalent to a binary lottery $(\ell^\circ, \alpha_f) \oplus (\ell^\dag, 1 - \alpha_f)$ between the extreme impacts. Given a general lottery $\ell$ each of its final impacts $f$ can be replaced with the degenerate lottery or with the equivalent binary lottery obtaining a compound two-phase lottery. The first phase no longer provides the single impacts, but tickets to take part to the second phase, in which only extreme impacts $f^\circ$ and $f^\dag$ are possible.
+	
+	The reduction axiom allows to combine the two phases into a single lottery with the same final impacts (the two extreme ones) and probabilities determined by the theorem of total probability. Now, the given lottery $\ell$ corresponds to a simple lottery between the extreme impacts
+	$$ \ell \sim \left(f^\circ, \sum_{\omega \in \Omega} \pi_\omega \alpha_{f(\omega)} \right) \oplus \left(f^\dag, 1 - \sum_{\omega \in \Omega} \pi_\omega \alpha_{f(\omega)}\right) $$
+	
+	We define the utility lottery $\ell$ as the probability of the best impact $\ell^\circ$. Since $\alpha_f = u(\ell_f)$, the stochastic utility of a lottery coincides with the expected value of the utility of the impact
+	$$ u(\ell) = \sum_{\omega \in \Omega} \pi_\omega u(f(\omega)) = E \left[u(f)\right] $$
+\end{proof}
+
+The utility of a lottery is the expected value of the utility in the scenarios, \textit{as Bernouilli proposed, combine perceived utilities, not impacts}.
+
+In summary, the Von Neumann-Morgenstern theorem
+\begin{itemize}
+	\item Receives from the decision-maker $u(f)$ for all $f \in F$
+	
+	\item Returns $u(\ell)$ for all $\ell \in L$
+\end{itemize}
+
+Since in a decision problem an alternative is a lottery, we pick the maximum expected value (benefits).
+
+Stochastic utility and multi-attribute utility exhibit strong similarities:
+\begin{itemize}
+	\item They are convex combinations of utilities with coefficients
+	
+	\item The utilities are normalized between a worst and best impact
+	
+	\item The coefficients are normalized between 0 and 1 with unitary sum
+\end{itemize}
+
+But there are also strong differences:
+\begin{itemize}
+	\item Additivity is intrinsically satisfied (no special condition required) because the different scenarios do not interact, while indicators do
+	
+	\item The attribute set $P$ is replaced by scenario set $\Omega$, possibly infinite
+	
+	\item The weights $w_l$ are replaced by probabilities $\pi (\omega)$ that do not necessarily require the decision-maker (they might be frequencies)
+\end{itemize}
+
+\section{Risk aversion and risk propensity}
+\label{sec:riskaversion}
+
+\begin{definition}
+	We denote as \textbf{risk profile} the profile of the stochastic utility function on the degenerate lotteries $\ell_f$ as impact $f$ varies in $F$.
+\end{definition}
+
+The shape of $u(f)$ for all $f \in F$, it determines $u(\ell(f, \pi))$ for all $\ell \in L$, combining $u(f)$ and $\pi (\omega)$, therefore \textit{showing the attitude of the decision-maker} towards risk.
+
+For the sake of simplicity, we'll assume that
+\begin{itemize}
+	\item $f$ is a benefit
+	
+	\item The impact set is an interval $F = \left[f^\dag, f^\circ\right]$
+	
+	\item Consequently, the risk profile increases from $(f^\dag, 0)$ to $(f^\circ, 0)$
+\end{itemize}
+
+The extension to more general cases is possible.
+
+Now consider: 
+\begin{itemize}
+	\item An intermediate deterministic impact $f_\alpha = (1 - \alpha) f^\dag + \alpha f^\circ$
+	
+	\item A binary lottery $\ell_{f^\circ, \alpha, f^\dag}$ combining $f^\circ$ and $f^\dag$ with coefficient $\alpha$
+\end{itemize}
+
+They are equivalent for the expected value criterium
+$$ \phi_{EV} (f_\alpha) = f_\alpha = \phi_{EV} \left(\ell_{f^\circ, \alpha, f^\dag}\right)$$
+
+\textit{What about their stochastic utilities $u(f_\alpha)$ and $u \left(\ell_{f^\circ, \alpha, f^\dag}\right)$?} The utility of any binary lottery $\ell_{f^{(1)}, \alpha, f^{(2)}}$ can be computed from the segment between points $\left(f^{(1)}, u\left(f^{(1)}\right)\right)$ and  $\left(f^{(2)}, u\left(f^{(2)}\right)\right)$
+$$ u \left(\ell_{f^\circ, \alpha, f^\dag}\right) = \alpha u \left(f^\circ\right) + \left(1 - \alpha\right)u \left(f^\dag\right) $$
+
+Three relevant cases (not exhaustive) exist: 
+\begin{enumerate}
+	\item \textbf{Convex case:} the risk profile is above the segment from $(f^\dag, 0)$ to $(f^\circ, 1)$ and the lottery is preferred to the deterministic impact
+	$$ u\left(f_\alpha\right) \leq u \left(\ell_{f^\circ, \alpha, f^\dag}\right), \quad \forall \alpha \in [0,1] $$
+	The decision maker is \textit{risk-prone}
+	
+	\item \textbf{Linear case:} the risk profile is lying on the segment from $(f^\dag, 0)$ to $(f^\circ, 1)$ and the lottery and the deterministic impact are equivalent
+	$$ u\left(f_\alpha\right) = u \left(\ell_{f^\circ, \alpha, f^\dag}\right), \quad \forall \alpha \in [0,1] $$
+	The decision-maker is \textit{risk-neutral, the expected value criterium is confirmed}
+	
+	\item \textbf{Concave case:} the risk profile is below the segment from $(f^\dag, 0)$ to $(f^\circ, 1)$ and the deterministic impact is preferred to the lottery 
+	$$ u\left(f_\alpha\right) \geq u \left(\ell_{f^\circ, \alpha, f^\dag}\right), \quad \forall \alpha \in [0,1] $$
+	The decision-maker is \textit{risk-averse}
+\end{enumerate}
+
+\subsection{Certainty equivalent and risk premium}
+
+An equivalent description of the risk profile of a decision-maker is given by the inverse of the utility function, that is the function that rebuilds an impact $f(u)$ for each possible value of the stochastic utility $u$. This inverse function certainly exists, given that $u(f)$ is strictly increasing. \\
+
+\begin{definition}
+	Given a lottery $\ell$ we denote as \textbf{certainty equivalent} the deterministic impact $f_\ell$ that is equivalent to the lottery, and \textbf{risk premium} the difference between the expected value of the lottery and its certainty equivalent.
+\end{definition}
+
+The certainty equivalent can differ from the expected value of the impact. Given a lottery $\ell$ of utility $u$: 
+\begin{itemize}
+	\item The expected value of the impact is $\phi_{EV} (\ell) = E \left[f(\ell, \omega)\right]$
+	
+	\item The certainty equivalent is $CE(\ell) = f(u(\ell))$
+\end{itemize}
+
+The risk premium $RP(\ell)$ is the difference of the two terms
+$$ RP(\ell) = \phi_{EV} (\ell) - CE(\ell) = E\left[f(\ell, \omega)\right] - f(u(\ell)) $$
+
+The risk premium measures the additional utility that the decision-maker requires in order to accept a lottery instead of its expected value. Therefore: 
+\begin{itemize}
+	\item For risk-averse decision-makers, the certainty equivalent of a lottery is smaller than its expected value, and the risk premium is positive
+	
+	\item For risk-neutral decision-makers, the certainty equivalent of a lottery is equal to its expected value, and the risk premium is zero 
+	
+	\item For risk-prone decision-makers, the certainty equivalent of a lottery is larger than its expected value, and the risk premium is negative
+\end{itemize}
+
+%End L18, p299 notes
