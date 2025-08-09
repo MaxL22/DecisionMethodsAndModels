@@ -1,0 +1,170 @@
+% !TeX spellcheck = en_US
+\chapter{Zero-sum games}
+\label{ch:zsg}
+
+A fundamental aspect in games is the overall utility distributed to the players (i.e., the sum of the payoffs on the players) and the way in which it's distributed in the different strategy profiles. A particularly important case is provided by the zero-sum games. \\
+
+\begin{definition}
+	We denote as \textbf{zero-sum game} a game in which the overall utility of the game is zero for every strategy profile:
+	$$ \sum_{d \in D} f^{(d)} \left(x^{(1)}, \dots, x^{(|D|)}\right) = 0, \quad \forall \left(x^{(1)}, \dots, x^{(|D|)}\right) \in X $$
+\end{definition}
+Changing the scale of the game payoffs (applying a linear transformation) does not modify the dominance or the equilibria of the game. All games with a uniform sum can be therefore considered as zero-sum games.
+
+In the zero-sum games with two players, the win of one equals the loss of the other, consequently, the payoff matrix of the column player is opposite to that of the row player and it's redundant to specify it. Usually, only the row payoff is specified. 
+$$
+\begin{array}{c | c c}
+	& 1 & 2 \\
+	\hline
+	1 & (a, -a) & (c,-c) \\
+	2 & (b, -b) & (d,-d) \\
+\end{array}
+\xrightarrow{\text{ becomes }}
+\begin{array}{c | c c}
+	& 1 & 2 \\
+	\hline
+	1 & a & c \\
+	2 & b & d \\
+\end{array}
+$$
+
+We assume:
+\begin{itemize}
+	\item Multiple decision-makers: $|D| > 1$
+	
+	\item Preference relations $\Pi_d$ that are weak orders, possibly with a known consistent value function $u^{(d)} (f)$
+\end{itemize}
+
+\section{Dominated strategies}
+\label{sec:domstrat}
+
+Dominance is defined as usual for the row player, but one must remember that the column player minimizes costs instead of maximizing payoffs (considering the simplified form).
+
+\section{Equilibrium}
+
+A similar adaptation must be applied to compute Nash equilibrium. \\
+
+\begin{definition}
+	In a two-person zero-sum game, the strategy profile $\left(x^{\ast (r)}, x^{\ast (c)}\right)$ is an equilibrium point if and only if cell $(r,c)$ is a \textbf{saddle point} of the payoff matrix: a point of maximum for column $c$ and of minimum for row $r$:
+	$$ \begin{cases}
+		f_{rc} \geq f_{ic} & \forall i \in X^{(r)} \\
+		f_{rc} \leq f_{rj} & \forall j \in X^{(c)} \\
+	\end{cases}$$
+\end{definition}
+
+Therefore, mark the maxima in each column and the minima in each row, the entries with two marks are equilibria.
+
+\section{Value of the game}
+
+In two-player zero-sum games, the worst-case assumption is more reasonable than in other games, since the impact on the two players are always exact opposite and therefore the worst-case for a player coincides with the best one for the other. It's natural to assume that the adversary will play as to provoke maximum damage, and the worst-case criterium will be a useful guide.
+
+The concept of value of the game for each of the two players, that is the best possible guarantee on the result, is defined as usual for the row player
+$$ u^{(r)} = \max_{i \in X^{(r)}} \min_{j \in X^{(c)}} f_{ij} $$
+whereas for the column player
+$$ u^{(c)} = \min_{j \in X^{(c)}} \max_{i \in X^{(r)}} f_{ij}$$
+it derives from the same function $f$ and usually it's redefined as cost, reversing its sign. It now describes a maximum guaranteed loss, since the column player minimizes the loss.
+
+Value and cost of the game are related: both refer to maximum gains and minimum cost, but the property is actually stronger. \\
+
+\begin{theo}
+	Given a two-player zero-sum game, if $u^{(r)}$ is the value of the game for the row player and $u^{(c)}$ is the value of the game for the column player:
+	\begin{enumerate}
+		\item $u^{(r)} \leq u^{(c)}$
+		
+		\item $u^{(r)} = u^{(c)}$ if and only if the game has at least a Nash equilibrium, that is the payoff matrix $F$ has a saddle point
+	\end{enumerate}
+\end{theo}
+
+The theorem states that the guaranteed gain of the row player is limited by the guaranteed loss of the column player.
+
+\section{Mixed strategies}
+\label{sec:mixedstrats}
+
+If the game is played several time , it's licit for the players to change strategies adopted in each round. In this situation, the decision variable for each player has no longer a finite feasible region, but a continuous set, corresponding to the frequency with which the player should choose each basic alternative. These combinations of frequencies are denoted as \textit{mixed strategies}. \\
+
+\begin{definition}
+	We denote as \textbf{mixed strategy} $\xi^{(d)}$ for a player $d \in D$ a probability vector defined on $X^{(d)}$ 
+	$$ \xi^{(d)} = \left[\xi^{(d)}_1 \ \dots \ \xi^{(d)}_{|X|^{(d)}}\right]^T \in \Xi^{(d)} $$
+	where 
+	$$ \Xi^{(d)} = \left\{\xi^{(d)} \in [0,1]^n \mid \sum_{i \in X^{(d)}} \xi^{(d)}_i = 1 \right\} $$
+\end{definition}
+
+It can be interpreted as many ways: 
+\begin{itemize}
+	\item The probability with which $d$ chooses strategy $x^{(d)}$
+	
+	\item The frequency with which $d$ chooses strategy $x^{(d)}$ in a repeated game 
+	
+	\item The fraction of players who choose strategy $x^{(d)}$ in a team game
+\end{itemize}
+
+In these situations the payoff obtained becomes a random variable and the aim becomes to maximize its expected value
+$$ \max E \left[f^{(d)} \left(\xi^{(1)}, \dots, \xi^{(|D|)}\right)\right]$$
+$$ \xi^{(d)} \in \Xi^{(d)} $$
+
+A pure strategy is the deterministic special case when $\xi^{(d)} \in \{0,1\}^n$
+$$ x^{(d)}_i \leftrightarrow \begin{cases}
+	\xi^{(d)}_i = 1 \\
+	\xi^{(d)}_{i'} = 0 & \forall i' \in X^{(d)} \setminus \{i\}
+\end{cases}$$
+
+While a zero-sum game can remain unsolved in pure strategies, it always admits a solution in mixed strategies. The worst-case criterium can be reformulated for mixed strategies and the problem has equilibria.
+
+The players aim to optimize the expected value of the game, that is
+$$ v^{(r)} = \max_{\xi^{(r)} \in \Xi^{(r)}} \min_{\xi^{(c)} \in \Xi^{(c)}} E \left[f(\xi)\right] $$
+$$ v^{(c)} = \min_{\xi^{(c)} \in \Xi^{(c)}} \max_{\xi^{(r)} \in \Xi^{(r)}} E \left[f(\xi)\right] $$
+where
+$$ E\left[f(\xi)\right] = \sum_{i \in X^{(r)}, j \in X^{(c)}} \xi^{(r)} \xi^{(c)} f_{ij} $$
+is the expected gain of the row player and loss of the column player.
+
+This looks like a complex problem, the players have infinite strategies to increase gain/reduce loss. \textit{Who is going to win?} Both, and it's why mixed strategies are useful in practice.
+
+\section{Von Neumann's minimax theorem}
+
+\begin{lemma}
+	In a two-player game, the worst case for any strategy of a player corresponds to one of the pure strategies of the adversary
+	\begin{itemize}
+		\item $v^{(r)} = \max_{\xi^{(r)} \in \Xi^{(r)}} \min_{{\color{red} j \in X^{(c)}}} E \left[ {\color{red} f(\xi^{(r)}, j)} \right]$
+		
+		\item $v^{(c)} = \min_{\xi^{(c)} \in \Xi^{(c)}} \max_{{\color{red} i \in X^{(r)}}} E \left[ {\color{red} f(i, \xi^{(c)})}\right] $
+	\end{itemize}
+\end{lemma}
+
+The intuitive idea is to assume that:
+\begin{itemize}
+	\item The row player adopts a mixed strategy $\xi^{(r)}$, so that $E\left[f(\xi)\right] = \xi^{(r)} f_{ij}$
+	
+	\item One of the column strategies $j \in X^c$ is the strongest against $\xi^{(r)}$
+	
+	\item Then, systematically playing $j$ hits harder than watering it down in a convex combination with weaker strategies
+	
+	\item Do the same for the column player
+\end{itemize}
+
+This simplifies the problem, requiring just a parametric expression for
+\begin{itemize}
+	\item $\min_{j \in X^{(c)}} E \left[f(\xi^{(r)}, j)\right] = \min_{j \in X^{(c)}} \left(\sum_{i \in X^{(r)}} \xi^{(r)}_i f_{ij} \right)$
+	
+	\item $\max_{i \in X^{(r)}} E \left[f(i, \xi^{(c)})\right] = \max_{i \in X^{(r)}} \left(\sum_{j \in X^{(c)}} \xi^{(c)}_j f_{ij}\right)$
+\end{itemize}
+
+This shows that one should give for granted that the adversary will behave in a deterministic wa, selecting the pure strategy that is most damaging for the chosen mixed strategy, instead of a stochastic way, selecting a combination of strategies. 
+
+\subsubsection{The minimax theorem}
+
+\begin{theo}
+	For any two-player zero-sum game
+	\begin{enumerate}
+		\item $u^{(r)} \leq v^{(r)} = v^{(c)} \leq u^{(c)}$
+		
+		\item At least one mixed strategy profile has this expected value
+		
+		\item This strategy profile is a saddle point with respect to mixed strategies
+	\end{enumerate}
+\end{theo}
+
+The guaranteed expected gain of the row player coincides with the guaranteed expected loss of column.
+
+Proof on p345 of the notes.
+
+%TODO: Check, computability of the equilibrium is not yet talked about
+% End of L21, p 347 notes

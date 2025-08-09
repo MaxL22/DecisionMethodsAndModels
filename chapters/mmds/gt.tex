@@ -154,14 +154,18 @@ So, every game can be represented with a $|D|$-dimensional matrix.
 
 This means that, for any possible behavior of the other players $j \neq d$, strategy $x^{(d)}$ yields a better impact than strategy $x^{'(d)}$ for player $d$. Since all the players are assumed to be rational, that is to have a preference relation that maximizes their own payoff, the dominated strategy will never be chosen. Strictly dominated strategies can be removed, obtaining an optimal solution or, more often, an irreducible core.
 
-\subsection{Equilibrium}
+\subsection{The worst-case strategy}
 
 If a game requires simultaneous moves (backward induction is ruled out) and it does not reduce to a single nondominated strategy profile, can it be "solved"? 
 
 We can apply choice criteria, treating the other players as scenarios. The worst-case strategy assumes the worst payoff for each strategy
 $$ \max_{x^{(d)} \in X^{(d)}} \min_{x^{D \setminus (d)} \in X^{D \setminus (d)}} f(x) $$
 
-Value of the fame for player $d$ is the minimum guaranteed payoff, that is the cost the player is willing to pay to join the game.
+Value of the game for player $d$ is the minimum guaranteed payoff, that is the cost the player is willing to pay to join the game. \\
+
+\begin{definition}
+	We denote as \textbf{value of the game for player} $d$ the maximum payoff that can be obtained by player $d$ in the worst case, that is the best possible guarantee on the performance of $d$.
+\end{definition}
 
 In a two-player game: 
 \begin{itemize}
@@ -170,6 +174,8 @@ In a two-player game:
 	\item $u^c = \max_{x^c \in X^c} \min_{x^r \in X^r} f^c (x^r, x^c)$
 \end{itemize}
 In general, the two values are totally unrelated; functions $f^r(x)$ and $f^c(x)$ are fully independent.
+
+\subsection{Equilibrium}
 
 A concept recalling the idea of "solving" a game is the Nash equilibrium: \\
 
