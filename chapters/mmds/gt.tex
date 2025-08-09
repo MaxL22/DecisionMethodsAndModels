@@ -1,0 +1,222 @@
+% !TeX spellcheck = en_US
+\chapter{Game theory}
+\label{ch:gt}
+
+The decision problems involving more that one decision-maker include two main extreme cases:
+\begin{enumerate}
+	\item \textbf{Game theory} studies the situations in which each decision-maker has their own decision variables, which are set independently from the other decision-makers
+	
+	\item \textbf{Group decision-making} studies the situations in which the decision-makers share the same decision variables and must coordinate in order to set their value together
+\end{enumerate}
+
+There are intermediate cases, but the two extremes show characteristic features worth investigating.
+
+Game theory is modeled defining: 
+\begin{itemize}
+	\item A finite set of decision-makers $D = \{1, \dots, |D|\}$
+	
+	\item A feasible region given by the Cartesian product of feasible regions $X_d$ associated with the decision-makers:
+	$$ X = X^{(1)} \times \dots \times X^{(|D|)} \Leftrightarrow x = \left[x^{(1)} \ \dots \ x^{|D|}\right]^T $$
+	and, consequently, a decision variable vector $x$ composed by $|D|$ subvectors $x^{(d)}$ associated with the single decision-maker and subject to constraint that involve a single subvector at a time
+	
+	\item A certain environments: $|\Omega| = 1 \implies f(x,\omega)$ reduces to $f(x)$
+	
+	\item A vectorial impact function composed by $d$ one-dimensional functions associated with the decision-makers
+	$$ f = \left[f^{(1)} \ \dots \ f^{|D|}\right] \ \text{ with } \ f^{(d)}: X^{(d)} \rightarrow F^{(d)} \subseteq \R, \quad d \in D $$
+	
+	\item A function $\Pi$ defining for each decision-maker a preference relation $\Pi_d$, which trivially consists in preferring larger impacts:
+	$$ \Pi_d = \left\{\left(f^{(d)}, f'^{(d)}\right) \in F^{(d)} \times F^{(d)} \mid f^{(d)} > f'^{(d)} \right\} $$
+	the impact components represent benefits, to be maximized.
+\end{itemize}
+
+A game theory problem, therefore, can be summarized in the following notation:
+$$\begin{array}{c c}
+	\max f^{(d)} = f^{(d)} \left(x^{(1)}, \dots, x^{|D|}\right) \ \ & d \in D \\
+	x^{(d)} \in X^{(d)} & d \in D
+\end{array}$$
+
+It looks like a set of $|D|$ optimization problems, but each $f^{(d)}$ depends on all $x^{(d)}$.
+
+Game theory has its own set of words for the usual basic concepts: 
+\begin{itemize}
+	\item A decision problem is called a \textbf{game}
+	
+	\item A decision-maker is called a \textbf{player}
+	
+	\item An impact is called a \textbf{payoff} (must be maximized)
+	
+	\item A solution is called a \textbf{strategy profile}
+	\begin{itemize}
+		\item a (pure) strategy is the subvector $x^{(d)}$ associated with each player
+		
+		\item $x^{(d)}$ consists of subvectors associated with ordered time instants named \textbf{moves}
+	\end{itemize}
+\end{itemize}
+
+Games can be classified from different points of view: 
+\begin{itemize}
+	\item With respect to the \textit{relation between players}:
+	\begin{itemize}
+		\item noncooperative: each player is independent (their choice is based only on data)
+		
+		\item cooperative: the players can agree to share payoffs
+	\end{itemize}
+	
+	\item With respect to the \textit{information on the data}:
+	\begin{itemize}
+		\item complete: all players know the whole of $X$ and $f$ 
+		
+		\item incomplete: each player $d$ knows only $X^{(d)}$ and $f^{(d)}$
+	\end{itemize}
+	
+	\item With respect to the \textit{information on the moves}: 
+	\begin{itemize}
+		\item perfect: all players know all past moves
+		
+		\item imperfect: player $d$ knows his own past moves
+	\end{itemize}
+\end{itemize}
+The three classifications are independent. Consider noncooperative games with complete and perfect information.
+
+\subsubsection{Game representations}
+
+There are two main representations of games: 
+\begin{itemize}
+	\item the \textbf{extended form}, in which the game is represented as a tree 
+	
+	\item the \textbf{strategic form}, in which the game is represented as a matrix
+\end{itemize}
+
+Every game can be represented in both ways, however, for each game one of them is clearly more natural than the other.
+
+\section{Games in extended form}
+\label{sec:extendedform}
+
+The extended form adopts the game tree:
+\begin{itemize}
+	\item The nodes correspond to game states (the root to the starting one)
+	
+	\item Typically, a turn of the game corresponds to $|D|$ consecutive levels
+	
+	\item All nodes on a level are associated with a player
+	
+	\item The levels are in chronological order
+	
+	\item The outgoing arcs represent the possible moves of the current player
+	
+	\item The leaves are associated with the payoffs (possibly in different levels)
+\end{itemize}
+
+\section{Games in strategic form}
+\label{sec:stratform}
+
+A \textbf{strategy} indicates the move a player should make in each possible sate. Therefore, it corresponds to a subset of arcs of the came tree that is 
+\begin{itemize}
+	\item Consistent, including at most one arc for every node of the player
+	
+	\item Complete, including at least one arc for every node of the player
+\end{itemize}
+
+In rock, paper, scissors the winning strategy is obviously to choose:
+\begin{itemize}
+	\item rock, if the other player chooses scissors
+	
+	\item paper, if the other player chooses rock
+	
+	\item scissors, if the other player chooses paper
+\end{itemize}
+But this is impossible, as it requires unavailable information (the two decision-maker have to decide at the same time).
+
+So the player doesn't known the exact position in the tree. We then partition the nodes of the game tree into \textbf{information sets}, i.e., minimal subsets of nodes of a player where the player knows to be, though the exact node is unknown.
+
+A strategy must be expressed in terms of information sets: an information set must have a single move. With this limitation, an optimal solution can be impossible to find.
+
+All games can be represented with a \textbf{game matrix}:
+\begin{itemize}
+	\item The rows correspond to the strategies of the first player
+	
+	\item The columns correspond t the strategies of the second player 
+	
+	\item Lines in higher dimensions correspond to the strategies of the following players 
+	
+	\item The matrix entries are associated with the payoffs
+\end{itemize}
+
+So, every game can be represented with a $|D|$-dimensional matrix. 
+
+\subsection{Dominance between strategies}
+
+\begin{definition}
+	Given two strategies $x^{(d)}$ and $x^{'(d)}$ for player $d$, we say that $x^{(d)}$ \textbf{dominates} $x^{'(d)}$ when
+	$$ x^{(d)} \wpref{} x^{'(d)} \Leftrightarrow f^{(d)} \left(x^{(1)}, \dots , x^{(d)}, \dots, x^{(|D|)}\right) \geq f^{(d)} \left(x^{(1)}, \dots, x^{'(d)}, \dots, x^{(|D|)}\right) $$
+	for all $x^{(j)} \in X^{(j)}$, $j \in D \setminus \{d\}$.
+\end{definition}
+
+This means that, for any possible behavior of the other players $j \neq d$, strategy $x^{(d)}$ yields a better impact than strategy $x^{'(d)}$ for player $d$. Since all the players are assumed to be rational, that is to have a preference relation that maximizes their own payoff, the dominated strategy will never be chosen. Strictly dominated strategies can be removed, obtaining an optimal solution or, more often, an irreducible core.
+
+\subsection{Equilibrium}
+
+If a game requires simultaneous moves (backward induction is ruled out) and it does not reduce to a single nondominated strategy profile, can it be "solved"? 
+
+We can apply choice criteria, treating the other players as scenarios. The worst-case strategy assumes the worst payoff for each strategy
+$$ \max_{x^{(d)} \in X^{(d)}} \min_{x^{D \setminus (d)} \in X^{D \setminus (d)}} f(x) $$
+
+Value of the fame for player $d$ is the minimum guaranteed payoff, that is the cost the player is willing to pay to join the game.
+
+In a two-player game: 
+\begin{itemize}
+	\item $u^r = \max_{x^r \in X^r} \min_{x^c \in X^c} f^r (x^r, x^c)$
+	
+	\item $u^c = \max_{x^c \in X^c} \min_{x^r \in X^r} f^c (x^r, x^c)$
+\end{itemize}
+In general, the two values are totally unrelated; functions $f^r(x)$ and $f^c(x)$ are fully independent.
+
+A concept recalling the idea of "solving" a game is the Nash equilibrium: \\
+
+\begin{definition}
+	We denote a strategy profile $\left(x^{\ast (1)}, \dots, x^{\ast |D|}\right) \in X$ as an \textbf{equilibrium point} or \textbf{Nash equilibrium}, when
+	$$ f^{(d)} \left(x^{\ast (1)}, \dots, x^{\ast (d)}, \dots, x^{\ast (|D|)}\right) \geq f^{(d)} \left(x^{\ast (1)}, \dots, x^{(d)}, \dots, x^{\ast (|D|)}\right) $$
+	for any $d \in D$, $x^{(d)} \in X^{(d)}$.
+\end{definition}
+
+It looks similar to dominance, but it
+\begin{itemize}
+	\item concerns a strategy profile $x^\ast$ instead of two strategies $x^{(d)}$ and $x^{'(d)}$
+	
+	\item compares a strategy $x^{\ast (d)}$ to all other strategies $x^{(d)}$ of the player 
+	
+	\item fixes a strategy for all other players, instead of considering all possible one 
+\end{itemize}
+
+For two players, the contrast is easier: 
+\begin{itemize}
+	\item Dominance compares corresponding entries in two rows or columns
+	
+	\item Nash equilibrium compares a single entry with all other entries in the same row and in the same column
+\end{itemize}
+
+The intuitive meaning of the definition is that every player moving away from an equilibrium point ends up by damaging themselves, if all other players keep their current strategies. If the game is repeated, the last strategy profile is known to all players and each player assumes that the other players will not change strategy, \textit{is it profitable for the player to change strategy?}
+
+\subsubsection{Methods to determine Nash equilibrium}
+
+A Nash equilibrium in a finite game in strategic form corresponds t a cell of the payoff matrix. In order to find the Nash equilibrium, it's possible to use the \textbf{best response method}, which consists in:
+\begin{itemize}
+	\item Scanning all players 
+	
+	\item For each player $d$, scan all strategies of the other players 
+	
+	\item For each one, mark the best strategy of player $d$ (best payoff)
+	
+	\item A strategy profile marked for all players is an equilibrium (the cell with all payoffs marked as "best", for each player)
+\end{itemize}
+
+In short, in two-player games we mark
+\begin{itemize}
+	\item the best row payoff in each column
+	
+	\item the best column payoff in each row
+\end{itemize}
+
+There can be a variable number of equilibria, from zero to several.
+
+% End L20, p 335 notes
