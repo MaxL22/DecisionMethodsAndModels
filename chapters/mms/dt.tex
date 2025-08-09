@@ -1,0 +1,217 @@
+% !TeX spellcheck = en_US
+\chapter{Decision theory}
+\label{ch:dt}
+
+This is more of an extension of the concepts previously exposed to more complex problems and models, both for decisions in conditions of ignorance or risk. In particular, decision theory takes into account the fact that \textit{decisions in an uncertain environment can be distributed along the time in various phases} and that, therefore, \textit{some decisions variables could be fixed after the time in which the value of some exogenous variables is revealed}. This modifies the assumption made so fare that first all decision variables should be fixed and only later the values of all exogenous variables become known.
+
+Decisions are taken in stages (finite number $t_{\max}$), part of the scenario unravels before part of the decision is taken, kinda like a turn-based game between decision-maker and external world. In each phase $t$
+\begin{itemize}
+	\item The decision-maker fixes a subvector of decision variables $x^{(t)}$
+	
+	\item Then, the external world fixes a subvector of exogenous variables $\omega^{(t)}$
+\end{itemize}
+
+We assume:
+\begin{itemize}
+	\item A preference relation $\Pi$ that is a weak order with a known consistent value function $u(f)$ (replaced by a cost $f$)
+	
+	\item A uncertain environment: $|\Omega| > 1 $ with probabilistic information
+	
+	\item A single decision-maker: $|D| = 1 \implies \Pi_d$ reduces to $\Pi$
+\end{itemize}
+
+A solution in basic decision problems is a real vector $\left(x \in \R^n\right)$. In decision theory a solution can be a strategy; it must be a time-consistent strategy: the decision variables of each stage depend on the exogenous variables of the previous stages
+$$ x^{(t)} = x^{(t)} \left(\omega^{(0)}, \dots, \omega^{(t-1)}\right), \quad t \in \{0, \dots, t_{\max} - 1\} $$
+
+These problems are more complex to represent
+\begin{itemize}
+	\item An evaluation matrix is possible, replacing solutions with strategies (that tend to be much more numerous)
+	
+	\item A tree representation is more natural and, therefore, common
+\end{itemize}
+Both require finite problems and pose difficulties in combinatorial ones.
+
+\section{Decision tree}
+\label{sec:dectree}
+
+The decision tree introduces a hierarchical structure on the decision variables and on the exogenous variables. It's a tree with $2_{\max} + 1$ levels chronologically ordered with respect to when information is revealed to the decision-maker: 
+\begin{itemize}
+	\item The even levels $2t$ with $t \in \{0, \dots, t_{\max} -  1\}$ represent decisions fixing $x^{(t)}$, the choice of the decision-maker
+	
+	\item The odd levels $2t+1$ with $t \in \{0, \dots, t_{\max} - 1\}$ represents scenario elements fixing $\omega^{(t)}$, revealing the state of nature
+	
+	\item Level $2t_{max}$ (leaves) represents the final configurations $(x, \omega)$ with associated impacts $f(x, \omega)$ or stochastic utilities $u(f(x, \omega))$
+\end{itemize}
+
+The arcs going out of a node correspond to
+\begin{itemize}
+	\item For decision nodes, the possible values of $x^{(t)}$
+	
+	\item For scenario nodes, the possible values of $\omega^{(t)}$ and associated information (conditional probabilities summing to 1)
+\end{itemize}
+
+The chronological order of the levels corresponds to the unraveling of decisions and external events, along a branch fo the decision tree from the root to one of the leaves. 
+
+To solve the problem, the \textbf{backward induction} algorithm visits the tree from leaves to root, assigning a value to the current node based on the value of its children
+\begin{itemize}
+	\item In the odd levels $2t + 1$ apply a choice criterium $\phi$ (the criterium chosen to face uncertainty); different criteria build different labels on the same tree, thus obtaining different solutions
+	
+	\item In the even levels $2t$, select the best value and mark the corresponding arc (the decision maker always selects the alternative with the best result)
+\end{itemize}
+The marked arcs provide the optimal strategy.
+
+Basically, the process is: 
+\begin{itemize}
+	\item Each leaf has "nothing to do" (no children)
+	
+	\item Each node on the level above marks one of its children according to a criterium (choose with respect to a chosen criterium, odd level)
+	
+	\item Go up another level, choose the best among the children of each node (here we have the decision-maker choosing, even level)
+	
+	\item Repeat up until the root, the branch labeled is the optimal strategy
+\end{itemize}
+
+Decision tree and evaluation matrix are two equivalent ways to represent the data of a decision problem in an uncertain environment. The solution process is the same: working on rows of the matrix or arcs of the tree, the same operations are performed. \textit{Then, what's the advantage of the decision tree?}
+
+The tree representation is better than the matrix representation when 
+\begin{enumerate}
+	\item Scenario probabilities are conditioned by the decision, the decision-maker has an influence on the external world
+	
+	\item The decision takes place in more stages, thus becoming a strategy 
+	
+	\item Random experiments to improve the estimation of probabilities can be performed before the decision; the probabilities are conditioned by the outcome of the experiment, the decision is a strategy depending on the outcome
+\end{enumerate}
+
+\section{Scenarios conditioned by decisions}
+\label{sec:scbd}
+
+When the state of nature is influenced by the decision variables, the probabilities of the scenarios no longer form a vector $\pi (\omega)$ of absolute values, but a matrix $\pi (\omega | x)$ of conditional values.
+
+Example: suppose that the choice of the model to launch affects the demand, modifying the probability of each scenario. Replace $\pi (\omega)$ with $\pi (\omega | x)$
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c c c|}
+		\multicolumn{1}{c}{$f(x, \omega)$} & \multicolumn{3}{c}{Demand level $\omega$} \\
+		\hline
+		Model $x$ & Low & Medium & High \\
+		\hline
+		A & 200 000 & 350 000 & 600 000 \\
+		B & 250 000 & 350 000 & 540 000 \\
+		C & 300 000 & 375 000 & 490 000 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c | c c c|}
+		\multicolumn{1}{c}{$\pi(\omega|x)$} & \multicolumn{3}{c}{Demand level $\omega$} \\
+		\hline
+		Model $x$ & Low & Medium & High \\
+		\hline
+		A & 0.1 & 0.5 & 0.4 \\
+		B & 0.1 & 0.5 & 0.4 \\
+		C & 0.1 & 0.5 & 0.4 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+And this can be easily represented as a decision tree and, applying backward induction with the expected value criterium, the nodes at level one yield 355k, 416k and 402k, leading to the choice of model B.
+
+\section{Decisions distributed along multiple phased}
+\label{sec:distributeddecisions}
+
+When the decisions are distributed along time and some variables are fixed after that the state of nature is partially revealed, the decision tree has more than two levels. This problem cannot be represented in an elementary way on a two-dimensional matrix, even if it's possible to translate a tree representation into a matrix representation, this leads to remarkable complications.
+
+To add onto the earlier example: after the launch of the model
+\begin{itemize}
+	\item The company either launches a marketing campaign or not
+	
+	\item The campaign has a deterministic effect
+\end{itemize}
+This yields a multi-stage model: $t_{\max} = 2$ decision stages imply a decision tree with 5 levels
+\begin{itemize}
+	\item Choice of the model $x^{(1)} \in \{$A$, $B$, $C$\}$
+	
+	\item Demand level: $\omega^{(1)} \in \{\text{High}, \text{Medium}, \text{Low}\}$
+	
+	\item Choice of the campaign: $x^{(2)} \in \{$Yes$, $No$\}$
+	
+	\item Effect of the campaign: $\omega^{(2)} \in \{$Given$\}$
+	
+	\item Impact: $f(x^{(1)}, \omega^{(1)}, x^{(2)}, \omega^{(2)})$, combining revenues and costs with the campaign cost and increase in sales
+\end{itemize}
+All probabilities are conditioned by the previous levels (\textit{not in this over-simplified case, but you can see how it would}).
+
+\section{Random experiments}
+
+Sometimes, the estimate of probabilities of the possible scenarios can be refined through the execution of an "experiment". We call \textbf{random experiment} an action whose outcome depends on the scenario.
+
+Given the outcome $\omega'$:
+\begin{itemize}
+	\item In general, the exact scenario $\omega$ remains unknown
+	
+	\item But all scenarios incompatible with outcome $\omega'$ can be ruled out 
+	
+	\item The scenario set reduces from $\Omega$ to $\bar \Omega (\omega') \subseteq \Omega$, that is, the subset of scenarios compatible with $\omega'$
+	
+	\item Therefore, in general $\pi (\omega | \omega') \neq \pi(\omega)$
+\end{itemize}
+They are uncertain information, that do not allow to know precisely the state of nature, but can lead to a better estimate of the probabilities of the scenario.
+
+Random experiments can be incorporated in decision trees by adding two other levels, upstream of the basic decision:
+\begin{enumerate}
+	\item Decide whether to make the experiment or not ($x'$); decision variable $x' \in X'$ can only assume two values
+	
+	\item The experiment has uncertain outcome $\omega'$ with probability $\pi (\omega')$, if it's not made, the outcome is deterministic
+	
+	\item The main decision takes place, solution $x \in X$ for the given problem
+	
+	\item The uncertain scenario $\omega \in \Omega$ has 
+	\begin{itemize}
+		\item probability $\pi (\omega | \omega')$ conditioned by the outcome of the experiment
+		
+		\item has an impact $f(x, x', \omega)$ including the cost of the experiment
+	\end{itemize}
+\end{enumerate}
+
+In summary, we need $f(x, x', \omega)$, $\pi(\omega')$ and $\pi(\omega| \omega')$. The problem is that usually we do not have the required probability. 
+
+The subtree associated to the decision not to perform the experiment should skip the stochastic level associated to the outcome of the experiment, directly linking the first level to the third one (decision about the given problem), but a fictitious middle level is introduced to keep the alternate level structure.
+
+The leaves of the tree are associated with impacts of each final system configuration, but they must also include the decision variables and the exogenous variables concerning the experiment: they are therefore quadruplets $(y, \omega', x, \omega)$ (instead if $(x, \omega)$). Knowing that usually experiments have costs associated: \\
+
+\begin{definition}
+	We denote as \textbf{information value} $V$ the difference between the utility gained performing the experiment and the utility gained not performing it.
+\end{definition}
+
+\subsection{Probability computation for the decision tree}
+
+In order to solve the problem with the backward induction method, it is required to associate the arcs of the stochastic levels with the corresponding probabilities. Each of them is the conditional probability with respect to the decisions and the outcomes associated to the arcs of the path leading from the root to the father node of the arc considered.
+
+In the case we are considering one must report on the tree:
+\begin{itemize}
+	\item at level 1 the total probabilities $\pi (\omega')$ of the outcomes of the experiment
+	
+	\item at level 3 the probabilities $\pi (\omega|\omega')$ of the states of nature conditioned by the outcomes of the experiment
+\end{itemize}
+
+Besides the total probabilities of the scenarios $\pi (\omega)$ we can assume to have information on the reliability of the experiment, that is the conditional probability $\pi(\omega' | \omega)$, that the experiment have given outcome $\omega'$ in a determined scenario $\omega$.
+
+We have to report on the tree $\pi(\omega')$ and $\pi(\omega|\omega')$ whereas we know $\pi(\omega)$ and $\pi(\omega' | \omega)$. To obtain them from the available data:\\
+
+\begin{theo}[Bayes' theorem]
+	Given a family of mutually exclusive events $A_i$ and an event $B$:
+	$$ P(A_i | B) = \frac{P(B|A_i) P(A_i)}{\sum_j P(B|A_j) P(A_j)} = \frac{P (B \cap A_i)}{P(B)} $$
+\end{theo}
+
+In our case, the events $A_i$ are the states of nature $\omega \in \Omega$ whereas event $B$ is each of the outcomes $\omega'$ of the random experiment. Therefore
+$$ \pi(\omega | \omega') = \frac{\pi(\omega' | \omega) \pi(\omega)}{\sum_{\omega \in \Omega} \pi(\omega' | \omega) \pi (\omega)}$$
+
+Finally, the total probabilities of the outcomes of the experiment can be obtained starting from the conditional probabilities $\pi (\omega' | \omega)$ and from the probabilities of the scenarios $\pi (\omega)$, by summing their products:
+$$ \pi(\omega') = \sum_{\omega \in \Omega} \pi(\omega', \omega) = \sum_{\omega \in \Omega} \pi(\omega' | \omega) \pi (\omega) $$
+
+At the end, the information value can be calculated, as it corresponds to the maximum cost one is willing to pay for the information provided.
+
+% End L19, p323 notes I guess; another easy one
