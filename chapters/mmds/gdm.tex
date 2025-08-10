@@ -131,3 +131,291 @@ Obviously, it's not democratic, therefore:
 \end{itemize}
 
 % End L23, p380 notes
+
+\section{The axiomatic approach}
+
+All historical attempts to build a social welfare function have failed to guarantee all desirable properties. The axiomatic approach: 
+\begin{itemize}
+	\item Lists the desired properties
+	
+	\item Tries to design a function that satisfies them by construction
+\end{itemize}
+
+In 1950 \href{https://en.wikipedia.org/wiki/Kenneth_Arrow}{\texttt{Kenneth Arrow}} proved that it's impossible to formulate a method enjoying all the properties considered as necessary to aggregate preferences in a democratically acceptable way. 
+
+\begin{definition}
+	Given a preference relation $\Pi_d (X) \subseteq X \times X$ and a subset $X' \subseteq X$, the \textbf{restriction} $\Pi_d (X)$ to $X'$ is the preference relation
+	$$ \Pi_d (X') = \Pi_d (X) \cap (X' \times X') $$
+\end{definition}
+
+Just remove from $\Pi_d (X)$ all pairs $(x,y)$ with $x \notin X'$ or $y \notin X'$. \\
+
+\begin{definition}
+	Given a finite set of alternatives $X$ and a finite set $D$ of individuals, a \textbf{preference profile} $\Pi (X) \in \D(X)^{|D|}$ is any vector of $|D|$ weak orders on $X$.
+\end{definition}
+
+Its restriction $\Pi (X')$ is the vector composed by the restrictions $\Pi_d (X')$. \\
+
+\begin{definition}
+	Given a solution pair $x, y \in X$ and two profiles $\Pi (X)$ and $\Pi'(X)$, we denote that \textbf{$\Pi'$ promotes $x$ over $y$ more than $\Pi$} when:
+	\begin{enumerate}
+		\item Every individual $d$ who strictly prefers $x$ in $\Pi$ also prefers $x$ in $\Pi'$ 
+		$$ x \pref{\Pi, d} y \implies x \pref{\Pi', d} y $$
+		
+		\item Every individual $d$ who is indifferent between $x$ and $y$ in $\Pi$ weakly prefers $x$ in $\Pi'$
+		$$ x \ind{\Pi, d} y \implies x \wpref{\Pi', d} y $$
+	\end{enumerate}
+\end{definition}
+So, the preference for $x$ increases monotonically if $\Pi$ is replaced with $\Pi'$. \\
+
+\begin{definition}
+	We denote as \textbf{dictator} an individual $s \in D$ such that
+	$$ x \pref{\Pi, s} y \implies x \pref{\Pi, D} y $$
+	for every solution pair $x, y \in X$ and for every preference profile $\Pi \in \D^{|D|}$.
+\end{definition}
+
+In words, every weak preference of the dictator translates into a weak preference of the group through the social welfare function. \textit{The existence of a dictator is a property of the social welfare function}.
+
+This concept can be relaxed and generalized in two ways. 
+\begin{itemize}
+	\item Replacing the dictator $s \in D$ with a subset of individuals
+	
+	\item Restricting the absolute power to a single pair of solutions $(x, y)$ \\
+\end{itemize}
+
+\begin{definition}
+	Given a solution pair $x,y \in X$, a \textbf{decisive set} for solution pair $(x, y)$ is a subset of individuals $S \subseteq D$ such that
+	$$ x \pref{\Pi, d} y, \quad \forall d \in S \implies x \pref{\Pi, D} y $$
+\end{definition}
+
+A specific weak unanimous preference of the decisive set translates into a weak preference of the group through the social welfare function. \textit{We could informally name it an oligarchy.}
+
+\subsection{Arrow's axioms}
+
+Kenneth Arrow summarized the desirable properties of a social welfare function into the following set of axioms: 
+\begin{enumerate}
+	\item \textbf{Nontriviality:} there are at least three alternatives and two individuals
+	$$ |X| \geq 3, \quad |D| \geq 2 $$
+	\textit{Condorcet method solves satisfactorily the case with two alternatives}
+	
+	\item \textbf{Universality:} $g (\Pi)$ is defined for all $\Pi \in \D^{|D|}$. The social welfare function must solve the problem for all profiles
+	
+	\item \textbf{Weak order:} $g(\Pi) \in \D$ for all $\Pi \in \D^{|D|}$. The social welfare function must return a weak order for all profiles
+	
+	\item \textbf{Independence from irrelevant alternatives:}
+	$$ g\left(\Pi(X)\right) = \Pi_D \left(X\right) \implies g \left(\Pi \left(X'\right)\right) = \Pi_D \left(X'\right), \quad \forall X' \subseteq X$$
+	The social welfare function on a restricted alternative set is the restriction of the original group preference. \textit{The Borda method and the plurality system violate this axiom}
+	
+	\item \textbf{Monotony:} given two alternatives $x, y \in X$ and two preference profiles $\Pi (X)$ and $\Pi' (X)$ such that
+	\begin{itemize}
+		\item $\Pi'(X)$ promotes $x$ over $y$ more that $\Pi (X)$
+		
+		\item $\Pi(X)$ has the same preferences on all pairs not including $x$
+		
+		\item $x \pref{\Pi, D} y$
+	\end{itemize}
+	Then $x \pref{\Pi', D} y$. The social welfare functions maintain a preference for $x$ over $y$ if $x$ is further promoted
+	
+	\item \textbf{Popular sovereignty:} the co-domain of $g (\cdot)$ id $\D(X)$
+	$$ \exists \Pi (X) \in \D (X)^{|D|} : g \left(\Pi \left(X\right)\right) = \bar \Pi, \quad \forall \bar \Pi \in \D \left(X\right) $$
+	Every weak order can be obtained choosing $|D|$ suitable preferences. \textit{Function $g(\cdot)$ is surjective}
+	
+	\item \textbf{Nondictatorship:} no individual is a dictator. \textit{The lexicographic method violates this axiom}
+\end{enumerate}
+
+The modern version of Arrow's theorem adopts a weaker axiom to replace monotony (5) and popular sovereignty (6): \textbf{unanimity} (or Pareto efficiency): if all individuals agree on a preference, the group also agrees
+$$ x \pref{\Pi, d} y, \ \forall d \in D \implies x \pref{D} y $$
+
+It is weaker because: 
+\begin{itemize}
+	\item Popular sovereignty guarantees the existence of a profile $\Pi'$ such that $x \pref{\Pi', D} y$
+	
+	\item The unanimous profile $\Pi$ for which $x \pref{\Pi, d} y$ for all $d \in D$ promotes $x$ over $y$ more than $\Pi'$
+	
+	\item Monotony guarantees that $x \pref{\Pi', D} y \implies x \pref{\Pi, D} y$ 
+\end{itemize}
+
+\begin{theo}[Arrow's theorem]
+	Any social welfare function satisfying axioms 1 to 6 implies a dictator.
+\end{theo}
+
+The proof goes through the following stages: 
+\begin{enumerate}
+	\item There is a decisive set for a specific pair of solutions
+	
+	\item This decisive set can be reduced to a single individual
+	
+	\item The individual is decisive for every pair of solutions
+\end{enumerate}
+The steps are based on applying the axioms to special cases and drawing general conclusions.
+
+\subsubsection{Sketch of the proof}
+
+Consider any social welfare function $g(\cdot)$. By \textit{unanimity}, set $D$ is decisive for every pair of alternatives.
+
+Given a specific pair $(w, z)$, is there a smaller decisive set $V = D \setminus \{d\}$? By progressively removing from $V$ individuals that do not affect this, generate a minimal decisive set for $(w, z)$.
+
+Is there a smaller set $V \setminus \{d\}$ that is decisive for another pair $(x,y)$? Remove from $V$ further individuals, possibly changing the pair, until: 
+\begin{itemize}
+	\item Set $V$ is decisive for $(x,y)$
+	
+	\item No proper subset of $V$ is decisive for any pair of alternatives
+\end{itemize}
+
+By \textit{universality}, function $g(\cdot)$ applies to any preference profile. \textit{So we can challenge it to solve any special case}.
+
+By \textit{nontriviality}, consider a problem with $|X| \geq 3$ and $|D| \geq 2$ and split $D$ into: 
+\begin{itemize}
+	\item An arbitrary individual $d$ from the decisive set $V$
+	
+	\item The rest of the decisive set $V \setminus \{d\}$
+	
+	\item The rest of the decision-maker set $D \setminus V$
+\end{itemize}
+It is possible that $V$ and $D$ coincide and $D \setminus V$ is empty.
+
+\textit{What about $V \setminus\{d\}$?} If $V \setminus \{d\}$ is empty, $V = \{d\}$ and individual $d$ is decisive for pair $(x, y)$. By contradiction, assume $V \setminus \{d\} \neq \emptyset$ and the following preference profile
+$$ 
+\begin{array}{c c c}
+	\{d\} & V \setminus \{d\} & D \setminus V \\
+	\hline
+	x & z & y  \\
+	y & x & z  \\
+	z & y & x  \\
+	\dots & \dots & \dots 
+\end{array}
+$$
+where the preference of all individuals on the other alternatives can be ignored by \textit{independence from irrelevant alternatives}.
+
+Notice that: 
+\begin{itemize}
+	\item $V$ is decisive for $(x,y)$ and $x \pref{d'} y$ for all $d' \in D \implies x \pref{D} y$
+	
+	\item All members of $V \setminus \{d\}$ think that $z \pref{} y$, while all other individuals think the opposite
+	
+	\item If we assume that $z \pref{D} y$ then $V \setminus \{d\}$ is decisive for $(y, z)$
+	
+	\item Since $V$ is a minimal decisive set, this is not possible $\implies y \wpref{D} z$
+	
+	\item By \textit{weak order}, $x \pref{D} y$ and $y \wpref{D} z \implies x \pref{D} z$
+	
+	\item This is also impossible, because $d$ would be decisive for $(x, z)$, as the only individual preferring $x$ to $z$
+\end{itemize}
+
+So, we go back and conclude that $V = \{d\}$ and $d$ is decisive for $(x, y)$.
+
+Now apply function $g (\cdot)$ to another preference profile 
+$$
+\begin{array}{c c}
+	\{d\} & D \setminus \{d\} \\
+	\hline
+	x & y \\
+	y & w \\
+	w & x \\
+	\dots & \dots
+\end{array}
+$$
+
+Notice that: 
+\begin{itemize}
+	\item By \textit{unanimity}, $y \pref{d'} w$ for all $d' \in D \implies y \pref{D} w$
+	
+	\item Since $d$ is decisive for $(x,y)$ and $w \pref{d} y \implies x \pref{D} y$, even if all other individuals disagree
+	
+	\item By \textit{weak order}, $x \pref{D} y$ and $y \pref{D} w \implies x \pref{D} w$
+\end{itemize}
+
+But $d$ is the only individual preferring $x$ to $w$: $d$ is decisive for $(x, w)$ for all $w \in X \setminus \{x\}$.
+
+Now apply function $g (\cdot)$ to another (second time) preference profile 
+$$
+\begin{array}{c c}
+	\{d\} & D \setminus \{d\} \\
+	\hline
+	z & w \\
+	x & z \\
+	w & x \\
+	\dots & \dots
+\end{array}
+$$
+with $w$ and $z$ generic solutions different from $x$ (but possibly equal to $y$).
+
+Notice that: 
+\begin{itemize}
+	\item By \textit{unanimity}, $z \pref{d'} x$ for all $d' \in D \implies z \pref{D} x$
+	
+	\item Since $d$ is decisive for $(x,w)$ and $x \pref{d} w \implies x \pref{D} w$, even if all other individuals disagree
+	
+	\item By \textit{weak order}, $z \pref{D} x$ and $x \pref{D} w \implies z \pref{D} w$
+\end{itemize}
+
+But $d$ is the only individual preferring $z$ to $w$: $d$ is decisive for $(z, w)$ for all $w, z \in X \setminus \{x\}$.
+
+Now apply function $g (\cdot)$ to a last preference profile 
+$$
+\begin{array}{c c}
+	\{d\} & D \setminus \{d\} \\
+	\hline
+	z & w \\
+	w & x \\
+	x & z \\
+	\dots & \dots
+\end{array}
+$$
+with $w$ and $z$ generic solutions different from $x$ (but possibly equal to $y$).
+
+Notice that: 
+\begin{itemize}
+	\item By \textit{unanimity}, $w \pref{d'} x$ for all $d' \in D \implies w \pref{D} x$
+	
+	\item Since $d$ is decisive for $(z,w)$ and $z \pref{d} w \implies z \pref{D} w$, even if all other individuals disagree
+	
+	\item By \textit{weak order}, $z \pref{D} w$ and $w \pref{D} x \implies z \pref{D} x$
+\end{itemize}
+
+But $d$ is the only individual preferring $z$ to $x$: $d$ is decisive for $(z, x)$ for all $z \in X \setminus \{x\}$.
+
+In summary, $d$ is decisive for all pairs of alternatives: \textit{$d$ is a dictator.}
+
+\section{Criticisms to Arrow's axioms}
+
+Most of Arrow's axioms have been criticized in the following decades. In particular, the reviewers tried to undermine the proof suggesting that the axioms are not as natural and obvious as they look. The criticisms are partially justified in stating that Arrow's model does not correspond exactly to the real world, but cannot anyway destroy the fundamental core of the theorem, that is the fact that no preference aggregation rule is able to satisfy the requirements that it would be desirable to enjoy.
+
+\subsubsection{Nontriviality}
+
+Of course we need $|D| \geq 2$, but what if $|X| = 2$? \href{https://en.wikipedia.org/wiki/Duncan\_Black}{\texttt{Duncan Black}} showed that if there are only two alternatives, the Condorcet method satisfies all other axioms. 
+
+But how to reduce the alternatives to two? Bipartitism? Primaries? \textit{This just pushes the problem to the lower level.}
+
+\subsubsection{Universality}
+
+Do we really need $g(\cdot)$ to work in all cases? Black proved that the Condorcet method satisfies all axioms when $X$ admits a linear order for which all preferences $\Pi_d$ are "unimodal": following the order, the alternatives first progressively improve, then progressively worsen.
+
+Moreover, sorting the individuals based on their best alternative, the best alternative of the median individual is the best of the group.
+
+\subsubsection{Weak order}
+
+Can we accept incompleteness and/or intransitivity? As already observed, Condorcet circuits open the way to manipulations.
+
+History proposes several examples of parliamentary votes in which three versions of a law had the support of voter groups structured as in the Condorcet paradox, and, in some cases, the \textit{impasse}, was solved by setting an arbitrary order of business to discuss the conflicts between solutions. Different orders of business can lead to different choices and setting the agenda often grants a strong position in parliamentary proceedings.
+
+\subsubsection{Independence from irrelevant alternatives}
+
+Can we really ignore the other alternatives? It depends on the model: the position of two alternatives in the overall order might be related to their appeal to the individual.
+
+A quantitative measure of utility could solve the problem, but that would reintroduce the complexity of multiple-attribute utility theory.
+
+\subsubsection{Unanimity}
+
+Should a unanimous preference always be applied? In the radical democracy modeled by Arrow, it should. Many political ideologies exclude some decisions from the formal aggregation of the individual preferences
+\begin{itemize}
+	\item "Nonnegotiable values" for the Catholic church
+	
+	\item Human rights for the liberal thought
+	
+	\item \dots
+\end{itemize}
+
+Of course, this opens the problem of how to define such decisions.
+
+% End L24, finally
