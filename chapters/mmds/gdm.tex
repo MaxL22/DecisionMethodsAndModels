@@ -1,0 +1,133 @@
+% !TeX spellcheck = en_US
+\chapter{Group decision-making}
+\label{ch:gdm}
+
+As in game theory, in group decision-making, the decision-maker set $D$ is finite, but each one does not fix independently the values of the decision variables. The final choice must be taken by the whole set $D$ and all decision-makers must agree before taking it.
+
+We assume: 
+\begin{itemize}
+	\item A finite feasible region $X$
+	
+	\item A deterministic environment $|\Omega| = 1 \implies f(x, \bar \omega)$ reduces to $f(x)$
+	
+	\item An invertible impact function $f$, so that each preference relation $\Pi_d$ can be directly imposed on $X$
+	
+	\item The decision-makers $d \in D$ are called \textit{individuals}, or \textit{citizens}, \textit{voters}, \textit{agents}, \textit{judges} (the investigations on this problem mainly come from political and social sciences)
+	
+	\item All preference relations $\Pi_d$ are weak orders; this is important, as it means that each decision-maker is required to respect the strict conditions of rationality
+\end{itemize}
+
+These assumptions reduce the complexity to a central point: \textit{how to aggregate the individual preferences $\Pi_d$ into a group preference $\Pi_D$?} After that, the problem becomes equivalent to that of a single decision-maker. \\
+
+\begin{definition}
+	Given a set of solutions $X$, we denote as $\D(X)$ the set of all weak orders on the elements of $X$.
+\end{definition}
+
+Since every preference relation on solutions is a set of pairs of solutions $\Pi_d \subseteq 2^{X \times X}$, set $\D(X)$ is the collection of all sets that enjoy the reflexive, transitive and complete property, therefore $\D(X) \subseteq 2^{2^{X \times X}}$.
+
+For example, $\D(\{a, b, c\})$ includes 13 relations: 
+\begin{itemize}
+	\item $6$ total orders corresponding to the permutations
+	$$ a \prec b \prec c \quad a \prec c \prec b $$ 
+	$$ b \prec a \prec c \quad b \prec c \prec a $$
+	$$ c \prec a \prec b \quad c \prec b \prec a $$
+	
+	\item $6$ weak orders with ties 
+	$$ a \prec b \sim c \quad b \prec a \sim c \quad c \prec a \sim b $$
+	$$ a \sim b \prec c \quad a \sim c \prec b \quad b \sim c \prec a $$
+	
+	\item $1$ total indifference relation
+	$$ a \sim b \sim c $$
+\end{itemize}
+Every individual $d \in D$ is associated to one of them.
+
+\section{Social welfare function}
+
+The problem we face is how to derive a group preference relation from a finite set of weak orders, one for each individual. \\
+
+\begin{definition}
+	Given a set of solutions $X$, we denote as \textbf{social welfare function} a function that associates to each $|D|$-uple of weak orders on $X$ a "group" weak order on $X$:
+	$$ g: \D (X)^{|D|} \rightarrow \D(X) $$
+\end{definition}
+
+It's a function that receives the preferences $\Pi_d \in \D(X)$ associated with the individual (all weak orders by assumption) and returns a preference relation $\Pi_D \in 2^{X \times X}$ for the whole group.
+
+We'll discuss some historical proposal and an axiomatic approach, then we'll list the properties that appear to be necessary to characterize an acceptable social welfare function, and see why no function satisfies all properties.
+
+\section{Condorcet method}
+
+The \textit{Condorcet method}, also known as \textit{simple majority method} is based on the following definition: 
+$$ x \wpref{D} x' \Leftrightarrow \left|\left\{d \in D \mid x \wpref{d} x' \right\}\right| \geq \left|\left\{d \in D \mid x' \wpref{d} x \right\}\right|$$ 
+
+It performs a sort of "election" on each pair of alternatives: the one preferred by more individuals is preferred by the group. Indifferent individuals have no effect, as they're counted on both sides, only the ones with strict preference matter.
+
+This provides a simple algorithm to compute a social welfare function, however, it has a strong drawback, known as \textit{Condorcet paradox}. The classical example concerns three alternatives $X = \{a, b, c\}$ with
+\begin{itemize}
+	\item $\Pi_1 = a \prec b \prec c$
+	
+	\item $\Pi_2 = b \prec c \prec a$
+	
+	\item $\Pi_3 = c \prec a \prec b$
+\end{itemize}
+
+The definition implies that:
+$$ a \pref{D} b, \quad b \pref{D} c, \quad c \pref{D} a$$
+But then, $\Pi_D$ has a circuit of strict preference: it \textit{does not guarantee that the group preference is a weak order} (not transitive).
+
+This doesn't mean that the method does not work, but it means that it \textit{can fail}. In particular, it can be unable to provide a solution preferable to all other ones, which is the minimum requirement for a choice criterium.
+
+\section{Borda method}
+
+The \textit{Borda method} is based on the auxiliary definition of \textit{Borda count}, building a value function for each individual
+$$ B_d (x) = \left|\left\{x' \in X \mid x \wpref{d} x' \right\}\right|$$
+
+Then aggregating them with a simple sum into a group value function
+$$ B_D (x) = \sum_{d \in D} B_d (x) $$
+
+The group preference is then derived from the group value function
+$$ x \wpref{d} x' \Leftrightarrow B_D (x) \geq B_D (x') $$
+
+The group preference is a weak order by construction and it always allows to build a social welfare function.
+
+A drawback of this method is that the order created depends also on the whole feasible region (the set $X$ appears in the definition), and thus it can be manipulated, affecting the choice.
+
+This allows rank reversal, the preference between two alternatives can depend on other irrelevant ones.
+
+\section{Plurality system}
+
+It's the method traditionally used in elections: a function is built based on the number of individuals that prefer each alternative to all other ones:
+$$ V_D (x) = \left|\left\{d \in D \mid x \wpref{d} x' \right\}\right|$$
+
+Then the group preference is derived from the group value function
+$$ x \wpref{D} x' \Leftrightarrow V(x) \geq V(x') $$
+
+This is based on a consistent value function, as the Borda method, and therefore gives rise to a weak order. However, it also has the drawback of depending on irrelevant alternatives, even if slightly less than the Borda method, since the value function does not consider all the positions of every solution, but only the winning positions.
+
+Another strong drawback is that this system can select alternatives abhorred by most individuals: it lets compact minorities prevail on disjunted majorities. This derives from the fat that the function $V(x)$ only considers the first position in the individual weak orders, neglecting subsequent positions.
+
+\section{Lexicographic method}
+
+The lexicographic method imposes a total order on the individuals
+$$ d_1 \prec \dots \prec d_{|D|} $$
+and applies to each pair of alternatives the first strict preference existing:
+$$ x \wpref{d} x' \Leftrightarrow \exists d \in D : x \wpref{d} x' \text{ and } x \sim_{d'} x' \ \forall d' < d $$
+
+In words: the individuals are organized into a completely ordered hierarchy, and the first one to not be indifferent on a pair of alternatives decides the order. Two alternatives are indifferent if and only if all individuals consider them as indifferent.
+
+This method describes an extreme version of an absolute monarchy, in which the will of monarch $d_1$ is the law, and if the monarch is indifferent the choice is delegated to another individual, and so on.
+
+This method has several advantages:
+\begin{itemize}
+	\item It always provides a weak order (most of the time, a total order)
+	
+	\item It does not suffer from rank reversal
+\end{itemize}
+
+Obviously, it's not democratic, therefore: 
+\begin{itemize}
+	\item Easily unstable, unless the total order is deeply wired in the culture
+	
+	\item Inefficient, as the people on the lower levels have little incentives to contribute to the group 
+\end{itemize}
+
+% End L23, p380 notes
