@@ -1,0 +1,392 @@
+% !TeX spellcheck = en_US
+\chapter{Symmetric games}
+\label{ch:sg}
+
+Another special case of particular importance in the distribution of utility among players is the case in which the players are perfectly interchangeable, that is, have the same strategies, and, if they exchange their strategies, they correspondingly exchange the same payoffs. \\
+
+\begin{definition}
+	We denote as \textbf{symmetric game} a game in which all players have the same number of pure strategies $n = |X^{(d)}|$ (for all $d \in D$) and, for every permutation $p = (p_1, \dots, p_{|D|})$ of the players, if the strategies adopted are permuted according to $p$, also the resulting payoffs are permuted according to $p$: 
+	$$ f^{(d)} \left(x^{(1)}, \dots, x^{(|D|)}\right) = f^{(p_d)} \left(x^{(p_1)}, \dots, x^{(p_{|D|})}\right), \quad \forall d \in D $$
+\end{definition}
+
+Intuitively, this means that the results of the strategies do not depend on the players who apply them. In the following, we consider the case of two-person symmetric games. In this case, there exists only two possible permutations of the players, so that definition is strongly simplified.
+
+In a two-person symmetric game, the payoff matrix of the second player is the transpose of the payoff matrix of the first player.
+
+\section{A taxonomy of two-person two-strategy symmetric games}
+\label{sec:taxonomy}
+
+We'll present a two-level taxonomy
+\begin{itemize}
+	\item 4 classes based on Nash equilibria
+	
+	\item 12 subclasses based on payoff orderings
+\end{itemize}
+
+\subsection{Classification based on Nash equilibria}
+
+Considering all payoffs to be different, the general payoff matrix for a two-person two-strategy symmetric game contains 4 distinct payoffs
+$$ 
+\begin{array}{c | c c}
+	& 1 & 2 \\
+	1 & (f_{11}, f_{11}) & (f_{12}, f_{21}) \\ 
+	2 & (f_{21}, f_{11}) &(f_{22}, f_{22}) \\
+\end{array}
+$$
+
+There are only four possible situations. For each, we evaluate whether it admits dominated strategies and we determine the equilibria, if any exist: 
+\begin{enumerate}
+	\item $f_{11} > f_{21}$ and $f_{12} > f_{22}$: the first strategy strictly dominates the second for both players; there is a single Nash equilibrium in point $(1,1)$
+	
+	\item $f_{11} > f_{21}$ and $f_{12} < f_{22}$: there is no dominated strategy, and there are two Nash equilibria lying on the main diagonal, points $(1,1)$ and $(2,2)$
+	
+	\item $f_{11} < f_{21}$ and $f_{12} > f_{22}$: there is no dominated strategy, and there are two Nash equilibria lying on the secondary diagonal, points $(1,2)$ and $(2,1)$
+	
+	\item $f_{11} < f_{21}$ and $f_{12} < f_{22}$: the second strategy strictly dominates the first for both players; there is a single Nash equilibrium in point $(2,2)$
+\end{enumerate}
+
+As it can be noticed, two-person and two-strategy symmetric games \textit{have always at least one equilibrium}.  This is remarkable, given that in general, this is not true for asymmetric games, not for symmetric games with more than two strategies. 
+
+\subsection{Classification based on the order of the payoffs}
+
+A more detailed way to classify two-person two-strategy symmetric games is based on the relative order of the four independent payoffs, $f_{11}$, $f_{12}$, $f_{21}$ and $f_{22}$. There are as many games permutations as the permutation of the four values.
+
+Considering games with 2 players, 2 strategies with conventional labels and 4 distinct payoffs, there are $4! = 24$ orders, which, assuming conventionally $f_{11} > f_{22}$ (with no loss of generality, since the names are completely conventional) yields 12 different games.
+
+\begin{center}
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{c|c|l|l}
+		
+		Class & Subclass & Order & Examples \\ \hline
+		\multirow{5}{*}{1}
+		& a & \(f_{11} > f_{12} > f_{21} > f_{22}\) & \multirow{5}{*}{Ideal marriage} \\ 
+		& b & \(f_{11} > f_{12} > f_{22} > f_{21}\) & \\ 
+		& c & \(f_{11} > f_{21} > f_{12} > f_{22}\) & \\ 
+		& d & \(f_{12} > f_{11} > f_{21} > f_{22}\) & \\ 
+		& e & \(f_{12} > f_{11} > f_{22} > f_{21}\) & \\ \hline
+		\multirow{3}{*}{2}
+		& a & \(f_{11} > f_{21} > f_{22} > f_{12}\) & Stag hunt \\ 
+		& b & \(f_{11} > f_{22} > f_{12} > f_{21}\) & Coordination (1) \\
+		& c & \(f_{11} > f_{22} > f_{21} > f_{12}\) & Coordination (2) \\ \hline
+		\multirow{3}{*}{3}
+		& a & \(f_{21} > f_{11} > f_{12} > f_{22}\) & Chicken's game \\ 
+		& b & \(f_{12} > f_{21} > f_{11} > f_{22}\) & Battle of the sexes (1) \\
+		& c & \(f_{21} > f_{12} > f_{11} > f_{22}\) & Battle of the sexes (2) \\ \hline
+		4 & a & \(f_{21} > f_{11} > f_{22} > f_{12}\) & Prisoner's dilemma \\ 
+	\end{tabular}
+\end{center}
+
+\section{The ideal marriage}
+
+This game corresponds to the order
+$$ f_{11} > f_{12} > f_{21} > f_{22} $$
+and the strategies are conventionally denoted as
+\begin{enumerate}
+	\item Cooperate $C$
+	
+	\item Not cooperate $NC$
+\end{enumerate}
+The payoffs are
+$$
+\begin{array}{c | c c}
+	& C & NC \\
+	\hline
+	C & (3,3) & (1, 2) \\
+	NC & (2,1) & (0,0)
+\end{array}
+$$
+$$ (C, C) \prec (C, NC) \prec (NC, C) \prec (NC, NC) $$
+
+The name comes from the main features of the model:
+\begin{itemize}
+	\item Mutual cooperation pays more than free-riding
+	
+	\item Free-riding pays more than being exploited
+	
+	\item Being exploited pays more than mutual egoism
+\end{itemize}
+That represents an ideal case for cooperation.
+
+Under these conditions: 
+\begin{itemize}
+	\item Non cooperation is dominated by cooperation
+	
+	\item There is only one Nash equilibrium in $(C,C)$
+	
+	\item The worst-case criterium leads both players to the equilibrium and it provides the best payoff to both players
+\end{itemize}
+
+The other games of class 1 assume $f_{12} > f_{21}$, which would mean that being exploited $(C, NC)$ is better than free-riding $(NC, C)$. \textit{The name of the strategies look less appropriate}, and it seems unlikely that such situations arise spontaneously, thus not inspiring names in the literature.
+
+\section{The stag hunt}
+
+This game corresponds to the order
+$$ f_{11} > f_{21} > f_{22} > f_{12} $$
+
+The name comes from \href{https://en.wikipedia.org/wiki/Jean-Jacques_Rousseau}{\texttt{J. J. Russeau}}'s essay \textit{Discours sur l'origine et les fondements de l'inegalité parmi les hommes}: 
+\begin{itemize}
+	\item Two hunters can cooperate and catch a stag
+	
+	\item One of them can defect and catch a hare (and maybe a stag), while the other gets maybe the stag
+	
+	\item Both can defect and catch a hare
+\end{itemize}
+Cooperation is favored by political structures (social contract), but noncooperation is a stable alternative.
+
+The payoffs are
+$$
+\begin{array}{c | c c}
+	& C & NC \\
+	\hline
+	C & (3,3) & (0, 2) \\
+	NC & (2,0) & (1,1)
+\end{array}
+$$
+$$ (C, C) \prec (NC, C) \prec (C, NC) \prec (NC, NC) $$
+
+Under these conditions: 
+\begin{itemize}
+	\item No strategy is dominated
+	
+	\item There are two Nash equilibria in $(C,C)$ and $(NC, NC)$
+	
+	\item The worst-case criterium leads to the noncooperative equilibrium
+	
+	\item The cooperative equilibrium provides the best payoff to both players
+\end{itemize}
+
+Therefore, both strategies are rational, and the choice between them will be taken based on other factors not modeled by the basic form of the game, such as the amount of trust in the other player.
+
+\section{Pure coordination games}
+
+These games correspond to the two orders:
+$$ f_{11} > f_{22} > f_{12} > f_{21} \ \text{ and } \ f_{11} > f_{22} > f_{21} > f_{12} $$
+
+The intermediate case in which $f_{12} = f_{21}$ falls in the same category, and is the most common representation of this class of games.
+
+The payoffs are
+$$
+\begin{array}{c | c c}
+	& 1& 2 \\
+	\hline
+	1 & (3,3) & (0, 1) \\
+	2 & (1,0) & (2,2)
+\end{array}
+\quad
+\begin{array}{c | c c}
+	& 1& 2 \\
+	\hline
+	1 & (3,3) & (1, 0) \\
+	2 & (0,1) & (2,2)
+\end{array}
+$$
+$$ (1, 1) \prec (2, 2) \prec (2, 1) \prec (1, 2) \ \text{ or } \ (1, 1) \prec (2, 2) \prec (1, 2) \prec (2, 1)  $$
+
+Two drivers meet on a narrow road from opposite directions: 
+\begin{itemize}
+	\item If they both drive on the right or left they avoid each other
+	
+	\item If one drives on the right and the other on the left, they crash
+\end{itemize}
+
+Under these conditions: 
+\begin{itemize}
+	\item No strategy is dominated
+	
+	\item There are two Nash equilibria in $(1,1)$ and $(2,2)$
+	
+	\item The two equilibria are nearly equivalent
+\end{itemize}
+
+These games describe the situations in which the best results are obtained when both players choose the same strategy, whereas asymmetric strategies are damaging for both.
+
+\section{The chicken race}
+
+This game corresponds to the order 
+$$ f_{21} > f_{11} > f_{12} > f_{22} $$
+
+The payoffs are
+$$
+\begin{array}{c | c c}
+	& C & NC \\
+	\hline
+	C & (2,2) & (1, 3) \\
+	NC & (3,1) & (0,0)
+\end{array}
+$$
+$$ (NC, C) \prec (C, C) \prec (C, NC) \prec (NC, NC) $$
+
+The name derives from the movie \textit{Rebel without a cause}: two drivers drive the car towards each other:
+\begin{itemize}
+	\item If both swerve together, they tie honorably
+	
+	\item If one swerves earlier, he is shamed and the other one acclaimed
+	
+	\item If they both persist, they risk their life in the crash
+\end{itemize}
+
+The largest payoff comes at a risk and cannot be obtained by both players.
+
+Under these conditions: 
+\begin{itemize}
+	\item No strategy is dominated
+	
+	\item There are two Nash equilibria in $(C, NC)$ and $(NC, C)$
+	
+	\item There is no way to know a priori which equilibrium will be chosen
+\end{itemize}
+
+\section{Battle of the sexes}
+
+These games correspond to the two orders:
+$$ f_{12} > f_{21} > f_{11} > f_{22} \ \text{ and } \ f_{21} > f_{12} > f_{11} > f_{22} $$
+
+The payoffs are
+$$
+\begin{array}{c | c c}
+	& 1& 2 \\
+	\hline
+	1 & (1,1) & (3, 2) \\
+	2 & (2,3) & (0,0)
+\end{array}
+\quad
+\begin{array}{c | c c}
+	& 1& 2 \\
+	\hline
+	1 & (1,1) & (2, 3) \\
+	2 & (3,2) & (0,0)
+\end{array}
+$$
+$$ (2, 1) \prec (1, 2) \prec (1, 1) \prec (2, 2) \ \text{ or } \ (1,2) \prec (2, 1) \prec (1, 1) \prec (2, 2)  $$
+
+Two fiances want to go to a show, but cannot communicate
+\begin{itemize}
+	\item The man would prefer going to a match
+	
+	\item The woman would prefer going to a ballet
+	
+	\item Both would prefer to be together rather than alone
+\end{itemize}
+Another example: a phone call is interrupted, should one wait or call again? 
+
+Under these conditions: 
+\begin{itemize}
+	\item No strategy is dominated
+	
+	\item There are two Nash equilibria in $(1, 2)$ and $(2, 1)$
+	
+	\item There is no wat to know a priori which equilibrium will be chosen 
+\end{itemize}
+
+It's similar to the chicken's race, but the payoff is good for both.
+
+\section{The prisoner's dilemma}
+
+This game corresponds to the order 
+$$ f_{21} > f_{11} > f_{22} > f_{12} $$
+
+The payoffs are
+$$
+\begin{array}{c | c c}
+	& C & NC \\
+	\hline
+	C & (2,2) & (0, 3) \\
+	NC & (3,0) & (1,1)
+\end{array}
+$$
+$$ (NC, C) \prec (C, C) \prec (NC, NC) \prec (C, NC) $$
+
+Two gangsters arrested by the police are suspected of a major crime: 
+\begin{itemize}
+	\item If they don't confess, the evidence is enough for a short sentence
+	
+	\item If one confesses, the police offers to further reduce the conviction, while sentencing the other gangster to a long conviction
+	
+	\item If both confess, however, they'll receive an intermediate sentence
+\end{itemize}
+The incentive to confess can't be gained by both players.
+
+Under these conditions: 
+\begin{itemize}
+	\item Cooperation is dominated by noncooperation
+	
+	\item There is only one Nash equilibrium in $(NC, NC)$
+	
+	\item The worst-case criterium lead both players to the equilibrium
+	
+	\item The equilibrium provides a bad payoff to both players
+\end{itemize}
+Cooperating would be better for both, but requires irrational trust.
+
+The prisoner's dilemma has been applied to several different fields: 
+\begin{itemize}
+	\item The management of natural resources (\href{https://en.wikipedia.org/wiki/Tragedy_of_the_commons}{\texttt{tragedy of the commons}})
+	
+	\item The management of traffic (\href{https://en.wikipedia.org/wiki/Braess%27_paradox}{\texttt{Braess' paradox}})
+	
+	\item Physics (spring paradox, same as before)
+\end{itemize}
+
+\section{Other games}
+
+We'll say very little about general games (nonsymmetric and non zero-sum). We'll only describe a rather curious asymmetric game which gives rise to paradoxical consequences. Such consequences are however supported not only by mathematical theory, but also by empirical investigation of situations that respect the model assumptions.
+
+\subsection{The pigsty game}
+
+Also known as \textit{pigeon coop game} is not symmetric and not zero-sum. A large application field for game theory is ethology and evolution theory. Example: 
+\begin{itemize}
+	\item A strong dominant pig and a weaker one share the same sty
+	
+	\item The two pigs can obtain food by pushing a lever
+	
+	\item The food is provided on the opposite side of the lever
+\end{itemize}
+
+The pigs have two possible strategies:
+\begin{itemize}
+	\item Push the lever
+	
+	\item Wait for the other pig to do it
+\end{itemize}
+
+The resulting payoffs are:
+\begin{center}
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{C{1.5cm} C{1.5cm} | C{1.5cm} C{1.5cm}}
+		\multicolumn{3}{c}{} \multicolumn{2}{c}{Weak pig} \\
+		& & Lever & Wait \\
+		\cline{2-4}
+		Strong & Lever & $(4,2)$ & $(3,3)$ \\
+		pig & Wait & $(5,0)$ & $(1,1)$
+	\end{tabular}
+\end{center}
+
+Because: 
+\begin{itemize}
+	\item If both pigs push the lever, the weaker one east some food before being sent away
+	
+	\item If the strong pig pushes the level, the weaker one eats more food before being sent away
+	
+	\item If the weaker pig pushes the level, it eats nothing and wastes energy
+	
+	\item If both pigs wait, no food is provided
+\end{itemize}
+
+Under these conditions: 
+\begin{itemize}
+	\item The waiting strategy is dominating for the weaker pig
+	
+	\item There is a single Nash equilibrium in which: the strong pig pushes the lever, the weak pig waits and eats
+\end{itemize}
+
+The stronger player has no dominated strategy, whereas the  weaker pig does. The paradoxical conclusion lies in the fact that it's advisable for the stronger player to service the weaker one, since it will get the scraps anyway, whereas the other player has no hope to get anything unless by waiting.
+
+\section{Finite games and mixed strategies}
+Nash extended Von Neumann and Morgenstern’s mixed strategy theory from zero-sum games to any game with finite sets of players and strategies. He showed:
+\begin{enumerate}
+	\item Every finite game admits at least an equilibrium in mixed strategies
+	
+	\item Linear Programming cannot directly find them; only algorithms that solve sequences of linear problems converging to an equilibrium exist. The number of equilibria can grow exponentially with players/strategies, and their values can differ (unlike zero-sum games, which usually have one value). Enumerating all equilibria still requires exponential-time algorithms.
+\end{enumerate}
+
+% End L22, p373 notes
