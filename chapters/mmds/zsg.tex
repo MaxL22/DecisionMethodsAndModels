@@ -166,5 +166,40 @@ The guaranteed expected gain of the row player coincides with the guaranteed exp
 
 Proof on p345 of the notes.
 
-%TODO: Check, computability of the equilibrium is not yet talked about
+\subsection{Computation of the equilibrium mixed strategies}
+
+If the game is particularly simple and each of the two players has only two strategies, the search for the equilibrium mixed strategies requires to solve optimization problems with only two variables (the probabilities $\xi^{(r)}_1$ and $\xi^{(r)}_2$ for the row player and the probabilities $\xi^{(c)}_1$ and $\xi^{(r)}_2$ for the column player). Since the sum of such probabilities is 1, they are actually simple one-dimension problems, which can be solved graphically.
+
+Considering the payoff matrix
+$$ 
+\begin{array}{c | c c}
+	& 1 & 2 \\
+	\hline
+	1 & 2 & -3 \\
+	2 & -1 & 1 
+\end{array}
+$$
+The mixed strategies for the row player can be represented as $\xi^{(r)} = \left[\alpha \ 1 - \alpha\right]^T$ with $\alpha \in [0,1]$. For every value of alpha, the worst case is determined by the worst of the two pure strategies available for the column player. The two results of the strategies are: 
+\begin{itemize}
+	\item $E\left[f(\xi^{(r)}, 1)\right] = 2 \cdot \alpha + (-1) \cdot (1 - \alpha) = 3 \alpha - 1$
+	
+	\item $E\left[f(\xi^{(r)}, 2)\right] = (-3) \cdot \alpha + 1 \cdot (1 - \alpha) = 1 - 4 \alpha$
+\end{itemize}
+
+The row player wants to maximize the worst of the two results:
+$$ v^{(r)} = \max_{\alpha \in [0,1]} \min (3 \alpha - 1, 1 - 4 \alpha) $$
+
+And such a strategy can be identified by finding the intersection of the two lines
+$$ \alpha = \frac{2}{7} \implies \xi^{\circ (r)} = \left[\frac{2}{7} \ \frac{5}{7}\right]^T$$
+and the value of the game is $v^{(r)} = -1/7$. With the same process: 
+\begin{itemize}
+	\item \item $E\left[f(\xi^{(c)}, 1)\right] = 2 \cdot \beta + (-3) \cdot (1 - \beta) = 5 \beta - 3$
+	
+	\item $E\left[f(\xi^{(c)}, 2)\right] = (-1) \cdot \beta + 1 \cdot (1 - \beta) = 1 - 2 \beta$
+\end{itemize}
+The column player wants to minimize the worst of the two results:
+$$ v^{(c)} = \min_{\beta \in [0,1]} \max (5 \beta - 3, 1 - 2\beta)$$
+$$ \implies \beta = \frac{4}{7} \implies \xi^{\circ (c)} = \left[\frac{4}{7} \ \frac{3}{7}\right]^T $$
+and the expected value is $v^{(c)} = - 1/7$.
+
 % End of L21, p 347 notes
