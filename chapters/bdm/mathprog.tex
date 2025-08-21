@@ -52,7 +52,7 @@ There is no process to find $X^\circ$ or $X^\ast$ directly, so we want to search
 $$ 
 \begin{array}{c c c c c}
 	\text{Global optimum} & \implies & \text{Local optimum} & \implies & \text{KKT conditions} \\
-	$X^\circ$ & \subseteq & X^\ast & \subseteq & X^{KKT} 
+	X^\circ & \subseteq & X^\ast & \subseteq & X^{KKT} 
 \end{array}
 $$
 The conditions are known as \textbf{Karush-Kuhn-Tucker conditions}, from the names of their discoverers.
@@ -223,7 +223,7 @@ $$ p_\xi = \left[\begin{array}{c}
 	\begin{align*}
 		f(\xi (\alpha)) & \geq f(x^\ast) \implies \\
 		\implies \cancel{f(\xi (0))} + \left \frac{df}{d\alpha} \right|_{\alpha = 0} \alpha + R_1 \left(\|\xi(\alpha) - \xi (0) \|\right) & \geq \cancel{f(x^\ast)} \implies  \\
-		\implies \left(\nabla f(x^\ast)\right)^T  p_\xi + \frac{R_1 \left(\| \xi (\alpha)  - \xi (0) \| \right)}{\alpha} & \geq 0 \\
+		\implies \left( \nabla f(x^\ast) \right)^T  p_\xi + \frac{R_1 \left(\| \xi (\alpha)  - \xi (0) \| \right)}{\alpha} & \geq 0 \\
 	\end{align*}
 	
 	If $\alpha$ converges to 0, by continuity the inequality is preserved
@@ -331,7 +331,7 @@ For any feasible arc $\xi (\alpha)$, vector $p_\xi$ satisfies the conditions abo
 \subsubsection{Regular points}
 
 \begin{definition}
-	We denote as \textbf{regular point} for a given system of constraints $g_j (x) \leq 0$a point in which all active constraint have linearly independent gradients (\textbf{constraint qualification} condition).
+	We denote as \textbf{regular point} for a given system of constraints $g_j (x) \leq 0$ a point in which all active constraint have linearly independent gradients (\textbf{constraint qualification} condition).
 \end{definition}
 
 In a regular point, the conditions on the gradients of the active constraints are not only necessary, but also sufficient to guarantee that there exists a feasible arc with the given tangent vector. \\

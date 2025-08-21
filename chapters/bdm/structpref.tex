@@ -61,7 +61,7 @@ Transitivity solves both problems. \textbf{Preorders} are strong candidates to \
 	If the preference relation $\Pi$ is a preorder (reflexive and transitive) and the solution set is finite and nonempty ($X \neq \emptyset$), the nondominated solution set $X^\ast$ is nonempty.
 \end{theo}
 
-This guarantees that decision problems admit reasonable solutions. In some cases, $X^\ast$ will contain a single solution, or several mutually indifferent, in other cases it will include incomparable solutions. Therefore, determining $X^\ast$ simplifies the problem, but doesn't solve it completely.
+This guarantees that decision problems admit reasonable solutions. In some cases, $X^\ast$ will contain a single solution, or several mutually indifferent, in other cases it will include incomparable solutions. Therefore, determining $X^\ast$ simplifies the problem, but doesn't solve it completely. \\
 
 \begin{theo}
 	If preference $\Pi$ is a preorder and $X^\ast$ is nonempty, the nondominated solutions partition into disjoint components
@@ -94,7 +94,7 @@ This obviously can't be applied to infinite sets and could be impractical even i
 	If preference $\Pi$ is a weak order (reflexive, transitive and complete) and $X$ is finite and nonempty, nondominated solutions exist and are all mutually indifferent.
 \end{theo}
 
-This allows to choose any of such solutions as the overall solution of the problem. This is good, the aim is to "make the right choice". Weak orders allow to sort impact on a line, with possible ties, as if associating a degree to each impact.
+This allows to choose any of such solutions as the overall solution of the problem. This is good, the aim is to "make the right choice". Weak orders allow to sort impact on a line, with possible ties, as if associating a degree to each impact. \\
 
 \begin{definition}
 	A \textbf{value function} is a function $v: F \rightarrow \R$ that associates a real value to each impact (also called \textit{utility functions in economics}). Function $v$ is \textbf{consistent} with preference relation $\Pi$ when 
@@ -353,7 +353,7 @@ Some properties (not guaranteed) which allow to make easier estimates, helping t
 	\begin{itemize}
 		\item costs lead to concave curves, benefits to convex ones
 	\end{itemize}
-	The indifference curves compensate for the increase of an indicator by a certain amount with variations of the other ones that increase (or decrease) with the value of the first indicator; basically, if a resource (indicator) is scarce, increasing it brings a large utility, compensated by a strong decrease of other resources, if a resource is abundant the same increase brings a small utility, compensated bt a weak decrease of other resources (this is the case of convex curves, they would be concave in the case of indicators expressing cost)
+	The indifference curves compensate for the increase of an indicator by a certain amount with variations of the other ones that increase (or decrease) with the value of the first indicator; basically, if a resource (indicator) is scarce, increasing it brings a large utility, compensated by a strong decrease of other resources, if a resource is abundant the same increase brings a small utility, compensated by a weak decrease of other resources (this is the case of convex curves, they would be concave in the case of indicators expressing cost)
 \end{itemize}
 
 \subsection{Additive utility functions (game changer)}
@@ -520,9 +520,9 @@ The behavior of a curve is described by the relation between $f_1$ and $f_2$: fr
 	\end{array}\right] \sim f$
 \end{definition}
 
-In other words, the MRS is the limits, for infinitesimal variations of $f_1$, of the ration between the variations of $f_2$ and $f_1$ that produces impacts indifferent with respect to $f$. The sign of the limit is reversed because it's often negative (e.g. when the two indicators are both costs or benefits).
+In other words, the MRS is the limits, for infinitesimal variations of $f_1$, of the ratio between the variations of $f_2$ and $f_1$ that produces impacts indifferent with respect to $f$. The sign of the limit is reversed because it's often negative (e.g. when the two indicators are both costs or benefits).
 
-In problems with more than two indicators, a marginal rate of substitution os defined for each pair of indicators, and is computed assuming that all other indicators remain constant.
+In problems with more than two indicators, a marginal rate of substitution is defined for each pair of indicators, and is computed assuming that all other indicators remain constant.
 
 The definition assumes to start from an impact $f$, slightly modifying the value of indicator $f_1$ and determining the corresponding variation of $f_2$ that allows to stay on the initial indifference curve.
 
@@ -534,7 +534,7 @@ $$
 $$
 
 The variations $\delta f_1$ and $\delta f_2$ used in the definition of $\lambda_{12}(f)$ correspond to a variation $\delta \alpha$ of the parameter, guaranteeing that the impact remains on the indifference curve and allowing us to express the MRS as
-$$ \lambda_{12} (f) ? \lim_{\delta f_1 \rightarrow 0} - \frac{\delta f_2 (f, \delta f_1)}{\delta f_1} = \lim_{\delta \alpha \rightarrow 0} - \frac{f_2 (\alpha + \delta \alpha) - f_2 (\alpha)}{f_1 (\alpha + \delta \alpha) - f_1 (\alpha)} = - \frac{\frac{df_2}{d\alpha}}{\frac{d f_1}{d \alpha}} $$
+$$ \lambda_{12} (f) = \lim_{\delta f_1 \rightarrow 0} - \frac{\delta f_2 (f, \delta f_1)}{\delta f_1} = \lim_{\delta \alpha \rightarrow 0} - \frac{f_2 (\alpha + \delta \alpha) - f_2 (\alpha)}{f_1 (\alpha + \delta \alpha) - f_1 (\alpha)} = - \frac{\frac{df_2}{d\alpha}}{\frac{d f_1}{d \alpha}} $$
 
 This form is useful to prove \textbf{reciprocity}:
 $$ \lambda_{12} (f) = \frac{1}{\lambda_{21} (f)} $$
@@ -672,7 +672,7 @@ When the indicator represents a cost or benefit, sometimes it's possible to assu
 $$ \tilde u_l (f_l) = \frac{f_l - \min_{x \in X} f_l (x)}{\max_{x \in X} f_l (x) - \min_{x \in X} f_l (x)} $$
 Switch them for costs.
 
-If $\min_{x \in X} f_l (x)$ or $\max_{x \in X} f_l (x)$ are unknown or hard to compute, an underestimate and overestimate can be used instead, yielding a normalized utility function, different from above mentioned one. This can lead to a "compression" of the value range if the estimates are loose (it's not using the whole interval $[0,1]$).
+If $\min_{x \in X} f_l (x)$ or $\max_{x \in X} f_l (x)$ are unknown or hard to compute, an underestimate and overestimate can be used instead, yielding a normalized utility function, different from the one mentioned above. This can lead to a "compression" of the value range if the estimates are loose (it's not using the whole interval $[0,1]$).
 
 \subsection{Determining the weights}
 \label{subsec:detweights}
@@ -688,7 +688,7 @@ As in the general case, $p-1$ independent pairs of indifferent impacts are neede
 	$$ \sum_{l = 1}^p w_l = 1$$
 \end{itemize}
 
-This process works correctly in the ideal case, but if indifference is imprecise, the pairs five wrong weights. The solution is to build a complete pairwise comparison of all indicators and analyze its consistency.
+This process works correctly in the ideal case, but if indifference is imprecise, the pairs give wrong weights. The solution is to build a complete pairwise comparison of all indicators and analyze its consistency.
 
 \subsubsection{The pairwise comparison matrix}
 
