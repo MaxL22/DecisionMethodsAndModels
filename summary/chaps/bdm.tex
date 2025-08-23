@@ -46,3 +46,34 @@ Usually, continuity is assumed (they are mathematical objects and not a general 
 %When they can be turned in explicit form
 %$$ f_l = f_l (c, \dots, f_{l-1}, f_{l+1}, \dots, f_p) $$
 %Then the indifference curve is a $p-1$-dimensional hypersurface in the space of indicators $\R^p$.
+
+\subsubsection{MRS}
+
+The Marginal Rate of Substitution $\lambda_{12}$ between two indicators $f_1$ and $f_2$ represents how much of $f_1$ are we willing to "give up" for a unit of $f_2$; e.g., if we're willing to give $4$ units of $f_1$ for a unit of $f_2$ then $\lambda_{12} = 1/4$.
+
+It's the ratio of the partial derivatives of the utility function w.r.t. $f_1$ and $f_2$
+$$ \lambda_{12} (f) = \frac{ \frac{\partial u }{\partial f_1} }{ \frac{\partial u}{\partial f_2} } $$
+
+A uniform MRS corresponds to a linear utility function $u(f) = w_1 f_1 + w_2 f_2$, and as such:
+$$ \lambda_{12} (f) = \frac{w_1}{w_2} $$
+
+It represents the steepness of the indifference curve (slope).
+
+\subsection{Mathematical Programming: \textit{Amateur hour}}
+
+The general process for solving MP problems is: 
+\begin{enumerate}
+	\item Draw a graphical representation of the feasible region
+	
+	\item Find which points are in the candidate set
+	
+	\item Write the generalized Lagrangian function
+	
+	\item Write the KKT conditions
+	
+	\item Solve the system of conditions to reject candidate points, hoping that few remain (add nonregular points after this)
+	
+	\item Evaluate the function in all the remaining points, choose the optimum
+\end{enumerate}
+
+\textit{Easy enough right? (It's not)}
