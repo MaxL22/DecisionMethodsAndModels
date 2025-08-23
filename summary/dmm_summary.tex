@@ -1,0 +1,64 @@
+% !TeX spellcheck = en_US
+\title{DMM Summary}
+\author{Massimo Perego}
+\date{}
+
+\documentclass[11pt]{article}
+\usepackage{graphicx} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[hidelinks]{hyperref}
+\usepackage[autostyle, english = american]{csquotes}
+\usepackage[parfill]{parskip}
+\MakeOuterQuote{"}
+
+\DeclareMathOperator{\D}{\mathcal{D}}
+\DeclareMathOperator{\I}{\mathcal{I}}
+\DeclareMathOperator{\N}{\mathbb{N}}
+\DeclareMathOperator{\R}{\mathbb{R}}
+\DeclareMathOperator{\U}{\mathcal{U}}
+\DeclareMathOperator{\Z}{\mathbb{Z}}
+
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\supp}{Supp}
+
+\renewcommand{\P}{\mathcal{P}}
+\renewcommand{\dist}{\text{dist}}
+
+\newcommand{\wpref}[1]{\preceq_{#1}}
+\newcommand{\pref}[1]{\prec_{#1}}
+\newcommand{\ind}[1]{\sim_{#1}}
+\newcommand{\indiff}[1]{\text{Ind}_{#1}}
+\newcommand{\spref}[1]{\text{Str}_{#1}}
+\newcommand{\inc}[1]{\text{Inc}_{#1}}
+\newcommand{\lottset}{L_{F, \Omega}}
+
+\NewDocumentEnvironment{myalgo}{m +b}{%
+	\begin{center}
+		\begin{minipage}{#1\linewidth}
+			\begin{tcolorbox}[colback=white,sharp corners,boxrule=.3mm]
+				\begin{algorithm}[H]
+					\setstretch{1.3}
+					\SetArgSty{relax}
+					\SetAlgoNoEnd
+					\SetKwSty{texttt}
+					#2
+				\end{algorithm}
+			\end{tcolorbox}
+		\end{minipage}
+	\end{center}
+}{}
+
+\begin{document}
+	\maketitle
+	
+	\paragraph{Disclaimer} This "summary" it's not supposed to be a standalone tool, it contains more \textit{pragmatic} definitions, aimed more at the exercises/exam itself. It's not complete \textit{and it's not supposed to be}.
+	
+	\tableofcontents
+	\newpage
+	
+	\include{chaps/dp}
+	\include{chaps/bdm}
+	
+\end{document}

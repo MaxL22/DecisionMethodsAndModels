@@ -1,0 +1,48 @@
+% !TeX spellcheck = en_US
+\section{Basic Decision Models}
+
+\subsection{Structured preferences}
+
+\subsubsection{Dominance relation}
+
+Some ways to sort \textit{the stuff}.
+
+\paragraph{Lexicographic order} Order the alternatives w.r.t. the value of the first indicator (for some ordering of the indicators) and break ties with the subsequent one. This yields a total order.
+
+The variant with aspiration levels introduces a "minimum requirement" $\epsilon_i$, rejecting all alternatives with indicator $f_i$ worse than $\epsilon_i$ (higher or lower depending on whether it's a benefit or cost).
+
+\paragraph{Utopia point} Identify an ideal impact with the best possible value for each indicator (optimize them independently) and evaluate all alternatives with the distance from the ideal impact. 
+
+Different definitions of distance yield different results. Some definitions:
+\begin{itemize}
+	\item $L_1$ Manhattan distance
+	$$ d(f, f') = \sum_{l \in P} |f_l - f_l'|$$
+	
+	\item $L_2$ Euclidean distance
+	$$ d(f, f') = \sqrt{\sum_{l \in P} \left(f_l - f_l'\right)^2} $$
+	
+	\item $L_\infty$ Chebyshev distance/maximum norm
+	$$ d(f,f') = \max_{l \in P} |f_l - f_l'| $$
+\end{itemize}
+
+\paragraph{Borda count} In the case of finite alternatives, they can be sorted by counting how many alternatives are worse than each one
+$$ B(f) = \left|\left\{f' \in F \mid f \wpref{} f' \right\}\right| $$
+
+\subsection{MAUT}
+
+\subsubsection{Indifference curves}
+
+An \textit{indifference curve} is a subset of the impact space $I \subseteq F$ of reciprocally indifferent impacts. By definition: 
+\begin{itemize}
+	\item The curves cover $F$
+	
+	\item Any two curves have empty intersection
+	
+	\item Weak order on impacts maps to total order on curves
+\end{itemize}
+
+Usually, continuity is assumed (they are mathematical objects and not a general set of points), and each indifference curve is expressed in the implicit form $ u(f) = c$, each $c$ identifies a curve.
+
+%When they can be turned in explicit form
+%$$ f_l = f_l (c, \dots, f_{l-1}, f_{l+1}, \dots, f_p) $$
+%Then the indifference curve is a $p-1$-dimensional hypersurface in the space of indicators $\R^p$.

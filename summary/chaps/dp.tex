@@ -1,0 +1,47 @@
+% !TeX spellcheck = en_US
+\section{Decision Problems}
+
+\subsection{Preference Relation}
+
+\subsubsection{Properties}
+
+Considering impact set $F$ and a binary relation $\Pi$, the main properties of said relation can be:
+\begin{itemize}
+	\item \textbf{Reflexivity:} $\forall a \in F$, $(a,a) \in \Pi$; to check for it, on the graph representation every impact has to have a self-loop
+	
+	\item \textbf{Transitivity:} $\forall a,b,c \in F$, if $(a,b) \in \Pi$ and $(b,c) \in \Pi$ then $(a,c) \in \Pi$; to check for it, on the graph representation follow every arc and check that every possible "triangle" is complete
+	
+	\item \textbf{Antisymmetry:} $\forall a,b \in F$, if $(a,b) \in \Pi$ and $(b,a) \in \Pi$ then $a = b$; to check for it, on the graph representation there must be no impacts that point at each other
+	
+	\item \textbf{Completeness:} $\forall a,b \in F$, if $(a,b) \notin \Pi$ then $(b, a) \in \Pi$; to check for it, on the graph representation, from each node there must be an arc (either outgoing or incoming) connecting it to every other
+\end{itemize}
+
+\subsubsection{Types of relations (orders)}
+
+Combining the properties, we can get different kinds of preferences: 
+\begin{itemize}
+	\item \textbf{Preorder:} reflexivity and transitivity. Guarantees that the set of nondominated alternatives is nonempty, even if not all alternatives are comparable, we can find at least one nondominated solution
+	
+	\item \textbf{Partial order:} reflexivity, transitivity and antisymmetry. This limits indifference, but still allows for incomparability, and thus not always leading to a definitive choice
+	
+	\item \textbf{Weak order:} reflexivity, transitivity and completeness. Guarantees that nondominated solutions exists and are all mutually indifferent, any of them can be chosen. Such orders admit representation by a value function (with ties), turning the decision problem into an optimization problem
+	
+	\item \textbf{Total order:} reflexivity, transitivity, antisymmetry and completeness. Provides a unique linear ranking of alternatives, there is always a unique best alternative
+\end{itemize}
+
+\subsubsection{Derived relations}
+
+From the weak preference relation, one can derive: 
+\begin{itemize}
+	\item \textbf{Indifference relation:} $\indiff{\Pi}$
+	$$ (a,b),(b,a) \in \indiff{\Pi} \Leftrightarrow (a,b) \in \Pi \wedge (b,a) \in \Pi $$
+	To build it from the graph representation, add all self loops and each pair of arcs that point at each other
+	
+	\item \textbf{Strict preference relation:} $\spref{\Pi}$
+	$$ (a,b) \in \spref{\Pi} \Leftrightarrow (a,b) \in \Pi \wedge (b,a) \notin \Pi $$
+	To build it from the graph representation, add all arcs which do not have an equal one in the opposite direction (the set difference of the last one w.r.t. $\Pi$)
+	
+	\item \textbf{Incomparability relation:} $\inc{\Pi}$
+	$$ (a,b), (b,a) \in \inc{\Pi} \Leftrightarrow (a,b) \notin \Pi \wedge (b,a) \notin \Pi $$
+	To build it from the graph representation, add all arcs which are not present in either direction in the graph
+\end{itemize}
