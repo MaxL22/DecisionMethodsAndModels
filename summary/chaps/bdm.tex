@@ -65,7 +65,7 @@ The general process for solving MP problems is:
 \begin{enumerate}
 	\item Draw a graphical representation of the feasible region
 	
-	\item Find which points are in the candidate set
+	\item Find nonregular points
 	
 	\item Write the generalized Lagrangian function
 	
@@ -73,7 +73,172 @@ The general process for solving MP problems is:
 	
 	\item Solve the system of conditions to reject candidate points, hoping that few remain (add nonregular points after this)
 	
-	\item Evaluate the function in all the remaining points, choose the optimum
+	\item Evaluate the function in all the remaining points, choosing the optimum
 \end{enumerate}
 
 \textit{Easy enough right? (It's not)}
+
+
+%Process for mathematical programming problems:
+%* Generalized function (?)
+%* KKT conditions
+%* Solve KKT conditions: start from the simplest constraint and "restrict the field", basically a search tree on the (kinda strict) conditions of $\mu_i g_i = 0$, by dividing them in the cases of:
+%1. $u_i = 0$ and $g_i \leq 0$
+%2. $u_i > 0$ and $g_i = 0$
+%* Compare the value of the function in all candidate points (nonregular points automatically get added to the candidate set)
+%
+%All points in which the gradients of the active ($= 0$) constraints are linearly independent are regular. Only active constraints must be considered. A point is regular if:
+%* no active constraints: trivially regular, interior of the feasible region
+%* one active constraint: if that constraint's gradient is $\neq 0$
+%* more than one active constraint: the gradients of those constraints have to be linearly independent
+
+\textit{Let's use an example:
+\begin{align*}
+	\min f(x) & = (x_1 - 1)^2 + x_2^2 \\
+	g_1 (x) & = -x_1^2 -x_2^2 + 4 \leq 0 \\
+	g_2 (x) & = x_1 - 3/2 \leq 0
+\end{align*}}
+
+\paragraph{Nonregular points} All points in which the gradients of the active constraints are linearly independent are regular. Only active constraints must be considered, the whole feasible region is composed of regular points. A constraint is active when $= 0$. 
+
+\textit{Why are active constraints zero? The constraints are active only on the borders of the feasible region, since a optimal solution can only be found on that border, "pushing the boundaries" of the problem. Each point strictly inside the feasible region is next to another point, slightly better, slightly more towards the border.}
+
+Calculate the gradients of each constraint and check wether they can be zero or not. If the gradient can be zero and in such point: 
+\begin{itemize}
+	\item The constraint is inactive: business as usual
+	
+	\item The constraint is active: nonregular point, has to be added to the candidate set
+\end{itemize}
+
+\textit{In our example, the gradients are: 
+\begin{align*}
+	\nabla g_1 (x) & = \left[ - 2 x_1 \  - 2 x_2 \right] \\
+	\nabla g_2 (x) & = \left[ 1 \ 0 \right]
+\end{align*}
+And:}
+\begin{itemize}
+	\item \textit{The first one is 0 only in the origin, point in which the constraint is nonactive ($ g_1 (0,0) = 4 $)}
+	
+	\item \textit{The second one is never zero}
+\end{itemize}
+
+% TODO: equality constraints? When to add? 
+Then check points in which pairs of constraints are active, i.e., make a system in which both are zero (I think equality constraints always have to be added? I'll get back to you on that, not sure).
+
+\textit{In our example:
+$$
+\begin{cases}
+	-x_1^2 - x_2^2 + 4 = 0 \\
+	x_1 - 3/2 = 0 
+\end{cases}
+\implies
+\begin{cases}
+	x_1 = 3/2 \\
+	x_2^2 = 7/4
+\end{cases}
+$$
+From which we get the points
+$$ A = \left(\frac{3}{2}, \frac{\sqrt{7}}{2}\right), \quad B \left(\frac{3}{2}, - \frac{\sqrt{7}}{2}\right) $$}
+
+Check wether the gradients are linearly independent or not in the points found. To verify this the simplest way is to compose a $2 \times 2$ matrix with the values of the gradients considered in each point, if the determinant of such matrix is nonzero the gradients are linearly independent in the point considered.
+
+\textit{In our example, $\nabla g_1 (A) = \left[- 3 \ -\sqrt{7}\right]$ and $\nabla g_2 (A) = \left[1 \ 0 \right]$, the resulting matrix being
+$$
+M = \left[\begin{array}{c c}
+	-3 & 1 \\ -\sqrt{7} & 0
+\end{array} \right]
+$$
+Whose determinant is: 
+$$ det(M) = (-3 \cdot 0) - (-\sqrt{7} \cdot 1) = \sqrt{7} \neq 0$$
+So the gradients are linearly independent.}
+
+Then check points in which triples of constraints are active, similarly to earlier. You can guess how this goes on.
+
+\textit{In our example there are no more constraints, but you would simply check that the gradients are linearly independent in the points resulting from the system given by $g_1(x) = 0$, $g_2(x) = 0$, $g_3(x) = 0$.}
+
+The aim of this phase is only to find nonregular points. Points with not linearly independent gradients are nonregular and as such have to be added to the candidate set after "sifting" with the KKT conditions.
+
+\paragraph{Generalized Lagrangian function} The generalized Lagrangian function is defined as:
+$$ \ell (x) = f(x) + \sum_{i = 1}^s \lambda_i h_i (x) + \sum_{j = 1}^m \mu_j g_j (x) $$
+With $\lambda_i$ free multipliers and $h_i (x)$ equality constraints (always active).
+
+\textit{In our example, the function becomes:
+\begin{align*}
+	\ell (x) & = f(x) + \mu_1 g_1 (x) + \mu_2 g_2 (x) \\
+	& = (x_1 - 1)^2 + x_2^2 + \mu_1\left(-x_1^2 - x_2^2 + 4\right) + \mu_2 (x_1 - 3/2)
+\end{align*}
+}
+
+\paragraph{KKT Conditions} The KKT conditions state that if a point is regular and locally minimal: 
+\begin{enumerate}
+	\item The partial derivatives of the Lagrangian function w.r.t. the $x$ variables are equal to zero ($\partial \ell / \partial x_i$ = 0)
+	
+	\item The partial derivatives of the Lagrangian function w.r.t. the $\lambda$ multipliers are equal to zero ($\partial \ell / \partial \lambda_i = h_j = 0$), that is, the equality constraints are respected
+	
+	\item The product of the functions expressing the inequality constraints, times the corresponding multipliers are equal to zero ($\mu_k g_k = 0$)
+	
+	\item All inequalities constraints are satisfied
+	
+	\item All multipliers of the inequality constraints are nonnegative ($\mu_k \geq 0$)
+\end{enumerate}
+These conditions allow to restrict the number of candidate points from \textit{all regular and nonregular points} to \textit{nonregular and a few regular}.
+
+\textit{In our example, the conditions become}
+\begin{align*}
+	\partial \ell / \partial x_1 & = 2(x_1 - 1) - 2 \mu_1 x_1 + \mu_2 = 0 \\
+	\partial \ell / \partial x_2 & = 2x_2 - 2 \mu_1 x_2 = 0 \\
+	\mu_1 g_1 & = \mu_1(-x_1^2 -x_2^2 + 4) = 0 \\
+	\mu_2 g_2 & = \mu_2 (x_1 - 3/2) = 0 \\
+	g_1 & = -x_1^2 -x_2^2 + 4 \leq 0 \\
+	g_2 & = x_1 - 3/2 \leq 0 \\
+	\mu_1 & \geq 0 \\
+	\mu_2 & \geq 0
+\end{align*}
+
+\paragraph{Solving conditions} To solve the system without exhaustively exploring all possible cases one can use a search tree, whose nodes divide the feasible region in disjoint parts. To do that we build on the stricter conditions, i.e., the products $\mu_k g_k = 0$ (at first choose the simplest one). Given a constraint, we can distinguish two cases:
+\begin{enumerate}
+	\item $\mu_k = 0$ and $g_k \leq 0$
+	
+	\item $\mu_k > 0$ and $g_k = 0$
+\end{enumerate}
+
+These assumption simplify the system, allowing it to be analyzed in an easier way. The process can be repeated on the resulting sub-problems, if necessary.
+
+The idea is to restrict the possible solutions and find them a little at a time. Divide in "easy" sub-problems and all solutions to such problems are candidate points.
+
+\textit{In our example, the constraint chosen is $\mu_2 g_2 = 0$. We now consider the case $P^1$, with $\mu_2 > 0$ and $g_2 (x) = 0$, and thus $x_1 = 3/2$. The constraints now become:
+\begin{align*}
+	1 - 3 \mu_1 + \mu_2 & = 0 \\
+	x_2 (1 - \mu_1) & = 0 \\
+	\mu_1 (7/4 - x_2^2) & = 0 \\
+	7/4 - x_2^2 & = 0 \\
+	\mu_1 & \geq 0
+\end{align*}
+We can now say that $\mu_1 = (\mu_2 + 1)/3 > 0$ and $x_2^2 = 7/4$. This yields candidate points:
+$$ A = \left(\frac{3}{2}, \frac{\sqrt{7}}{2}\right), \quad B \left(\frac{3}{2}, - \frac{\sqrt{7}}{2}\right) $$
+}
+
+\textit{Now consider $P^2$, with $\mu_2 = 0$ and $g_2 \leq 0$, the constraints become:
+\begin{align*}
+	2(x_1 - 1) - 2 \mu_1 x_1 & = 0 & \implies x_1 (1 - \mu_1) = 1 & \implies \mu_1 \neq 1 \\
+	x_2 (1 - \mu_1) & = 0 & \implies x_2 = 0 \\
+	\mu_1(-x_1^2 -x_2^2 + 4) & = 0 & \implies \mu_1 (4 - x_1^2) = 0 \\
+	x_1^2 + x_2^2 & \geq 4 & \implies x_1^2 \geq 4 \\
+	x_1 & \leq 3/2 \\
+	\mu_1 & \geq 0 \\
+	& \implies x_1 = -2
+\end{align*}
+This yields candidate point:
+$$ C = \left(-2, 0\right)$$}
+
+\paragraph{Choose optimum} We now want to evaluate the function in all the candidate points (remember to consider nonregular points) and choose the best solution.
+
+\textit{In our example:
+$$
+\begin{cases}
+	f(A) = 2 \\
+	f(B) = 2 \\
+	f(C) = 9
+\end{cases}
+$$
+Which implies that both $A$ and $B$ are globally optimal points.}
