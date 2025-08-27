@@ -79,7 +79,7 @@ The theorem states that the guaranteed gain of the row player is limited by the 
 \section{Mixed strategies}
 \label{sec:mixedstrats}
 
-If the game is played several time , it's licit for the players to change strategies adopted in each round. In this situation, the decision variable for each player has no longer a finite feasible region, but a continuous set, corresponding to the frequency with which the player should choose each basic alternative. These combinations of frequencies are denoted as \textit{mixed strategies}. \\
+If the game is played several times, it's licit for the players to change strategies adopted in each round. In this situation, the decision variable for each player no longer has a finite feasible region, but a continuous set, corresponding to the frequency with which the player should choose each basic alternative. These combinations of frequencies are denoted as \textit{mixed strategies}. \\
 
 \begin{definition}
 	We denote as \textbf{mixed strategy} $\xi^{(d)}$ for a player $d \in D$ a probability vector defined on $X^{(d)}$ 
@@ -147,7 +147,7 @@ This simplifies the problem, requiring just a parametric expression for
 	\item $\max_{i \in X^{(r)}} E \left[f(i, \xi^{(c)})\right] = \max_{i \in X^{(r)}} \left(\sum_{j \in X^{(c)}} \xi^{(c)}_j f_{ij}\right)$
 \end{itemize}
 
-This shows that one should give for granted that the adversary will behave in a deterministic wa, selecting the pure strategy that is most damaging for the chosen mixed strategy, instead of a stochastic way, selecting a combination of strategies. 
+This shows that one should give for granted that the adversary will behave in a deterministic way, selecting the pure strategy that is most damaging for the chosen mixed strategy, instead of selecting a combination of strategies in a stochastic way. 
 
 \subsubsection{The minimax theorem}
 
@@ -193,7 +193,7 @@ And such a strategy can be identified by finding the intersection of the two lin
 $$ \alpha = \frac{2}{7} \implies \xi^{\circ (r)} = \left[\frac{2}{7} \ \frac{5}{7}\right]^T$$
 and the value of the game is $v^{(r)} = -1/7$. With the same process: 
 \begin{itemize}
-	\item \item $E\left[f(\xi^{(c)}, 1)\right] = 2 \cdot \beta + (-3) \cdot (1 - \beta) = 5 \beta - 3$
+	\item $E\left[f(\xi^{(c)}, 1)\right] = 2 \cdot \beta + (-3) \cdot (1 - \beta) = 5 \beta - 3$
 	
 	\item $E\left[f(\xi^{(c)}, 2)\right] = (-1) \cdot \beta + 1 \cdot (1 - \beta) = 1 - 2 \beta$
 \end{itemize}
