@@ -1,0 +1,71 @@
+% !TeX spellcheck = en_US
+\section{Models with complex preferences}
+
+The preference relation now is not a weak order. 
+
+We denote as \textbf{Paretian preference} (in the case of costs) the relation 
+$$ \Pi = \left\{(f, f') \mid f_l \leq f_l', \text{ for each } l \in \{1, \dots, p\}\right\} $$
+Which is a \textbf{partial order}.
+
+We denote as \textbf{dominated solution} a solution which is not better than w.r.t. each indicator of another solution, and strictly worse in at least one indicator.
+
+We denote as \textbf{Paretian solution} every solution such that no other solution dominates it. We call \textbf{Paretian region} the set of all Paretian solutions.
+
+Paretian solutions are not preferable to all other solutions and are not all reciprocally indifferent. Thus we want to identify the whole Paretian region
+
+\subsection{Identifying the Paretian region}
+
+\subsubsection{Applying the definition}
+
+In the finite case, the Paretian region can be found by applying the definition through pairwise comparisons. 
+
+This is exact but slow.
+
+\subsubsection{Inverse transformation method}
+
+If the solution can be graphically represented, compute the inverse function $\phi: F \rightarrow X$ of $f: X \rightarrow F$, build the image of $X$ in $F$ through $f$, find graphically the nondominated impacts (lower left quadrant empty), find a parametric way to describe such impacts, transform them back using the inverse function. 
+
+This is exact, but human intervention is required and is limited to 2 indicators (\textit{maybe} 3).
+
+\subsubsection{KKT conditions}
+
+KKT conditions can be extended to Paretian preference, by repeating the derivation with minor changes, obtaining a set that is usually larger than the Paretian region (finds an overestimate).
+
+Not usable in discrete problems, as always.  
+
+\subsubsection{Weighted sum method}
+
+Consists in building a linear combination of the indicators and optimizing it. The result is sufficient conditions for a point to be Paretian (underestimate of the region).
+
+% TODO Explain how to actually do an exercise, there is parametric stuff to do
+
+\subsubsection{$\epsilon$-constraint method}
+
+Replace all indicators but one with constraints that require the solution to respect a quality threshold and solve the auxiliary problem. The result is a necessary condition for a point to be Paretian.
+
+It's needed to find parametrically how the Paretian region is described w.r.t. the variation of $\epsilon$. It's just a constraint, so: when it varies, which solutions are feasible? Get the intervals for which the Paretian region doesn't change and optimize the non-replaced indicator for the feasible solutions.
+
+This can be applied to any problem and provides an overestimate of the Paretian region, but it requires to consider all possible values of $\epsilon$ and find all globally optimal solutions, increasing the complexity of the problem. 
+
+\subsection{Weak rationality methods}
+
+Decision-makers often can't estimate correctly, so let's just \textit{embrace} that the pairwise comparison matrix is incorrect and the normalized utilities are incorrect.
+
+\subsubsection{AHP}
+
+The \textbf{Analytic Hierarchy Process} was introduced in 1980 based on the following criticisms:
+\begin{enumerate}
+	\item The reconstruction of the single-variable normalized utility functions is subject to strong approximation errors
+	
+	\item The estimation of the weights is subject to strong approximation errors when the number of attributes $p$ is large
+	
+	\item The various approximation errors combine in cascade
+\end{enumerate}
+
+The method replaces absolute measures with relative ones, and quantitative ratios with qualitative scales, building a hierarchy of indicators to compare only conceptually similar quantities.
+
+The preference among impacts is measured with an arbitrary qualitative scale, allowing to compare heterogeneous quantities, translating verbal judgments and building an evaluation matrix. 
+
+Humans find it difficult to compare nonhomogeneous things, so build an indicator tree and compare only siblings: leaves include elementary attributes, upper levels summarize them, getting progressively more general.
+
+% TODO Continue from page 96
