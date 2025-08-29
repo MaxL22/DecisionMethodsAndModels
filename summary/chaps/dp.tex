@@ -1,7 +1,51 @@
 % !TeX spellcheck = en_US
 \section{Decision Problems}
 
+\subsection{Fundamental definitions}
+
+A decision problem is defined by a 6-uple: 
+$$ P = (X, \Omega, F, f, D, \Pi)$$
+Where
+\begin{itemize}
+	\item $X$ is the feasible region, set of all alternatives
+	
+	\item $\Omega$ is the sample space, set of all possible scenarios
+	
+	\item $F$ is the indicator space, set of all possible impacts 
+	
+	\item $f: X \times \Omega \rightarrow F$ is the impact function, associates each configuration of the system to a impact
+	
+	\item $D$ is the set of all decision-makers
+	
+	\item $\Pi: D \rightarrow 2^{F \times F}$ is the preference function, which associates to each decision maker a subset of impact pairs
+\end{itemize}
+
+The \textbf{alternatives} formally describe the events under the control of the decision-makers. $X$ includes all possible choices.
+
+The \textbf{scenarios} formally describe the events out of the control of the decision-makers. $\Omega$ defines all such events.
+
+The \textbf{impacts} model all aspects relevant to the decision, they are described quantitatively as vector of real numbers.
+
+The \textbf{impact function} is a vectorial function which associates each configuration to an impact.
+
+A \textbf{decision-maker} is whoever takes part in the decision. 
+
+The decision-maker takes part directly in the choice of alternative, holding the power and responsibility to decide, while \textbf{stakeholders} are all the subjects who don't actively participate in the decision but whose interests are affected by its outcome.
+
 \subsection{Preference Relation}
+
+For each decision maker, we need a relation between pair of impacts to determine which ones are preferable. $\Pi: D \rightarrow 2^{F \times F}$ associates each decision-maker to a subset of impact pairs.
+
+A \textbf{weak preference} $f \wpref{d} f'$ is when the decision-maker accepts the exchange of $f$ for $f'$.
+
+Two impacts are \textbf{indifferent} if the decision-maker considers both equally as satisfactory, i.e., is willing to exchange one for the other in both directions.
+
+Two impacts are \textbf{incomparable} if the decision-maker is unable or unwilling to choose between them, rejecting the exchange in both directions.
+
+In a decision problem, an \textbf{outperformer} $x \in X$ for $d \in D$ is an alternative which performs at least as good as any other $x' \in X$ in every scenario $\omega \in \Omega$
+$$ (f(x, \omega), f(x', \omega)) \in \Pi_d, \quad \forall \omega \in \Omega, x' \in X $$
+and is strictly better for at least one comparison/scenario
+$$ \exists x^\circ \in X, \omega^\circ \in \Omega \quad (f(x, \omega), f(x^\circ, \omega)) \in \Pi_d \wedge (f(x^\circ), \omega), f(x, \omega)) \notin \Pi$$
 
 \subsubsection{Properties}
 
