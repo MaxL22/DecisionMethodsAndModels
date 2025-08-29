@@ -1,0 +1,265 @@
+% !TeX spellcheck = en_US
+\section{Models with multiple scenarios}
+
+Weak order preference, single decision-maker, but the scenario is not certain. Two possibilities: 
+\begin{itemize}
+	\item Decisions in conditions of ignorance: $\omega$ falls in $\Omega$
+	
+	\item Decisions in conditions of risk: the probability of each $\omega$ is known
+\end{itemize}
+
+An alternative \textbf{strongly dominates} another when its impact is at least as good in all scenarios. An alternative \textbf{probabilistically dominates} another when for any threshold considered the probability that it has impacts not worse than the threshold is not worse than the other alternative.
+
+\paragraph{Models of uncertainty} There are two main ways to describe uncertain situations: 
+\begin{itemize}
+	\item Scenario description: $\Omega$ is a finite set, in which the scenarios are explicitly listed, $\Omega = \left\{\omega^{(1)}, \dots, \omega^{(|\Omega|)}\right\}$
+	
+	\item Interval description: $\Omega$ is the Cartesian product of a finite number of real intervals on the $s$ exogenous variables $\Omega = [\omega_1^{\min}, \omega_2^{\max}] \times  \dots  \times [\omega_s^[\min], \omega_s^{\max}]$
+\end{itemize}
+
+These are not the only possible cases, but they are frequent. The choice depends on the problem
+
+\subsection{Conditions of ignorance}
+
+We denote as \textbf{choice criterium} every definition of $\phi_\Omega (x)$ aimed to replace the impact $f(x, \omega)$.
+
+\subsubsection{Worst-case criterium}
+
+Assume for each solution the worst scenario, reducing the problem tos
+$$ \min_{x \in X} \phi_{worst} (x) = \min_{x \in X} \max_{\omega \in \Omega} f(x, \omega) $$
+
+It's an approach aimed at avoiding losses, even giving up opportunities. 
+
+\subsubsection{Best-case criterium}
+
+Complementary to the last one, assume for each solution the best scenario possible. The problem becomes: 
+$$ \min_{x \in X} \phi_{best} (x) = \min_{x \in X} \min_{\omega \in \Omega} f(x, \omega) $$
+
+Believe in opportunities, ignore danger.
+
+\subsubsection{Hurwicz criterium}
+
+For balance, use a convex combination of best and worst-case criterium. The problem becomes
+$$ \min_{x \in X} \phi_{Hurwicz} (x) = \min_{x \in X} \left[\rho \max_{\omega \in \Omega} f(x, \omega) + (1 - \rho) \min_{\omega \in \Omega} f(x, \omega) \right]$$
+Where $\rho \in [0,1]$ is the pessimism coefficient, as it weighs the worst impact, allowing to tune the weights of the scenarios.
+
+\paragraph{Tuning $\rho$} Get (maybe invent) a pair of reciprocally indifferent alternatives and impose equality of the corresponding $\phi_{Hurwicz}$ values, solving the corresponding equation in $\rho$.
+
+The simplest way to do that is to get an alternative $x$ and have the decision-maker indicate its certainty equivalent, a (generally fake) alternative with uniform impact on all scenarios, indifferent to $x$.
+
+\paragraph{Sensitivity analysis} If ranking is unclear and value of $\rho$ imprecise, find for which values of $\rho$ each solution is optimal.
+
+\subsubsection{Laplace criterium}
+
+Apply the same weight on all scenarios. This reduces the problem to
+$$ \min_{x \in X} \phi_{Laplace} (x) = \min_{x \in X} \frac{\sum_{\omega \in \Omega} f (x, \omega)}{|\Omega|} $$
+
+Mean of the impacts on the scenarios, with a balanced approach that takes all scenarios into account.
+
+\subsubsection{Regret criterium}
+
+Evaluate the regret the decision-maker would feel if the decision taken were wrong, each solution should be compared to other ones, scenario by scenario. How can one measure the regret? 
+$$ \rho (x, \omega) = f(x, \omega) - \min_{x' \in X} f (x', \omega) $$
+It's the difference from the solution/scenario considered w.r.t. the best possible solution for that scenario. Then apply the worst-case criterium to this function. This reduces the problem to: 
+$$ \min_{x \in X} \phi_{regret} (x) = \min_{x \in X} \max_{\omega \in \Omega} \rho (x, \omega) = \min_{x \in X} \max_{\omega \in \Omega} \left(f(x, \omega) - \min_{x' \in X} f(x', \omega) \right) $$
+
+In practice: 
+\begin{itemize}
+	\item Determine the best alternative for each scenario
+	
+	\item For each alternative, evaluate the regret (subtract the value determined earlier) for each scenario
+	
+	\item Pick the maximum regret for each alternative
+	
+	\item Choose the minimum of the values obtained
+\end{itemize}
+
+It's a comparative approach, caring only about unnecessary losses.
+
+\subsubsection{Surplus criterium}
+
+Complimentary to the regret criterium: consider the minimum guaranteed surplus obtained w.r.t. the worst alternative and maximize it. Surplus is measured as
+$$ \sigma (x, \omega) = \max_{x' \in X} f(x', \omega) - f(x, \omega) $$
+
+Then apply the worst-case criterium to the surplus function
+$$ \max_{x \in X} \phi_{surplus} (x) = \max_{x \in X} \min_{\omega \in \Omega} \sigma (x, \omega) = \max_{x \in X} \min_{\omega \in \Omega} \left(\max_{x' \in X} f(x', \omega) - f(x, \omega) \right)$$
+
+In practice: 
+\begin{itemize}
+	\item Determine the worst alternative for each scenario
+	
+	\item For each alternative, evaluate the surplus (difference with the worst) for each scenario
+	
+	\item Pick the minimum surplus for each alternative
+	
+	\item Choose the maximum of the values obtained
+\end{itemize}
+
+It's a comparative approach, caring only about nonguaranteed gains.
+
+\subsubsection{Formal defects of the choice criteria}
+
+No criteria satisfies all properties which would be desirable. Let's present such properties. 
+
+All criteria presented respect these four properties: 
+\begin{itemize}
+	\item \textbf{Weak order:} the dominance relation is a weak order
+	
+	\item \textbf{Labeling independence:} the dominance relation is independent from names and order of alternatives and scenarios
+	
+	\item \textbf{Scale invariance:} scalar products of the impacts yield the same dominance relation, the result is independent from unit of measure and offset 
+	
+	\item \textbf{Strong dominance:} the dominance relation includes the strong dominance relation 
+	$$ f(x, \omega) \leq f (x', \omega) , \ \forall \omega \in \Omega \implies x \preceq x' $$
+\end{itemize}
+
+However, each criteria breaks at least one of these three: 
+\begin{itemize}
+	\item \textbf{Independence from irrelevant alternatives:} no rank reversal, adding/removing alternatives doesn't modify the other ranks. Regret and surplus violate this property, they are comparative approaches
+	
+	\item \textbf{Independence from scenario duplication:} the dominance relation doesn't change by adding scenarios with identical impacts. Laplace violates this property, the weight of the duplicated scenarios increases
+	
+	\item \textbf{Uniform variations of a scenario:} the dominance relation does not change if a scenario varies by a uniform amount for all alternatives. Worst-case, best-case and Hurwicz violate the property, changing a scenario can change the $\max$/$\min$ across scenarios
+\end{itemize}
+
+It can be proven that these properties are mutually exclusive, no algorithm can satisfy all of them.
+
+\subsection{Conditions of risk}
+
+With the scenario set $\Omega$, we now have a formalization of their probability. For each solution, the associated impact is a random variable depending on the scenario. 
+
+The main approach consists in reducing the problem to the optimization of an auxiliary function which removes dependency on the scenario. 
+
+\subsubsection{Definitions of probability}
+
+Probability is a debated concept. 
+
+\paragraph{Classical definition} Probability is the ratio between the number of elementary cases that form a scenario and the total number of possible elementary cases. 
+$$ \pi (\omega) = \frac{n(\omega)}{n (\Omega)}$$
+
+This assumes a finite number of elementary cases with same probability, but what is an elementary case? Why do they have equal probability?
+
+\paragraph{Frequentist definition} Probability of a scenario is the limit to which its relative frequency tends to as the number of observation increases
+$$ \pi (\omega) = \lim_{n \rightarrow + \infty} \frac{n (\omega)}{n} $$
+
+This requires empirical information of good quality and a large quantity of observation, also the future behavior must be similar to the past.
+
+\paragraph{Subjective definition} Probability is the price one would pay to receive 1 if the scenario happens, 0 if it doesn't. This depends on personal opinion.
+
+\paragraph{Axiomatic definition} Probability is any function that respects the axioms: 
+\begin{itemize}
+	\item Being restricted in $[0,1]$ for all $\omega \in \Omega$
+	
+	\item Summing to 1 over all $\omega \in \Omega$
+	
+	\item Being additive over sets of disjoint scenarios 
+\end{itemize}
+
+The theory that derives is perfectly consistent, but does not indicate how to obtain the value practically.
+
+\subsubsection{Expected value criterium}
+
+Sums the impacts of a solution over all scenarios with the convex combination of impacts with probabilities
+$$ \phi_{EV} = E \left[f(x, \omega)\right] = \sum_{\omega \in \Omega} \pi (\omega) f (x, \omega) $$
+
+It's just the weighed probability.
+
+\paragraph{Formal defects} This criterium can lead to unrealistic consequences. It has some strong defects: 
+\begin{itemize}
+	\item \textbf{Actual preferences inconsistent with expected values:} different combinations of impacts and probabilities with same EV should be reciprocally indifferent, while they often are not
+	
+	\item \textbf{Extreme values of probability and impact have paradoxical effects:} combining small probabilities with large impacts is problematic, it can lead to infinite (very large) EVs for very small probabilities, not reflecting reality. This problem can be reduced by considering \textit{utility}, which scales logarithmically with gain, but is solved only when the utility function is upper bounded
+\end{itemize}
+
+\subsubsection{Stochastic utility theory}
+
+We want to build a choice criterium that satisfies certain desired properties (axioms). 
+
+A \textbf{finite simple lottery} is a pair of functions $(f(\omega), \pi(\omega))$ where $f(\omega)$ is a random variable on a finite sample space and $\pi(\omega)$ is a probability function on the sample space.
+
+A \textbf{degenerate lottery} has a single deterministic scenario (probability 1). A \textbf{compound lottery} is a lottery whose impacts are other lotteries (possibly degenerate). We call $L_{F, \Omega}$ the set of all possible lotteries, simple or compound, on $F$ and $\Omega$.
+
+In a decision problem, each alternative corresponds to a lottery (different results with the associated probability).
+
+A \textbf{preference relation between lotteries} is a binary relation on the lottery set: $\Pi \subset 2^{L_{F, \Omega} \times L_{F, \Omega}}$. A preference relation between lotteries $\Pi$ admits a \textbf{consistent stochastic utility function} $u : L_{F, \Omega} \rightarrow \R$ when, for every pair of lotteries $\ell$ and $\ell'$, the utility of the preferred one exceeds the utility of the other one
+$$ \ell \wpref{} \ell' \Leftrightarrow u(\ell) \geq u (\ell') $$
+
+\paragraph{Fundamental axioms} The properties required for a rational preference between lotteries, or axioms of stochastic utility, are: 
+\begin{enumerate}
+	\item \textbf{Weak ordering:} the preference relation $\Pi$ between lotteries is a weak order 
+	
+	\item \textbf{Monotony:} lotteries that assign larger probabilities to better impacts/lotteries are preferable
+	
+	\item \textbf{Continuity:} any intermediate impact between two lotteries admits an equivalent compound lottery with the two given ones as outcomes, composing them with a suitable probability value
+	
+	\item \textbf{Independence} (or \textbf{substitution})\textbf{:} the preference between two lotteries does not change by combining them with the same lottery with the same probability
+	
+	\item \textbf{Reduction:} any compound lottery is indifferent to the simple lottery with the same final impacts and probabilities given by the laws of conditional and total probabilities; the lottery structure is not relevant, impacts and probabilities are
+\end{enumerate}
+
+\paragraph{Von Neumann-Morgenster stochastic utility theorem} Given a set of impacts $F$ not all reciprocally indifferent, a sample space $\Omega$ and a preference relation $\Pi$ between lotteries on $F$ and $\Omega$ that respects the five axioms, there exists one and only one utility function $u: L_{F, \Omega} \rightarrow [0,1]$ consistent with $\Pi$ and normalized so as to have value 0 in the worst impact and 1 in the best one.
+
+This can be proves, and means that it's always possible to build a consistent stochastic utility function to compare lotteries, under the five axioms. 
+
+\subsubsection{Risk aversion and risk propensity}
+
+\textbf{Risk profile} is the profile of the stochastic utility function on the degenerate lotteries $\ell_f$ as impact $f$ varies in $F$. 
+
+The shape of the utility function $u(f)$ for all $f \in F$ determines $u (\ell (f, \pi))$ for all $\ell \in L$, combining $u(f)$ and $\pi (\omega)$ and showing the attitude of the decision-maker towards risk. 
+
+Comparing the risk profile with the segment given by connecting the degenerate lotteries for worst and best impacts, there are three relevant cases: 
+\begin{itemize}
+	\item \textbf{Convex case:} risk profile above the segment, lottery preferred to the deterministic impact, \textbf{risk-prone} decision-maker
+	
+	\item \textbf{Linear case:} risk profile on the segment, lottery and deterministic impact are indifferent, \textbf{risk-neutral} decision makers, confirming the EV criterium
+	
+	\item \textbf{Concave case:} risk profile below the segments, deterministic impact preferred to the lottery, \textbf{risk-averse} decision-maker
+\end{itemize}
+
+Given a lottery $\ell$ we denote as \textbf{certainty equivalent} the deterministic impact $f_\ell$ equivalent to the lottery, and \textbf{risk premium} the difference between the EV of the lottery and its certainty equivalent.
+$$ RP (\ell) = \phi_{EV} (\ell) - CE (\ell) = E[f(\ell, \omega)] - f(u(\ell)) $$
+
+The risk premium measures the additional utility needed for the decision-maker to accept a lottery instead of the EV, therefore it's positive/zero/negative for risk-averse/neutral/prone decision-makers.
+
+\subsection{Decision theory}
+
+Decisions are now taken in stages and part of the scenario unravels before part of the decision is taken. 
+
+\subsubsection{Decision tree}
+
+A tree representation is the most common one. It introduces a hierarchical structure on decision and exogenous variables: $2^{\max} + 1$ levels, chronologically ordered: even levels represent the decision-maker's choices, odd levels represent scenario elements fixing, leaves represent final configurations.
+
+The arcs outgoing from a node are possible values of $x^{(t)}$ or $\omega^{(t)}$ (depending on the type of node).
+
+To solve the problem \textbf{backward induction} algorithm is used: visit the tree from leaves to root, assigning a value to the current node based on the value of its children: 
+\begin{itemize}
+	\item Odd levels, below there's a decision node, apply a criterium $\phi$ and assign to the node the value of $\phi$; you want to find out the "value" given by the possible scenarios
+	
+	\item Even levels, below there's a scenario node, choose the best alternative and mark the corresponding arc 
+\end{itemize}
+
+In the end the marked arcs provide the optimal strategy.
+
+\paragraph{Scenarios conditioned by decisions} The state of nature can be influenced by the decision variables, turning probabilities from $\pi (\omega)$ to the conditional value $\pi (\omega | x)$. 
+
+\subsubsection{Random experiments}
+
+Sometimes, the estimate of the probabilities can be refined through a \textbf{random experiment}. In general, given an outcome of the experiment, the probabilities change. 
+
+They can be incorporated in the decision tree by adding two levels upstream of the basic decision: 
+\begin{itemize}
+	\item Decide wether to make the experiment or not
+	
+	\item Outcome of the experiment $\omega'$; deterministic if the experiment is not made
+	
+	\item The main decision takes place, solution $x \in X$ for the given problem 
+	
+	\item The uncertain scenario $\omega \in \Omega$ has probability $\pi (\omega | \omega')$ conditioned by the outcome of the experiment, and an impact that includes the cost of the experiment
+\end{itemize}
+
+We denote as \textbf{information value} the difference between the utility gained performing the experiment and the utility gained not performing it.
+
+\paragraph{Probability computation for the decision tree} We know $\pi (\omega)$ and $\pi (\omega' | \omega)$, but on the tree we need $\pi (\omega')$ and $\pi (\omega | \omega')$. To obtain them from available data
+$$ \pi(\omega | \omega') = \frac{\pi (\omega' | \omega) \pi (\omega)}{\sum_{\omega \in \Omega} \pi (\omega' | \omega) \pi (\omega)}$$
+and the total probabilities can be obtained starting from the conditional probabilities and the probabilities of the scenarios. 
+$$ \pi (\omega') = \sum_{\omega \in \Omega} \pi (\omega', \omega) = \sum_{\omega \in \Omega} \pi (\omega' | \omega) \pi (\omega) $$

@@ -1,0 +1,282 @@
+% !TeX spellcheck = en_US
+\section{Models with multiple decision makers}
+
+\subsection{Game theory}
+
+Game theory studies the situation in which multiple decision-makers have each their own variables, set independently from the others.
+
+Some terminology:
+\begin{itemize}
+	\item A decision problem is called a game
+	
+	\item A decision-maker is called a player 
+	
+	\item An impact is called a payoff
+	
+	\item A solution is called a strategy profile
+\end{itemize}
+
+Game can be classified from different points of view: 
+\begin{itemize}
+	\item W.r.t. the relation between players
+	\begin{itemize}
+		\item Noncooperative: each player is independent 
+		
+		\item Cooperative: players can agree to share payoffs
+	\end{itemize}
+	
+	\item W.r.t. the information on the data:
+	\begin{itemize}
+		\item Complete: all players know the whole of $X$ and $f$
+		
+		\item Incomplete: each player $d$ knows only $X^{(d)}$ and $f^{(d)}$
+	\end{itemize}
+	
+	\item W.r.t. the information on the moves:
+	\begin{itemize}
+		\item Perfect: all players know all past moves 
+		
+		\item Imperfect: player $d$ only knows his own past moves
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Game representations}
+
+There are two main representations of games: 
+\begin{itemize}
+	\item \textbf{Extended form:} the game is represented as a tree, nodes are game states, a turn is $|D|$ consecutive levels, all nodes on a level are associated with a player, levels are in chronological order, leaves are payoffs and outgoing arcs represent possible moves for the current player
+	
+	\item \textbf{Strategic form:} a strategy indicates the move a player should make in each possible state and the game is represented as a matrix in which rows represent strategies for the first player and columns strategies for the second player, the matrix entries are associated with payoffs
+\end{itemize}
+
+\subsubsection{Dominance between strategies}
+
+Given two strategies, one dominates the other when it yields a better impact for any possible behavior of the other player. Assuming rational players, a dominated strategy will never be chosen and can be removed.
+
+\paragraph{Worst-case strategy} If a game requires simultaneous moves (backward induction is ruled out) and it does not reduce to a single nondominated strategy profile, we can calculate the minimum payoff that can be obtained by a player in the worst case by treating other players as scenarios, i.e., the best possible guarantee on the performance of the player, this is called \textbf{value of the game for the player},
+
+\subsubsection{Equilibrium}
+
+We denote a strategy profile as an \textbf{equilibrium point} or \textbf{Nash equilibrium} when the strategy profile can't yield a better payoff, i.e., moving away from that point ends up damaging the player.
+
+\paragraph{Determining Nash equilibrium} A way to determine equilibria is the \textbf{best response method}: 
+\begin{itemize}
+	\item Scan all players
+	
+	\item For each player $d$, scan all strategies of the other players and mark the best strategy for player $d$
+	
+	\item A strategy profile marked for all players is an equilibrium
+\end{itemize}
+
+On a matrix, mark the best row payoff in each column and vice versa. 
+
+\subsection{Zero-sum games}
+
+A zero-sum game is a game in which the overall utility of the game is zero for every single strategy profile. Changing the scale does not modify this property, so any game with uniform sum can be considered zero-sum games. 
+
+With two-players, the win of one equals the loss of the other so it's redundant to specify. Definitions of domination and equilibrium need to be adapted to the new representation: row player wants to maximize gain, while column player need to minimize losses. 
+
+To find equilibria, look for saddle points in the matrix: mark the maximum in each column and minimum in each row, entries with two marks are equilibria.
+
+\paragraph{Value of the game} It's interesting to note that, in a two-player zero-sum game, if $u^{(r)}$ and $u^{(c)}$ are the value of the game for row and column player, then $u^{(r)} \leq u^{(c)}$ and $u^{(r)} = u^{(c)}$ if and only if the game has at least one Nash equilibrium. The guaranteed gain of the row player is bounded by the guaranteed loss of the column player.
+
+\subsubsection{Mixed strategies}
+
+A mixed strategy $\xi^{(d)}$ for player $d \in D$ is a probability vector defined on $X^{(d)}$ which represents the probability with which $d$ chooses the basic strategy $x^{(d)}$ (alternatively, the frequency with which $d$ chooses $x^{(d)}$ in a repeated game).
+
+Allowing mixed strategies turns the payoffs into random variables, whose EV has to be maximized.
+
+Zero-sum games can remain unsolved in pure strategies, but they \textbf{always admit a solution in mixed strategy}. 
+
+\paragraph{Minimax theorem} In a two-player game, the worst case for any strategy of a player corresponds to one of the pure strategies of the adversary. This allows to assume that the adversary will behave in a deterministic way, using the most damaging pure strategy. 
+
+The minimax theorem states that for any two-player zero-sum game there is at least one mixed strategy in which the guaranteed expected gain of the row player coincides with the guaranteed expected loss of the column player.
+
+%TODO: I ignored p 158, last of the chapter
+
+\subsection{Symmetric games}
+
+A symmetric game is a game in which all players have the same strategies and, if they exchange them, they correspondingly exchange payoffs. Each player is perfectly interchangeable. This way, the results of the strategies do not depend on the players who apply them.
+
+\subsubsection{Taxonomy of two-person two-strategy symmetric games}
+
+\paragraph{Classification based on Nash equilibria} Considering all payoffs to be different, the general payoff matrix is
+$$ \begin{array}{c | c c}
+	& 1 & 2  \\
+	\hline
+	1 & (f_{11}, f_{11}) & (f_{12}, f_{21}) \\
+	2 & (f_{21}, f_{12}) & (f_{22}, f_{22}) \\
+\end{array}$$
+There are only four possible situations: 
+\begin{enumerate}
+	\item $f_{11} > f_{21}$ and $f_{12} > f_{22}$: strategy 1 dominates for both players, equilibrium in $(1,1)$
+	
+	\item $f_{11} > f_{21}$ and $f_{12} < f_{22}$: no dominated strategies, equilibria on $(1,1)$ and $(2,2)$
+	
+	\item $f_{11} < f_{21}$ and $f_{12} > f_{22}$: no dominated strategy, equilibria on $(1,2)$ and $(2,1)$
+	
+	\item $f_{11} < f_{21}$ and $f_{12} < f_{22}$: strategy 2 dominates for both players, equilibrium on $(2,2)$
+\end{enumerate}
+
+Two-person and two-strategy symmetric games have always at least one equilibrium, this is generally not true for asymmetric games, or symmetric ones with more than two strategies.
+
+\paragraph{Classifications based on the order of the payoffs} More detailed, classification based on the relative order of the four payoffs. There are as many cases as permutations of the values (12, conventionally $f_{11} > f_{22}$, with no loss of generality).
+
+\subsubsection{Games classes}
+
+\paragraph{The ideal marriage} Corresponds to order
+$$ f_{11} > f_{12} > f_{21} > f_{22} $$
+
+The strategies are conventionally denoted as Cooperate $C$ and Not cooperate $NC$, since: 
+\begin{itemize}
+	\item Mutual cooperation pays more than free-riding
+	
+	\item Free-riding pays more than being exploited
+	
+	\item Being exploited pays more than mutual egoism
+\end{itemize}
+
+Ideal case of cooperation, which dominates $NC$, and there is one equilibrium in $(C,C)$. The worst-case criterium leads both players to the equilibrium, providing the best payoff.
+
+\paragraph{The stag hunt} Corresponds to order
+$$ f_{11} > f_{21} > f_{22} > f_{12} $$
+Two hunters can:
+\begin{itemize}
+	\item Cooperate and catch a stag 
+	
+	\item One of them can defect and catch a hare, while the other maybe gets the stag
+	
+	\item Both can defect and catch a hare
+\end{itemize}
+
+Under these conditions, no strategy is dominated and there are two equilibria in $(C,C)$ and $(NC,NC)$. The worst-case criterium leads to the $NC$ equilibrium, but the best payoff comes with $C$, both strategies are rational.
+
+\paragraph{Pure coordination games} Corresponds to orders
+$$ f_{11} > f_{22} > f_{12} > f_{21} \ \text{ and } \ f_{11} > f_{22} > f_{21} > f_{12} $$
+Including the case in which $f_{12} = f_{21}$. 
+
+Under these conditions no strategy is dominated, there are two equilibria in $(1,1)$ and $(2,2)$ and they are nearly equivalent. This describes situations in which the best results are obtained by using the same strategy, while asymmetric strategies are damaging for both. 
+
+\paragraph{The chicken race} Corresponds to order
+$$ f_{21} > f_{11} > f_{12} > f_{22} $$
+
+Two cars drive towards each other: who swerves loses. The largest payoff comes at a risk (of the lowest one) and cannot be obtained by both players. 
+
+Under these conditions no strategy is dominated and there are two equilibria in $(C, NC)$ and $(NC, C)$. There is no way to know a priori which one will be chosen.
+
+\paragraph{Battle of the sexes} Corresponds to orders
+$$ f_{12} > f_{21} > f_{11} > f_{22} \ \text{ and } \ f_{21} > f_{12} > f_{11} > f_{22} $$
+
+Two fiances want to go out but can't communicate: one would like to go to $A$ the other to $B$, but both would rather be together than alone. Similar to the chicken race, but the payout is good for both.
+
+Under these conditions no strategy is dominated and there are two equilibria in $(1,2)$ and $(2,1)$. No way to know a priori which equilibrium will be chosen.
+
+\paragraph{Prisoner's dilemma} Corresponds to order
+$$ f_{21} > f_{11} > f_{12} > f_{22} $$
+
+Two gangsters are arrested: confess for less time? If one snitches, he goes free and the other goes away for a long time, if no one confesses short sentence for both, if both confess intermediate sentence for both.
+
+Under these conditions cooperation is dominated by noncooperation and there is one equilibrium in $(NC, NC)$. The worst-case criterium leads both player to the equilibrium (bad for both).
+
+\subsubsection{Finite games and mixed strategies}
+
+Nash extended Von Neumann and Morgenstern's mixed strategy theory from zero-sum games to any game with finite sets of players and strategies. 
+
+Every finite game admits at least an equilibrium in mixed strategies. The number of equilibria can grow exponentially with players/strategy.
+
+\subsection{Group decision-making}
+
+Multiple decision-makers, but each one does not fix independently the values of the decision variables, all decision-makers must agree on the decision before taking it.
+
+The problem can be reduced to: \textit{how to aggregate the individual preferences into a group preference?} After that, the problem becomes equivalent to that of a single decision-maker.
+
+\paragraph{Social welfare function} The problem is to derive a group preference from a finite set of weak orders, one for each individual. The function that does that is called \textbf{social welfare function}. It receives the preferences of all individuals and returns a preference relation for the whole group.
+
+\subsubsection{Condorcet method}
+
+Also known as simple majority method, is based on the definition: 
+$$ x \wpref{D} x' \Leftrightarrow \left| \left\{d \in D \mid x \wpref{d} x' \right\}\right| \geq \left| \left\{d \in D \mid x' \wpref{d} x \right\}\right| $$
+
+The alternative preferred by more individuals is preferred by the group. Indifferent individuals are counted on both sides. 
+
+It's simple, but can lead to a circuit of strict preference: it does not guarantee transitivity. This means that the method can fail to provide a solution preferable to all other ones.
+
+\subsubsection{Borda method}
+
+Based on the auxiliary definition of Borda count
+$$ B_d (x) = \left|\left\{x' \in X \mid x \wpref{d} x' \right\}\right|$$
+
+Then aggregated
+$$ B_D (x) = \sum_{d \in D} B_d (x)$$
+
+The group preference is then 
+$$ x \wpref{D} x' \Leftrightarrow B_D (x) \geq B_D (x')$$
+
+It's a weak order by construction and always allows to build a welfare function, but it also suffers from rank reversal ($X$ appears in the definition), allowing it to be manipulated.
+
+\subsubsection{Plurality system}
+
+A function is built based on the number of individuals that prefer each alternative to all other ones
+$$  V_D (x) = \left|\left\{d \in D \mid x \wpref{d} x', \ \forall x' \in X\right\}\right|$$
+
+Then the group preference
+$$ x \wpref{D} x' \Leftrightarrow V_D (x) \geq V_D (x') $$
+
+This guarantees a weak order, but suffers from rank reversal and allows compact minorities to prevail on disjunted majorities, leading to choices abhorred by most; this happens because only the first position in the individual weak orders is considered.
+
+\subsubsection{Lexicographic method}
+
+A total order on the individual is imposed
+$$ d_1 \pref{} \dots \pref{} d_{|D|} $$
+
+And to each pair of preference the first strict preference existing is applied
+$$ x \wpref{D} x' \Leftrightarrow \exists d \in D : x \wpref{d} x' \text{ and } x \sim_{d'} x', \ \forall d' < d $$
+
+It's a hierarchy of individuals: the first one with a preference rules, it's an absolute monarchy.
+
+It always provides a weak order and doesn't suffer from rank reversal, but it's not democratic, easily unstable and inefficient (people on the lower levels have little incentives to contribute).
+
+\subsubsection{Axiomatic approach}
+
+The axiomatic approach lists the desired properties and tries to design a function that satisfies them by construction, which has been proved impossible.
+
+We call a \textbf{preference profile} $\Pi (X)$ any vector of $|D|$ weak orders on $X$.
+
+Given a solution pair $x, y \in X$ and two profiles $\Pi (X)$ and $\Pi'(X)$, we say that \textbf{$\Pi'$ promotes $x$ over $y$ more than $\Pi$} when
+$$ x \pref{\Pi, d} y \implies x \pref{\Pi', d} y \ \text{ and } \ x \sim_{\Pi, d} y \implies x \wpref{\Pi', d} y $$
+
+We call \textbf{dictator} an individual $s \in D$ such that 
+$$ x \pref{\Pi, s} y \implies x \pref{\Pi, D} y$$
+
+Every preference of the dictator turns into preference of the group through the social welfare function. The existence of a dictator is property of the social welfare function.
+
+The idea of a dictator can be generalized to a \textbf{decisive set} of individuals.
+
+\paragraph{Arrow's axioms} Desirable properties of a social welfare function are: 
+\begin{enumerate}
+	\item \textbf{Nontriviality:} there are at least three alternatives and two individuals 
+	
+	\item \textbf{Universality:} $g(\Pi)$ is defined for all profiles $\Pi$ (solves the problem for all profiles)
+	
+	\item \textbf{Weak order:} $g(\Pi)$ returns a weak order for all profiles
+	
+	\item \textbf{Independence from irrelevant alternatives:} The social welfare function on a restricted alternative set is the restriction of the original group preference
+	
+	\item \textbf{Monotony:} given two alternatives $x,y \in X$ and two preference profiles $\Pi(X)$ and $\Pi'(X)$, if $\Pi'(X)$ promotes $x$ more over $y$ more than $\Pi(X)$ and $x \pref{\Pi, D} y$, then $x \pref{\Pi', D} y$, the social welfare function maintains a preference for $x$ over $y$ if $x$ is further promoted
+	
+	\item \textbf{Popular sovereignty:} Every weak order can be obtained using $|D|$ suitable preferences. The social welfare function is surjective
+	
+	\item \textbf{Nondictatorship:} no individual is a dictator
+\end{enumerate}
+
+Arrow's theorem states that any social welfare function satisfying axioms 1 to 6 implies a dictator.
+
+\subsubsection{Criticism to Arrow's axioms}
+
+Criticism arose, trying to undermine the proof suggesting that the axioms are not as obvious as they look.
+
+\paragraph{Nontriviality} What if $|X| = 2$? For only two alternatives the Condorcet method satisfies all other axioms. But how to reduce to two the alternatives? It's just another problem.
+
+Personally, I think other criticisms are not as important.
+
+%TODO other criticism, last page

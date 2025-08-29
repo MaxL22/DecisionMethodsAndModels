@@ -66,6 +66,74 @@ The method replaces absolute measures with relative ones, and quantitative ratio
 
 The preference among impacts is measured with an arbitrary qualitative scale, allowing to compare heterogeneous quantities, translating verbal judgments and building an evaluation matrix. 
 
-Humans find it difficult to compare nonhomogeneous things, so build an indicator tree and compare only siblings: leaves include elementary attributes, upper levels summarize them, getting progressively more general.
+Humans find it difficult to compare nonhomogeneous things, so build an indicator tree and compare only siblings: leaves include elementary attributes, upper levels summarize them, getting progressively more general. Many small pairwise comparison matrices are built on the different levels.
 
-% TODO Continue from page 96
+The weights are normalized within each group of children nodes and the tree structure allows to build the attribute weight vector level-by-level, from leaves to root. The weights vector have sum 1, no normalize them is enough to make it so that their sum coincides with the weight of the father node.
+
+\paragraph{Rank reversal} The main defect of the AHP is that the order of alternatives substantially depends on what alternatives are present, since evaluations are pairwise comparisons. Adding or removing alternatives can change the ranking.
+
+To avoid rank reversal, a proposal is to fix a set of absolute levels for each indicator and make comparisons on levels, instead of alternatives. This allows for a open decision process, in which alternatives arrive gradually and long decision processes, but introduces further approximation on the values.
+
+\subsubsection{ELECTRE methods}
+
+The ELECTRE methods start from a criticism of the assumption that the decision-maker is able to compare all pairs of impacts. The idea is to extend the Paretian preference definition with a concept called \textbf{outranking}: $A$ could be preferable to $B$ even if it's worse for some attributes, but not by too much.
+
+$f$ outranks $f'$ based on the threshold $\epsilon_l \geq 0$ when $f$ is not worse than $f' - \epsilon_l$, $\forall l \in P$. Setting $\epsilon_l = 0$ yields the Paretian preference. Now the preference means \textit{exchanging $f$ and $f'$ is not a clear loss}. This relation is reflexive, but is in general nontransitive, noncomplete and nonantisymmetric.
+
+This definition can easily produce too weak or too rich relations (based on the value of $\epsilon_l$), so it can be refined with other conditions: the final relation will include only pairs that verify all conditions. The conditions take into account additional remarks, such as weights $w_l$ on the relative importance of indicators.
+
+Some conditions: 
+\begin{itemize}
+	\item \textbf{Satisfaction of comparability threshold:} impact $f$ is not worse than $f'$ by more than $\epsilon_l$ for all attributes
+	
+	\item \textbf{Concordance condition:} a subset of attributes of sufficient weight agree that $f$ is not worse than $f'$
+	$$ f \wpref{s_c} f' \Leftrightarrow c_{ff'} = \sum_{l \in P: f_l \geq f_l'} w_l \geq \alpha_c, \quad \alpha_c \in [0,1] $$
+	
+	\item \textbf{Discordance condition:} no attributes reject with exceeding strength the statement that $f$ is better than $f'$:
+	$$ f \wpref{s_d} f' \Leftrightarrow d_{ff'} = \frac{\max_{l \in P} \left[\max (f_l' - f_l, 0)\right]}{\max_{l \in P} |f_l - f_l'|} \leq 1 - \alpha_d, \quad \alpha_d \in [0,1] $$
+\end{itemize}
+One can intersect the three definitions to refine the outranking relation. Parameters $\alpha_c$  and $\alpha_d$ are arbitrary, and have to be tuned.
+
+\paragraph{Kernel identification} The outranking relation is used to filter solutions out. We denote as \textbf{kernel} the subset of alternatives obtained by the procedure: 
+\begin{enumerate}
+	\item Start with an empty kernel $K := \emptyset$ 
+	
+	\item Add to the kernel the subset of all not strictly outranked solutions
+	$$ K := K \cup \left\{x \in X \mid \nexists x' \in X : x' \pref{S} x \right\} $$
+	
+	\item Remove from $X$ all solutions outranked by a kernel solution
+	$$ X := X \setminus \left\{x \in X \mid \exists x' \in X : x' \pref{S} x \right\} $$
+	
+	\item Terminate if $X = K$, otherwise go back to 2
+\end{enumerate}
+
+If the outranking graph contains circuits the procedure does not terminate. 
+
+\paragraph{Creation of a weak ordering} A final phase can be added, in which additional criteria are introduced to sort kernel solutions: 
+\begin{itemize}
+	\item \textbf{Topological ordering:} it selects one of the total orders consistent with the original partial one. The forward ordering approach:
+	\begin{itemize}
+		\item Start with an empty list
+		
+		\item Find a solution not strictly outranked, append it to the list and remove it from the graph
+		
+		\item Repeat the last step if the graph is nonempty, return the list otherwise
+	\end{itemize}
+	The backward approach proceeds similarly, but with solutions which do not outrank any other and reverses the list at the end. The combined approach
+	\begin{itemize}
+		\item Applies the forward and backward approach
+		
+		\item Computes the Borda count on both lists 
+		
+		\item Sums the two Borda counts to obtain a weak order
+	\end{itemize}
+	
+	\item \textbf{Ordering with aggregated indices:} build fo reach impact a concordance and discordance aggregated index: 
+	\begin{itemize}
+		\item Concordance index: large when many weighty attributes prevail on the other ones
+		$$ C_f = \sum_{g \in F} (c_{fg} - c_{gf}), \quad f \in F $$
+		
+		\item Discordance index: decreases when the regret for a victory is small
+		$$ D_f = \sum_{g \in F} (d_{fg} - d_{gf}), \quad f \in F $$
+	\end{itemize}
+\end{itemize}
