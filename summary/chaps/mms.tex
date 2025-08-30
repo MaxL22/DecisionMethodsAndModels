@@ -3,9 +3,9 @@
 
 Weak order preference, single decision-maker, but the scenario is not certain. Two possibilities: 
 \begin{itemize}
-	\item Decisions in conditions of ignorance: $\omega$ falls in $\Omega$
+	\item Decisions in \textit{conditions of ignorance}: $\omega$ falls in $\Omega$
 	
-	\item Decisions in conditions of risk: the probability of each $\omega$ is known
+	\item Decisions in \textit{conditions of risk}: the probability of each $\omega$ is known
 \end{itemize}
 
 An alternative \textbf{strongly dominates} another when its impact is at least as good in all scenarios. An alternative \textbf{probabilistically dominates} another when for any threshold considered the probability that it has impacts not worse than the threshold is not worse than the other alternative.
@@ -132,7 +132,7 @@ The main approach consists in reducing the problem to the optimization of an aux
 
 \subsubsection{Definitions of probability}
 
-Probability is a debated concept. 
+Probability is a debated concept, with more than one definition.
 
 \paragraph{Classical definition} Probability is the ratio between the number of elementary cases that form a scenario and the total number of possible elementary cases. 
 $$ \pi (\omega) = \frac{n(\omega)}{n (\Omega)}$$
@@ -162,7 +162,7 @@ The theory that derives is perfectly consistent, but does not indicate how to ob
 Sums the impacts of a solution over all scenarios with the convex combination of impacts with probabilities
 $$ \phi_{EV} = E \left[f(x, \omega)\right] = \sum_{\omega \in \Omega} \pi (\omega) f (x, \omega) $$
 
-It's just the weighed probability.
+It's just using the probability as weight for each impact.
 
 \paragraph{Formal defects} This criterium can lead to unrealistic consequences. It has some strong defects: 
 \begin{itemize}
@@ -177,7 +177,9 @@ We want to build a choice criterium that satisfies certain desired properties (a
 
 A \textbf{finite simple lottery} is a pair of functions $(f(\omega), \pi(\omega))$ where $f(\omega)$ is a random variable on a finite sample space and $\pi(\omega)$ is a probability function on the sample space.
 
-A \textbf{degenerate lottery} has a single deterministic scenario (probability 1). A \textbf{compound lottery} is a lottery whose impacts are other lotteries (possibly degenerate). We call $L_{F, \Omega}$ the set of all possible lotteries, simple or compound, on $F$ and $\Omega$.
+A \textbf{degenerate lottery} has a single deterministic scenario (probability 1). 
+
+A \textbf{compound lottery} is a lottery whose impacts are other lotteries (possibly degenerate). We call $L_{F, \Omega}$ the set of all possible lotteries, simple or compound, on $F$ and $\Omega$.
 
 In a decision problem, each alternative corresponds to a lottery (different results with the associated probability).
 
@@ -199,7 +201,7 @@ $$ \ell \wpref{} \ell' \Leftrightarrow u(\ell) \geq u (\ell') $$
 
 \paragraph{Von Neumann-Morgenster stochastic utility theorem} Given a set of impacts $F$ not all reciprocally indifferent, a sample space $\Omega$ and a preference relation $\Pi$ between lotteries on $F$ and $\Omega$ that respects the five axioms, there exists one and only one utility function $u: L_{F, \Omega} \rightarrow [0,1]$ consistent with $\Pi$ and normalized so as to have value 0 in the worst impact and 1 in the best one.
 
-This can be proves, and means that it's always possible to build a consistent stochastic utility function to compare lotteries, under the five axioms. 
+This can be proved, and means that it's always possible to build a consistent stochastic utility function to compare lotteries, under the five axioms. 
 
 \subsubsection{Risk aversion and risk propensity}
 
@@ -263,3 +265,50 @@ We denote as \textbf{information value} the difference between the utility gaine
 $$ \pi(\omega | \omega') = \frac{\pi (\omega' | \omega) \pi (\omega)}{\sum_{\omega \in \Omega} \pi (\omega' | \omega) \pi (\omega)}$$
 and the total probabilities can be obtained starting from the conditional probabilities and the probabilities of the scenarios. 
 $$ \pi (\omega') = \sum_{\omega \in \Omega} \pi (\omega', \omega) = \sum_{\omega \in \Omega} \pi (\omega' | \omega) \pi (\omega) $$
+
+Example, if given a decision problem with three alternatives and two scenarios:
+$$
+\begin{array}{c|c|c}
+	f(x, \omega) & \omega_1 & \omega_2 \\
+	\hline
+	x_1 & 40 & 40 \\
+	x_2 & 20 & 80 \\
+	x_3 & 70 & 10
+\end{array}
+\qquad
+\begin{array}{c|c|c}
+	\pi(\omega) & \omega_1 & \omega_2 \\
+	\hline
+	& 0.6 & 0.4
+\end{array}
+\qquad
+\begin{array}{c|c|c}
+	\pi(y|\omega) & \omega_1 & \omega_2 \\
+	\hline
+	y_1 & 5/6 & 1/4 \\
+	y_2 & 1/6 & 3/4
+\end{array}
+$$
+
+The EV without the experiment is: 
+$$ EV(x_1) = f(x_1, \omega_1)\pi(\omega_1) + f(x_1, \omega_2) \pi (\omega_2) = 40, \quad EV(x_2) = 44, \quad EV(x_3) = 46 $$
+the best being $x_3$ with 46.
+
+Then find the probability of each outcome of the random experiment: 
+$$ \pi(y_1) = \pi(y_1|\omega_1)\pi(\omega_1) + \pi(y_1|\omega_2)\pi(\omega_2) = 0.6, \quad \pi(y_2) = 0.4 $$
+
+Then find the probability of each scenario after each experiment
+$$ \pi(\omega_1|y_1) = \frac{\pi(\omega_1) \pi(y_1|\omega_1)}{\pi(y_1)} = \frac{5}{6}, \quad \pi(\omega_2|y_1) = \frac{1}{6} $$
+$$ \pi(\omega_1|y_2) = \frac{1}{4}, \quad \pi(\omega_2|y_2) = \frac{3}{4} $$
+
+
+The expected values with the experiments:
+$$ EV(x_1|y_1) = f(x_1, \omega_1) \pi (\omega_1 | y_1) + f(x_1, \omega_2) \pi (\omega_2 | y_1) = 40, $$
+$$ EV(x_2|y_1) = 30, \quad EV(x_3|y_1) = 60 $$
+$$ EV(x_1|y_2) = 40, \quad EV(x_2|y_2) = 65, \quad EV(x_3|y_2) = 25 $$
+For $y_1$ the best choice is $x_3$ with 60, for $y_2$ the best choice is $x_2$ with 65.
+
+Then the total expected value is:
+$$ EV_i = EV(x_3|y_1) \cdot \pi (y_1) + EV(x_2|y_2) \cdot \pi(y_2) = 62 $$
+The information value is then:
+$$ V = EV_i - EV(x_3) = 16 $$

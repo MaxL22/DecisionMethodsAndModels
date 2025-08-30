@@ -13,16 +13,18 @@ Where
 	
 	\item $F$ is the indicator space, set of all possible impacts 
 	
-	\item $f: X \times \Omega \rightarrow F$ is the impact function, associates each configuration of the system to a impact
+	\item $f: X \times \Omega \rightarrow F$ is the impact function, which associates each possible configuration $f(x, \omega)$ of the system to an impact
 	
 	\item $D$ is the set of all decision-makers
 	
 	\item $\Pi: D \rightarrow 2^{F \times F}$ is the preference function, which associates to each decision maker a subset of impact pairs
 \end{itemize}
 
-The \textbf{alternatives} formally describe the events under the control of the decision-makers. $X$ includes all possible choices.
+The \textbf{alternatives} formally describe the events under the control of the decision-makers. The feasible region $X$ includes all possible choices. 
 
-The \textbf{scenarios} formally describe the events out of the control of the decision-makers. $\Omega$ defines all such events.
+Alternatives are described as vectors of real numbers, each component of the alternative is a \textbf{decision variable}, an elementary quantity describing a specific aspect of the alternative. The core of the decision process is choosing an alternative with the best possible outcome (impact), the decision variables create the decision space (all the values that an alternative can assume), and solutions are point within that space that have to be evaluated by the decision process.
+
+The \textbf{scenarios} formally describe the events out of the control of the decision-makers. The sample space $\Omega$ defines all such events.
 
 The \textbf{impacts} model all aspects relevant to the decision, they are described quantitatively as vector of real numbers.
 
@@ -34,7 +36,7 @@ The decision-maker takes part directly in the choice of alternative, holding the
 
 \subsection{Preference Relation}
 
-For each decision maker, we need a relation between pair of impacts to determine which ones are preferable. $\Pi: D \rightarrow 2^{F \times F}$ associates each decision-maker to a subset of impact pairs.
+For each decision maker, we need a relation between pair of impacts to determine which ones are preferable, $\Pi: D \rightarrow 2^{F \times F}$ associates each decision-maker to a subset of impact pairs.
 
 A \textbf{weak preference} $f \wpref{d} f'$ is when the decision-maker accepts the exchange of $f$ for $f'$.
 
@@ -43,21 +45,21 @@ Two impacts are \textbf{indifferent} if the decision-maker considers both equall
 Two impacts are \textbf{incomparable} if the decision-maker is unable or unwilling to choose between them, rejecting the exchange in both directions.
 
 In a decision problem, an \textbf{outperformer} $x \in X$ for $d \in D$ is an alternative which performs at least as good as any other $x' \in X$ in every scenario $\omega \in \Omega$
-$$ (f(x, \omega), f(x', \omega)) \in \Pi_d, \quad \forall \omega \in \Omega, x' \in X $$
+$$ (f(x, \omega), f(x', \omega)) \in \Pi_d, \quad \forall \omega \in \Omega, \ \forall x' \in X $$
 and is strictly better for at least one comparison/scenario
-$$ \exists x^\circ \in X, \omega^\circ \in \Omega \quad (f(x, \omega), f(x^\circ, \omega)) \in \Pi_d \wedge (f(x^\circ), \omega), f(x, \omega)) \notin \Pi$$
+$$ \exists x^\circ \in X \quad \left(f(x, \omega), f(x^\circ, \omega)\right) \in \Pi_d \wedge \left(f(x^\circ, \omega), f(x, \omega)\right) \notin \Pi$$
 
 \subsubsection{Properties}
 
 Considering impact set $F$ and a binary relation $\Pi$, the main properties of said relation can be:
 \begin{itemize}
-	\item \textbf{Reflexivity:} $\forall a \in F$, $(a,a) \in \Pi$; to check for it, on the graph representation every impact has to have a self-loop
+	\item \textbf{Reflexivity:} $\forall a \in F$, $(a,a) \in \Pi$, every impact is in relation with itself; to check for it, on the graph representation every impact has to have a self-loop
 	
 	\item \textbf{Transitivity:} $\forall a,b,c \in F$, if $(a,b) \in \Pi$ and $(b,c) \in \Pi$ then $(a,c) \in \Pi$; to check for it, on the graph representation follow every arc and check that every possible "triangle" is complete
 	
-	\item \textbf{Antisymmetry:} $\forall a,b \in F$, if $(a,b) \in \Pi$ and $(b,a) \in \Pi$ then $a = b$; to check for it, on the graph representation there must be no impacts that point at each other
+	\item \textbf{Antisymmetry:} $\forall a,b \in F$, if $(a,b) \in \Pi$ and $(b,a) \in \Pi$ then $a = b$, two impacts are indifferent only if they're equal; to check for it, on the graph representation there must be no impacts that point at each other
 	
-	\item \textbf{Completeness:} $\forall a,b \in F$, if $(a,b) \notin \Pi$ then $(b, a) \in \Pi$; to check for it, on the graph representation, from each node there must be an arc (either outgoing or incoming) connecting it to every other
+	\item \textbf{Completeness:} $\forall a,b \in F$, if $(a,b) \notin \Pi$ then $(b, a) \in \Pi$, every impact is in relation with every other, one way or another; to check for it, on the graph representation, from each node there must be an arc (either outgoing or incoming) connecting it to every other
 \end{itemize}
 
 \subsubsection{Types of relations (orders)}

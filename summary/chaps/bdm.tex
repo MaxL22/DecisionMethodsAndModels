@@ -3,6 +3,10 @@
 
 \subsection{Dominance relation}
 
+A solution \textbf{dominates} another when the impact of the former is preferable to the impact of the latter. When solving a decision problem, it looks natural to choose among the nondominated solutions. 
+
+On a strict preference graph, the nondominated solutions correspond to nodes with no ingoing arcs. 
+
 \subsubsection{Decision making on weak orders}
 
 If a preference relation is a weak order
@@ -15,17 +19,17 @@ If a preference relation is a weak order
 A \textbf{value function} $f: F \rightarrow \R$ associates each impact to a real value. A value function is \textbf{consistent} with preference relation $\Pi$ when 
 $$ f \preceq f' \Leftrightarrow v(f) \geq v(f'), \quad \forall f,f' \in F$$
 
-If a preference relation $\Pi$ admits a consistent value function, then $\Pi$ it's a weak order.
+If a preference relation $\Pi$ admits a consistent value function, then $\Pi$ it's a weak order. The opposite is not always true. Consistent value functions are not unique, each one admits infinite equivalent ones that sort impacts in the same way, with different values (composition with any strictly increasing function).
 
 \subsubsection{Weak order preference models}
 
-Some ways to sort \textit{the stuff}.
+Some ways to order preferences starting from a weak order.
 
-\paragraph{Lexicographic order} Order the alternatives w.r.t. the value of the first indicator (for some ordering of the indicators) and break ties with the subsequent one. This yields a total order.
+\paragraph{Lexicographic order} Order the alternatives w.r.t. the value of the first indicator (for some defined ordering of the indicators) and break ties with the subsequent one. This yields a total order.
 
-The variant \textbf{with aspiration levels} introduces a "minimum requirement" $\epsilon_i$, rejecting all alternatives with indicator $f_i$ worse than $\epsilon_i$ (higher or lower depending on whether it's a benefit or cost). It applies the lexicographic order on a restricted feasible region.
+The variant \textbf{with aspiration levels} introduces a "minimum requirement" $\epsilon_l$, rejecting all alternatives with indicator $f_l$ worse than $\epsilon_l$ (higher or lower depending on whether it's a benefit or cost). It then applies the lexicographic order on the restricted feasible region.
 
-\paragraph{Utopia point} Identify an ideal impact with the best possible value for each indicator (optimize them independently) and evaluate all alternatives with the distance from the ideal impact. 
+\paragraph{Utopia point} Identify an ideal impact, with the best possible value for each indicator (optimize them independently or estimate such point) and evaluate all alternatives with the distance from the ideal impact. 
 
 Different definitions of distance yield different results. Some definitions:
 \begin{itemize}
@@ -41,6 +45,8 @@ Different definitions of distance yield different results. Some definitions:
 
 \paragraph{Borda count} In the case of finite alternatives, they can be sorted by counting how many alternatives are worse than each one
 $$ B(f) = \left|\left\{f' \in F \mid f \wpref{} f' \right\}\right| $$
+Then 
+$$ f \wpref{} f' \Leftrightarrow B(f) > B(f') $$ 
 
 \subsection{MAUT}
 
@@ -48,7 +54,7 @@ Multi Attribute Utility theory assumes the preference relation of the decision-m
 
 \subsubsection{Indifference curves}
 
-An \textit{indifference curve} is a subset of the impact space $I \subseteq F$ of reciprocally indifferent impacts. By definition: 
+An \textbf{indifference curve} is a subset of the impact space $I \subseteq F$ of reciprocally indifferent impacts. By definition: 
 \begin{itemize}
 	\item The curves cover $F$
 	
@@ -78,21 +84,21 @@ Some properties which allow for easier estimates of $u(f)$:
 
 \subsubsection{Additive utility function}
 
-A utility function is additive when it can be expressed as the sum of functions of the single indicators. If the utility function is additive, the problem to estimate it can be reduced to the estimation of $p$ single-variable functions, simplifying the process.
+A utility function is additive when it can be expressed as a sum of functions of the single indicators. If the utility function is additive, the problem to estimate it can be reduced to the estimation of $p$ single-variable functions, simplifying the process.
 
-\paragraph{Preferential independence} A subset of indicators $L$ is \textbf{preferentially independent} from the complementary subset $P \setminus L$ when given two impacts with identical values of $P \setminus L$ the preference relation does not depend on such values.
+\paragraph{Preferential independence} A subset of indicators $L$ is \textbf{preferentially independent} from the complementary subset $P \setminus L$ when given two impacts with identical values of $P \setminus L$ the preference relation does not depend on values in $P \setminus L$.
 
 \paragraph{Mutual preferential independence} A problem enjoys \textbf{mutual preferential independence} when every proper subset of indicator is independent from its complement. 
 
-Mutual preferential independence is necessary for additivity. Intuitively if subsets of indicators depend on each other there can't be a way to express the utility function in an additive way by summing such indicators (or value of the subsets).
+Mutual preferential independence is \textit{necessary for additivity}. Intuitively if subsets of indicators depend on each other there can't be a way to express the utility function in an additive way by summing such indicators (or value of the subsets).
 
 For a decision problem with $p \geq 3$ indicators mutual preferential independence is a sufficient condition for additivity.
 
 \subsubsection{MRS}
 
-The Marginal Rate of Substitution $\lambda_{12}$ between two indicators $f_1$ and $f_2$ represents how much of $f_1$ are we willing to \textit{"give up"} for a unit of $f_2$; e.g., if we're willing to give $4$ units of $f_1$ for a unit of $f_2$ then $\lambda_{12} = 1/4$.
+The \textbf{Marginal Rate of Substitution} $\lambda_{12}$ between two indicators $f_1$ and $f_2$ represents how much of $f_1$ are we willing to \textit{"give up"} for a unit of $f_2$; e.g., if we're willing to give $4$ units of $f_1$ for a unit of $f_2$ then $\lambda_{12} = 1/4$.
 
-It's the ratio of the partial derivatives of the utility function w.r.t. $f_1$ and $f_2$
+It's the ratio of the partial derivatives of the utility function with respect to $f_1$ and $f_2$
 $$ \lambda_{12} (f) = \frac{ \frac{\partial u }{\partial f_1} }{ \frac{\partial u}{\partial f_2} } $$
 
 A uniform MRS corresponds to a linear utility function $u(f) = w_1 f_1 + w_2 f_2$, and as such:
@@ -107,9 +113,37 @@ Multiplying two MRSs on a diagonal equate to multiplying the values on the oppos
 
 A preference relation $\Pi$ admits an additive utility function if and only if it enjoys both mutual preferential independence and the corresponding trade-off condition.
 
-% TODO part about building a utility function, p55+ of your notes
+\subsubsection{Building an additive utility function}
+
+Usually a utility function uses normalized pure values for utilities (pure numbers $\in [0,1]$) and combines them with nonnegative weights whose total sum is 1. 
+
+Then we need to build a function for each one-dimensional impact, for example through the bisection method: get the decision maker to point extreme impacts and points in the middle of each "segment" created, until a function can be determined.
+
+\paragraph{Determining the weights} Identify a sufficient number of indifferent impacts and solve the resulting constraints on the weighs (linear equation system).
+
+If indifference is imprecise, this can give wrong weights, so build a complete pairwise comparison for all indicators. The \textbf{pairwise comparison matrix} is the matrix reporting all rates of substitution between normalized utilities, expressing relative weight. 
+
+A correct pairwise comparison matrix enjoys: 
+\begin{itemize}
+	\item \textbf{Positivity:} each entry is positive, $\tilde \lambda_{lm} > 0$, $\forall l,m \in P$
+	
+	\item \textbf{Reciprocity:} $\tilde \lambda_{lm} = 1/ \tilde \lambda_{ml}$, $\forall l,m \in P$
+	
+	\item \textbf{Consistency:} $\tilde \lambda_{ln} = \tilde \lambda_{lm} \cdot \tilde \lambda_{mn}$, $\forall l,m,n \in P$
+\end{itemize}
+
+To determine the weights from (correct) a matrix: 
+\begin{itemize}
+	\item Calculate the total of each column
+	
+	\item Divide each entry in the column for the total
+	
+	\item For each row calculate the mean of the resulting values, those means compose the weight vector
+\end{itemize}
 
 \subsection{Mathematical Programming: \textit{How to}}
+
+Mathematical programming assumes decision problems with a preference relation which admits a known consistent utility function, reducing the problem to classical optimization. 
 
 The general process for solving MP problems is: 
 \begin{enumerate}
@@ -280,4 +314,3 @@ $$
 Which implies that both $A$ and $B$ are globally optimal points.}
 
 % This is NOT the easy way
-

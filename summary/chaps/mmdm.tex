@@ -7,32 +7,32 @@ Game theory studies the situation in which multiple decision-makers have each th
 
 Some terminology:
 \begin{itemize}
-	\item A decision problem is called a game
+	\item A decision problem is called a \textbf{game}
 	
-	\item A decision-maker is called a player 
+	\item A decision-maker is called a \textbf{player} 
 	
-	\item An impact is called a payoff
+	\item An impact is called a \textbf{payoff}
 	
-	\item A solution is called a strategy profile
+	\item A solution is called a \textbf{strategy profile}
 \end{itemize}
 
 Game can be classified from different points of view: 
 \begin{itemize}
-	\item W.r.t. the relation between players
+	\item W.r.t. the \textbf{relation between players}
 	\begin{itemize}
 		\item Noncooperative: each player is independent 
 		
 		\item Cooperative: players can agree to share payoffs
 	\end{itemize}
 	
-	\item W.r.t. the information on the data:
+	\item W.r.t. the \textbf{information on the data}:
 	\begin{itemize}
 		\item Complete: all players know the whole of $X$ and $f$
 		
 		\item Incomplete: each player $d$ knows only $X^{(d)}$ and $f^{(d)}$
 	\end{itemize}
 	
-	\item W.r.t. the information on the moves:
+	\item W.r.t. the \textbf{information on the moves}:
 	\begin{itemize}
 		\item Perfect: all players know all past moves 
 		
@@ -72,13 +72,13 @@ On a matrix, mark the best row payoff in each column and vice versa.
 
 \subsection{Zero-sum games}
 
-A zero-sum game is a game in which the overall utility of the game is zero for every single strategy profile. Changing the scale does not modify this property, so any game with uniform sum can be considered zero-sum games. 
+A zero-sum game is a game in which the overall utility of the game is zero for every single strategy profile. Changing the scale does not modify this property, so any game with uniform sum can be considered zero-sum. 
 
 With two-players, the win of one equals the loss of the other so it's redundant to specify. Definitions of domination and equilibrium need to be adapted to the new representation: row player wants to maximize gain, while column player need to minimize losses. 
 
 To find equilibria, look for saddle points in the matrix: mark the maximum in each column and minimum in each row, entries with two marks are equilibria.
 
-\paragraph{Value of the game} It's interesting to note that, in a two-player zero-sum game, if $u^{(r)}$ and $u^{(c)}$ are the value of the game for row and column player, then $u^{(r)} \leq u^{(c)}$ and $u^{(r)} = u^{(c)}$ if and only if the game has at least one Nash equilibrium. The guaranteed gain of the row player is bounded by the guaranteed loss of the column player.
+\paragraph{Value of the game} It's interesting to note that, in a two-player zero-sum game, if $u^{(r)}$ and $u^{(c)}$ are the value of the game for row and column player respectively, then $u^{(r)} \leq u^{(c)}$, and $u^{(r)} = u^{(c)}$ if and only if the game has at least one Nash equilibrium. The guaranteed gain of the row player is bounded by the guaranteed loss of the column player.
 
 \subsubsection{Mixed strategies}
 
@@ -269,7 +269,7 @@ The idea of a dictator can be generalized to a \textbf{decisive set} of individu
 	\item \textbf{Nondictatorship:} no individual is a dictator
 \end{enumerate}
 
-Arrow's theorem states that any social welfare function satisfying axioms 1 to 6 implies a dictator.
+Arrow's theorem states that any social welfare function satisfying axioms 1 through 6 implies a dictator.
 
 \subsubsection{Criticism to Arrow's axioms}
 
@@ -277,6 +277,6 @@ Criticism arose, trying to undermine the proof suggesting that the axioms are no
 
 \paragraph{Nontriviality} What if $|X| = 2$? For only two alternatives the Condorcet method satisfies all other axioms. But how to reduce to two the alternatives? It's just another problem.
 
-Personally, I think other criticisms are not as important.
+Personally, I think other criticisms are not as important (can't be bothered to write them).
 
-%TODO other criticism, last page
+%TODO other criticism, last page, maybe

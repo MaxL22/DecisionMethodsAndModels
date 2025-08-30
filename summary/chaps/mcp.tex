@@ -37,7 +37,7 @@ Not usable in discrete problems, as always.
 
 Consists in building a linear combination of the indicators and optimizing it. The result is sufficient conditions for a point to be Paretian (underestimate of the region).
 
-% TODO Explain how to actually do an exercise, there is parametric stuff to do
+% TODO Explain how to actually do an exercise, there is parametric stuff to do?
 
 \subsubsection{$\epsilon$-constraint method}
 
@@ -64,21 +64,23 @@ The \textbf{Analytic Hierarchy Process} was introduced in 1980 based on the foll
 
 The method replaces absolute measures with relative ones, and quantitative ratios with qualitative scales, building a hierarchy of indicators to compare only conceptually similar quantities.
 
-The preference among impacts is measured with an arbitrary qualitative scale, allowing to compare heterogeneous quantities, translating verbal judgments and building an evaluation matrix. 
+The preference among impacts is measured with an arbitrary \textbf{qualitative scale}, allowing to compare heterogeneous quantities, translating verbal judgments and building an evaluation matrix. 
 
 Humans find it difficult to compare nonhomogeneous things, so build an indicator tree and compare only siblings: leaves include elementary attributes, upper levels summarize them, getting progressively more general. Many small pairwise comparison matrices are built on the different levels.
 
-The weights are normalized within each group of children nodes and the tree structure allows to build the attribute weight vector level-by-level, from leaves to root. The weights vector have sum 1, no normalize them is enough to make it so that their sum coincides with the weight of the father node.
+The weights are normalized within each group of children nodes and the tree structure allows to build the attribute weight vector level-by-level, from leaves to root. The weights vector must have sum 1, to normalize them is enough to make it so that their sum coincides with the weight of the father node (just multiply).
 
 \paragraph{Rank reversal} The main defect of the AHP is that the order of alternatives substantially depends on what alternatives are present, since evaluations are pairwise comparisons. Adding or removing alternatives can change the ranking.
 
-To avoid rank reversal, a proposal is to fix a set of absolute levels for each indicator and make comparisons on levels, instead of alternatives. This allows for a open decision process, in which alternatives arrive gradually and long decision processes, but introduces further approximation on the values.
+To avoid rank reversal, a proposal is to fix a set of absolute levels for each indicator and make comparisons on levels, instead of alternatives. This allows for a open and long decision process, in which alternatives arrive gradually, but introduces further approximation on the values (very different values can be "flattened" and similar values can be made to look "distant").
 
 \subsubsection{ELECTRE methods}
 
-The ELECTRE methods start from a criticism of the assumption that the decision-maker is able to compare all pairs of impacts. The idea is to extend the Paretian preference definition with a concept called \textbf{outranking}: $A$ could be preferable to $B$ even if it's worse for some attributes, but not by too much.
+The ELECTRE methods start from a criticism of the assumption that the decision-maker is able to compare all pairs of impacts. The idea is to extend the Paretian preference definition with a concept called \textbf{outranking}: $A$ could be preferable to $B$ even if it's worse for some attributes, if not by too much.
 
-$f$ outranks $f'$ based on the threshold $\epsilon_l \geq 0$ when $f$ is not worse than $f' - \epsilon_l$, $\forall l \in P$. Setting $\epsilon_l = 0$ yields the Paretian preference. Now the preference means \textit{exchanging $f$ and $f'$ is not a clear loss}. This relation is reflexive, but is in general nontransitive, noncomplete and nonantisymmetric.
+We say that $f$ \textbf{outranks} $f'$ based on the threshold $\epsilon_l \geq 0$ when $f$ is not worse than $f' - \epsilon_l$, $\forall l \in P$. Setting $\epsilon_l = 0$ yields the Paretian preference. 
+
+Now the preference means that \textit{exchanging $f$ and $f'$ is not a clear loss}. This relation is reflexive, but is in general nontransitive, noncomplete and nonantisymmetric.
 
 This definition can easily produce too weak or too rich relations (based on the value of $\epsilon_l$), so it can be refined with other conditions: the final relation will include only pairs that verify all conditions. The conditions take into account additional remarks, such as weights $w_l$ on the relative importance of indicators.
 
@@ -92,7 +94,7 @@ Some conditions:
 	\item \textbf{Discordance condition:} no attributes reject with exceeding strength the statement that $f$ is better than $f'$:
 	$$ f \wpref{s_d} f' \Leftrightarrow d_{ff'} = \frac{\max_{l \in P} \left[\max (f_l' - f_l, 0)\right]}{\max_{l \in P} |f_l - f_l'|} \leq 1 - \alpha_d, \quad \alpha_d \in [0,1] $$
 \end{itemize}
-One can intersect the three definitions to refine the outranking relation. Parameters $\alpha_c$  and $\alpha_d$ are arbitrary, and have to be tuned.
+One can intersect the three definitions to refine the outranking relation. Parameters $\alpha_c$  and $\alpha_d$ are arbitrary, and may need to be tuned.
 
 \paragraph{Kernel identification} The outranking relation is used to filter solutions out. We denote as \textbf{kernel} the subset of alternatives obtained by the procedure: 
 \begin{enumerate}
@@ -128,7 +130,7 @@ If the outranking graph contains circuits the procedure does not terminate.
 		\item Sums the two Borda counts to obtain a weak order
 	\end{itemize}
 	
-	\item \textbf{Ordering with aggregated indices:} build fo reach impact a concordance and discordance aggregated index: 
+	\item \textbf{Ordering with aggregated indices:} build for each impact a concordance and discordance aggregated index: 
 	\begin{itemize}
 		\item Concordance index: large when many weighty attributes prevail on the other ones
 		$$ C_f = \sum_{g \in F} (c_{fg} - c_{gf}), \quad f \in F $$
