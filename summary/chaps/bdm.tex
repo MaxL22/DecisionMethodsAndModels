@@ -241,15 +241,15 @@ With $\lambda_i$ free multipliers and $h_i (x)$ equality constraints (always act
 
 \paragraph{KKT Conditions} The KKT conditions state that if a point is regular and locally minimal: 
 \begin{enumerate}
-	\item The partial derivatives of the Lagrangian function w.r.t. the $x$ variables are equal to zero ($\partial \ell / \partial x_i$ = 0)
+	\item \textbf{Stationarity:} the partial derivatives of the Lagrangian function w.r.t. the $x$ variables are equal to zero ($\partial \ell / \partial x_i$ = 0)
 	
-	\item The partial derivatives of the Lagrangian function w.r.t. the $\lambda$ multipliers are equal to zero ($\partial \ell / \partial \lambda_i = h_j = 0$), that is, the equality constraints are respected
+	\item The partial derivatives of the Lagrangian function w.r.t. the $\lambda$ multipliers are equal to zero ($\partial \ell / \partial \lambda_i = h_j = 0$), that is, the equality constraints are respected (just add the equality constraints)
 	
-	\item The product of the functions expressing the inequality constraints, times the corresponding multipliers are equal to zero ($\mu_k g_k = 0$)
+	\item \textbf{Dual feasibility:} the product of the functions expressing the inequality constraints, times the corresponding multipliers are equal to zero ($\mu_k g_k = 0$)
 	
-	\item All inequalities constraints are satisfied
+	\item \textbf{Primal feasibility:} all inequalities constraints are satisfied
 	
-	\item All multipliers of the inequality constraints are nonnegative ($\mu_k \geq 0$)
+	\item \textbf{Complementary slackness:} all multipliers of the inequality constraints are nonnegative ($\mu_k \geq 0$)
 \end{enumerate}
 These conditions allow to restrict the number of candidate points from \textit{all regular and nonregular points} to \textit{nonregular and a few regular}.
 
@@ -264,8 +264,9 @@ These conditions allow to restrict the number of candidate points from \textit{a
 	\mu_1 & \geq 0 \\
 	\mu_2 & \geq 0
 \end{align*}
+\textit{No equalities here, but just add them as constraint and remember to find the value of the free multiplier $\lambda$.}
 
-\paragraph{Solving conditions} To solve the system without exhaustively exploring all possible cases one can use a search tree, whose nodes divide the feasible region in disjoint parts. To do that we build on the stricter conditions, i.e., the products $\mu_k g_k = 0$ (at first choose the simplest one). Given a constraint, we can distinguish two cases:
+\paragraph{Solving conditions} To solve the system without exhaustively exploring all possible cases one can use a search tree, whose nodes divide the feasible region in disjoint parts. To do that we build on the stricter conditions, i.e., the complementary slackness conditions (the products $\mu_k g_k = 0$, start with the simplest one). Given a constraint, we can distinguish two cases:
 \begin{enumerate}
 	\item $\mu_k = 0$ and $g_k \leq 0$
 	
@@ -312,5 +313,3 @@ $$
 \end{cases}
 $$
 Which implies that both $A$ and $B$ are globally optimal points.}
-
-% This is NOT the easy way
