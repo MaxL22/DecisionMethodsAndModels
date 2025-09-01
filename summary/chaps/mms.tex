@@ -25,7 +25,7 @@ We denote as \textbf{choice criterium} every definition of $\phi_\Omega (x)$ aim
 
 \subsubsection{Worst-case criterium}
 
-Assume for each solution the worst scenario, reducing the problem tos
+Assume for each solution the worst scenario, reducing the problem to
 $$ \min_{x \in X} \phi_{worst} (x) = \min_{x \in X} \max_{\omega \in \Omega} f(x, \omega) $$
 
 It's an approach aimed at avoiding losses, even giving up opportunities. 
@@ -35,17 +35,17 @@ It's an approach aimed at avoiding losses, even giving up opportunities.
 Complementary to the last one, assume for each solution the best scenario possible. The problem becomes: 
 $$ \min_{x \in X} \phi_{best} (x) = \min_{x \in X} \min_{\omega \in \Omega} f(x, \omega) $$
 
-Believe in opportunities, ignore danger.
+Believe in opportunities, \textit{ignore danger}.
 
 \subsubsection{Hurwicz criterium}
 
-For balance, use a convex combination of best and worst-case criterium. The problem becomes
+More balanced, use a convex combination of best and worst-case criterium. The problem becomes
 $$ \min_{x \in X} \phi_{Hurwicz} (x) = \min_{x \in X} \left[\rho \max_{\omega \in \Omega} f(x, \omega) + (1 - \rho) \min_{\omega \in \Omega} f(x, \omega) \right]$$
 Where $\rho \in [0,1]$ is the pessimism coefficient, as it weighs the worst impact, allowing to tune the weights of the scenarios.
 
 \paragraph{Tuning $\rho$} Get (maybe invent) a pair of reciprocally indifferent alternatives and impose equality of the corresponding $\phi_{Hurwicz}$ values, solving the corresponding equation in $\rho$.
 
-The simplest way to do that is to get an alternative $x$ and have the decision-maker indicate its certainty equivalent, a (generally fake) alternative with uniform impact on all scenarios, indifferent to $x$.
+The simplest way to do that is to get an alternative $x$ and have the decision-maker indicate its certainty equivalent, a (generally fictitious) alternative with uniform impact on all scenarios, indifferent to $x$.
 
 \paragraph{Sensitivity analysis} If ranking is unclear and value of $\rho$ imprecise, find for which values of $\rho$ each solution is optimal.
 
@@ -237,7 +237,7 @@ To solve the problem \textbf{backward induction} algorithm is used: visit the tr
 \begin{itemize}
 	\item Odd levels, below there's a decision node, apply a criterium $\phi$ and assign to the node the value of $\phi$; you want to find out the "value" given by the possible scenarios
 	
-	\item Even levels, below there's a scenario node, choose the best alternative and mark the corresponding arc 
+	\item Even levels, below there's a scenario node, choose the best alternative and mark the corresponding arc (a rational decision-maker always takes the best choice)
 \end{itemize}
 
 In the end the marked arcs provide the optimal strategy.
@@ -261,7 +261,7 @@ They can be incorporated in the decision tree by adding two levels upstream of t
 
 We denote as \textbf{information value} the difference between the utility gained performing the experiment and the utility gained not performing it.
 
-\paragraph{Probability computation for the decision tree} We know $\pi (\omega)$ and $\pi (\omega' | \omega)$, but on the tree we need $\pi (\omega')$ and $\pi (\omega | \omega')$. To obtain them from available data
+\paragraph{Probability computation for the decision tree} Usually, we know $\pi (\omega)$ and $\pi (\omega' | \omega)$, but on the tree we need $\pi (\omega')$ and $\pi (\omega | \omega')$. To obtain them from available data
 $$ \pi(\omega | \omega') = \frac{\pi (\omega' | \omega) \pi (\omega)}{\sum_{\omega \in \Omega} \pi (\omega' | \omega) \pi (\omega)}$$
 and the total probabilities can be obtained starting from the conditional probabilities and the probabilities of the scenarios. 
 $$ \pi (\omega') = \sum_{\omega \in \Omega} \pi (\omega', \omega) = \sum_{\omega \in \Omega} \pi (\omega' | \omega) \pi (\omega) $$
