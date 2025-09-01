@@ -93,8 +93,11 @@ Some conditions:
 	
 	\item \textbf{Discordance condition:} no attributes reject with exceeding strength the statement that $f$ is better than $f'$:
 	$$ f \wpref{s_d} f' \Leftrightarrow d_{ff'} = \frac{\max_{l \in P} \left[\max (f_l' - f_l, 0)\right]}{\max_{l \in P} |f_l - f_l'|} \leq 1 - \alpha_d, \quad \alpha_d \in [0,1] $$
+    To calculate it more easily, it's the ratio of the highest positive difference $f_l' - f_l$ (not absolute value, 0 at a minimum) with the highest $|f_l' - f_l|$, which is the biggest difference among any two indicators of the alternative
 \end{itemize}
 One can intersect the three definitions to refine the outranking relation. Parameters $\alpha_c$  and $\alpha_d$ are arbitrary, and may need to be tuned.
+
+\paragraph{Concordance/discordance matrix} It groups all concordance/discordance coefficients $c_{ff'}$/$d_{ff'}$. Diagonals are always 0 for discordance and 1 for concordance.
 
 \paragraph{Kernel identification} The outranking relation is used to filter solutions out. We denote as \textbf{kernel} the subset of alternatives obtained by the procedure: 
 \begin{enumerate}
