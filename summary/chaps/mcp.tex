@@ -49,7 +49,20 @@ This can be applied to any problem and provides an overestimate of the Paretian 
 
 \subsection{Weak rationality methods}
 
-Decision-makers often can't estimate correctly, so let's just \textit{embrace} that the pairwise comparison matrix is incorrect and the normalized utilities are incorrect.
+Decision-makers often can't estimate correctly, so we can fix the matrix or just \textit{embrace} that the pairwise comparison matrix is incorrect and the normalized utilities are incorrect.
+
+\subsubsection{Reconstructing consistent matrices}
+
+A possible approach force consistency on the matrix is to find the positive, consistent and reciprocal matrix closest to the original one, for some definition of distance (different definitions of distance yield different results). The problem to solve is: 
+$$ \min d \left(W, \tilde \Lambda \right)$$
+$$ W_{lm} = \frac{w_l}{w_m} $$
+$$ w_l > 0, \ l \in P, \quad \sum_{l \in P} w_l = 1$$
+
+Where $\tilde \Lambda$ is the original matrix and $W$ is the consistent one. $W$ is composed by the ratio of the weights, which are the unknown variables (to find).
+
+The minimum distance from a consistent matrix can be considered as a measure of inconsistency of the original one.
+
+If he asks for the eigenvalue method I'm out, I ain't studying that.
 
 \subsubsection{AHP}
 

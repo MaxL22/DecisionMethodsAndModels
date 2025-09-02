@@ -12,12 +12,23 @@ An alternative \textbf{strongly dominates} another when its impact is at least a
 
 \paragraph{Models of uncertainty} There are two main ways to describe uncertain situations: 
 \begin{itemize}
-	\item Scenario description: $\Omega$ is a finite set, in which the scenarios are explicitly listed, $\Omega = \left\{\omega^{(1)}, \dots, \omega^{(|\Omega|)}\right\}$
+	\item Scenario description: $\Omega$ is a finite set, in which the scenarios are explicitly listed
+	$$\Omega = \left\{\omega^{(1)}, \dots, \omega^{(|\Omega|)}\right\} $$
 	
-	\item Interval description: $\Omega$ is the Cartesian product of a finite number of real intervals on the $s$ exogenous variables $\Omega = [\omega_1^{\min}, \omega_2^{\max}] \times  \dots  \times [\omega_s^[\min], \omega_s^{\max}]$
+	\item Interval description: $\Omega$ is the Cartesian product of a finite number of real intervals on the $s$ exogenous variables 
+	$$ \Omega = [\omega_1^{\min}, \omega_2^{\max}] \times  \dots  \times [\omega_s^{\min}, \omega_s^{\max}] $$
 \end{itemize}
 
 These are not the only possible cases, but they are frequent. The choice depends on the problem
+
+W.r.t. the possible scenarios of a decision problem, the terms
+\begin{itemize}
+	\item Conditions of \textbf{uncertainty}: describe the whole category of decision problems in which the impact depends on external factor that cannot be predicted (the scenario)
+	
+	\item Conditions of \textbf{ignorance}: describe problems in which the only information known about the scenario $\omega$ is that it falls inside a set $\Omega$
+	
+	\item Conditions of \textbf{risk}: describe problems in which, along with the set of scenarios $\Omega$, a formalization of the probability of each scenario is known (a function $\pi: \Omega \rightarrow [0,1]$, with the sum of all probabilities being 1)
+\end{itemize}
 
 \subsection{Conditions of ignorance}
 
