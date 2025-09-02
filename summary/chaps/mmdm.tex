@@ -80,7 +80,7 @@ With two-players, the win of one equals the loss of the other so it's redundant 
 
 To find equilibria, look for saddle points in the matrix: mark the maximum in each column and minimum in each row, entries with two marks are equilibria.
 
-\paragraph{Value of the game} It's interesting to note that, in a two-player zero-sum game, if $u^{(r)}$ and $u^{(c)}$ are the value of the game for row and column player respectively, then $u^{(r)} \leq u^{(c)}$, and $u^{(r)} = u^{(c)}$ if and only if the game has at least one Nash equilibrium. The guaranteed gain of the row player is bounded by the guaranteed loss of the column player.
+\paragraph{Value of the game} It's interesting to note that, in a two-player zero-sum game, if $u^{(r)}$ and $u^{(c)}$ are the values of the game for row and column player respectively, then $u^{(r)} \leq u^{(c)}$, and $u^{(r)} = u^{(c)}$ if and only if the game has at least one Nash equilibrium. The guaranteed gain of the row player is bounded by the guaranteed loss of the column player.
 
 \subsubsection{Mixed strategies}
 
@@ -242,7 +242,7 @@ It always provides a weak order and doesn't suffer from rank reversal, but it's 
 
 The axiomatic approach lists the desired properties and tries to design a function that satisfies them by construction, which has been proved impossible.
 
-We call a \textbf{preference profile} $\Pi (X)$ any vector of $|D|$ weak orders on $X$.
+A \textbf{preference profile} $\Pi (X)$ is any vector of $|D|$ weak orders on $X$.
 
 Given a solution pair $x, y \in X$ and two profiles $\Pi (X)$ and $\Pi'(X)$, we say that \textbf{$\Pi'$ promotes $x$ over $y$ more than $\Pi$} when
 $$ x \pref{\Pi, d} y \implies x \pref{\Pi', d} y \ \text{ and } \ x \sim_{\Pi, d} y \implies x \wpref{\Pi', d} y $$

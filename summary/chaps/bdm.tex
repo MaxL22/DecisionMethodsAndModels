@@ -16,10 +16,10 @@ If a preference relation is a weak order
 	\item and the solution set is finite and nonempty, nondominated solutions exists and are all mutually indifferent
 \end{itemize}
 
-A \textbf{value function} $f: F \rightarrow \R$ associates each impact to a real value. A value function is \textbf{consistent} with preference relation $\Pi$ when 
+A \textbf{value function} $v: F \rightarrow \R$ associates each impact to a real value. A value function is \textbf{consistent} with preference relation $\Pi$ when 
 $$ f \preceq f' \Leftrightarrow v(f) \geq v(f'), \quad \forall f,f' \in F$$
 
-If a preference relation $\Pi$ admits a consistent value function, then $\Pi$ it's a weak order. The opposite is not always true. Consistent value functions are not unique, each one admits infinite equivalent ones that sort impacts in the same way, with different values (composition with any strictly increasing function).
+If a preference relation $\Pi$ admits a consistent value function, then $\Pi$ is a weak order. The opposite is not always true. Consistent value functions are not unique, each one admits infinite equivalent ones that sort impacts in the same way, with different values (composition with any strictly increasing function).
 
 \subsubsection{Weak order preference models}
 
@@ -63,7 +63,7 @@ An \textbf{indifference curve} is a subset of the impact space $I \subseteq F$ o
 	\item Weak order on impacts maps to total order on curves
 \end{itemize}
 
-Usually, \textbf{continuity} is assumed (they are mathematical objects and not a general set of points), and each indifference curve is expressed in the implicit form $ u(f) = c$, each $c$ identifies a curve.
+Usually, \textbf{continuity} is assumed (they are mathematical objects and not a general set of points), and each indifference curve is expressed in the implicit form $ u(f) = c$, each $c$ identifying a curve.
 
 %When they can be turned in explicit form
 %$$ f_l = f_l (c, \dots, f_{l-1}, f_{l+1}, \dots, f_p) $$
@@ -71,7 +71,7 @@ Usually, \textbf{continuity} is assumed (they are mathematical objects and not a
 
 \subsubsection{Determining the utility function}
 
-The general process requires sampling and guessing a utility function, with consistency checks. This is complex and error prone. 
+The general process requires sampling and guessing a utility function, with consistency checks. This process can be complex and error prone. 
 
 Some properties which allow for easier estimates of $u(f)$: 
 \begin{itemize}
@@ -109,7 +109,7 @@ It represents the steepness of the indifference curve (slope).
 \paragraph{Corresponding trade-off condition} We denote as \textbf{corresponding trade-off condition the property}
 $$ \lambda_{12} (f_1', f_2') \lambda_{12} (f_1'', f_2'') = \lambda_{12} (f_1'', f_2') \lambda_{12} (f_1', f_2'')$$
 
-Multiplying two MRSs on a diagonal equate to multiplying the values on the opposite diagonal.
+Multiplying two MRSs on a diagonal equates to multiplying the values on the opposite diagonal.
 
 A preference relation $\Pi$ admits an additive utility function if and only if it enjoys both mutual preferential independence and the corresponding trade-off condition.
 
@@ -239,6 +239,7 @@ With $\lambda_i$ free multipliers and $h_i (x)$ equality constraints (always act
 \end{align*}
 }
 
+% TODO: Check the names?
 \paragraph{KKT Conditions} The KKT conditions state that if a point is regular and locally minimal: 
 \begin{enumerate}
 	\item \textbf{Stationarity:} the partial derivatives of the Lagrangian function w.r.t. the $x$ variables are equal to zero ($\partial \ell / \partial x_i$ = 0)
