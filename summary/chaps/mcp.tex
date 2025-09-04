@@ -25,7 +25,20 @@ This is exact but slow.
 
 If the solution can be graphically represented, compute the inverse function $\phi: F \rightarrow X$ of $f: X \rightarrow F$, build the image of $X$ in $F$ through $f$, find graphically the nondominated impacts (lower left quadrant empty), find a parametric way to describe such impacts, transform them back using the inverse function. 
 
-This is exact, but human intervention is required and is limited to 2 indicators (\textit{maybe} 3).
+This is exact, but human intervention is required and is limited to 2 indicators.
+
+The practical steps are: 
+\begin{enumerate}
+    \item Invert the functions describing the two indicators, i.e., system and describe $x_1$ and $x_2$ in terms of $f_1$ and $f_2$
+    
+    \item Turn the constraints in term of $f$s, i.e., substitute $x_1$ and $x_2$ in the constraints with what obtained earlier
+    
+    \item Draw the graph in terms of $f_1$ and $f_2$, with the constraints obtained
+    
+    \item Find the set of points with an empty lower left quadrant
+    
+    \item If the segment of points goes from $A$ to $B$, "invert" the points, i.e., calculate $x(A)$ and $x(B)$, for $x_1$ and $x_2$
+\end{enumerate}
 
 \subsubsection{KKT conditions}
 
@@ -79,9 +92,13 @@ The method replaces absolute measures with relative ones, and quantitative ratio
 
 The preference among impacts is measured with an arbitrary \textbf{qualitative scale}, allowing to compare heterogeneous quantities, translating verbal judgments and building an evaluation matrix. 
 
-Humans find it difficult to compare nonhomogeneous things, so build an indicator tree and compare only siblings: leaves include elementary attributes, upper levels summarize them, getting progressively more general. Many small pairwise comparison matrices are built on the different levels.
+The decision-maker expresses preference for each impact for each pair of solutions, with a qualitative scale. The utility is on a relative qualitative scale.
 
-The weights are normalized within each group of children nodes and the tree structure allows to build the attribute weight vector level-by-level, from leaves to root. The weights vector must have sum 1, to normalize them is enough to make it so that their sum coincides with the weight of the father node (just multiply).
+Humans find it difficult to compare non-homogeneous things, so build an indicator tree and compare only siblings: leaves include elementary attributes, upper levels summarize them, getting progressively more general. Many small pairwise comparison matrices are built on the different levels.
+
+The weights of the attributes are also determined starting from a qualitative scale, their importance is determined by the decision-maker via pairwise comparisons.
+
+Then the weights are normalized within each group of children nodes and the tree structure allows to build the attribute weight vector level-by-level, from leaves to root. The weights vector must have sum 1, to normalize them is enough to make it so that their sum coincides with the weight of the father node (just multiply).
 
 \paragraph{Rank reversal} The main defect of the AHP is that the order of alternatives substantially depends on what alternatives are present, since evaluations are pairwise comparisons. Adding or removing alternatives can change the ranking.
 
